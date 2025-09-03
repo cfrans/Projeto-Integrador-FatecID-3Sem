@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="Menu">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Novo Cadastro" />
+            <MenuItem mnemonicParsing="false" text="Plano de Acompanhamento Individual" />
+            <MenuItem mnemonicParsing="false" text="Histórico de Intervenções" />
+                  <MenuItem mnemonicParsing="false" text="Cadastro de Rendimento" />
+            <MenuItem mnemonicParsing="false" text="Acompanhamento Escolar" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Sair" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Editar">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Perfil" />
+            <MenuItem mnemonicParsing="false" text="Dados do Aluno/Responsável" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Sobre">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Projeto" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <SplitPane focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <items>
+        <AnchorPane>
+          <children>
+            <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" textAlignment="CENTER" wrapText="false">
+              <font>
+                <Font size="18.0" fx:id="x1" />
+              </font>
+              <textFill>
+                <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
+              </textFill>
+            </Label>
+                  <Button fx:id="btVoltar" layoutX="729.0" layoutY="490.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="120.0" text="Voltar" />
+                  <Button fx:id="btLimpar" layoutX="729.0" layoutY="457.0" mnemonicParsing="false" onAction="#onClickLimpar" prefHeight="27.0" prefWidth="120.0" text="Limpar" />
+                  <Button fx:id="btSalvar" layoutX="729.0" layoutY="424.0" mnemonicParsing="false" onAction="#onClickSalvar" prefHeight="27.0" prefWidth="120.0" text="Salvar" />
+                  <Label layoutX="304.0" layoutY="50.0" text="Cadastro de Alunos e Responsáveis" textFill="#3d5390">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tfNome" layoutX="52.0" layoutY="117.0" prefHeight="25.0" prefWidth="416.0" />
+                  <Label layoutX="53.0" layoutY="100.0" text="Nome" />
+                  <DatePicker fx:id="dpDataNascimento" layoutX="489.0" layoutY="117.0" />
+                  <Label layoutX="489.0" layoutY="100.0" text="Data de nascimento" />
+                  <ChoiceBox fx:id="chSerieTurma" layoutX="689.0" layoutY="117.0" prefWidth="150.0" />
+                  <Label layoutX="689.0" layoutY="100.0" text="Série/Turma" />
+                  <CheckBox fx:id="cbTipoNecessidade1" layoutX="51.0" layoutY="185.0" mnemonicParsing="false" text="TDAH" />
+                  <Label layoutX="51.0" layoutY="159.0" text="Necessidade Educacional Especial" />
+                  <CheckBox fx:id="cbTipoNecessidade4" layoutX="461.0" layoutY="185.0" mnemonicParsing="false" text="Transtorno Desafiador Opositor (TDO)" />
+                  <CheckBox fx:id="cbTipoNecessidade3" layoutX="372.0" layoutY="185.0" mnemonicParsing="false" text="Dislexia" />
+                  <CheckBox fx:id="cbTipoNecessidade2" layoutX="128.0" layoutY="185.0" mnemonicParsing="false" text="Transtorno do Espectro Autista (TEA)" />
+                  <Separator layoutX="50.0" layoutY="153.0" prefHeight="2.0" prefWidth="788.0" />
+                  <CheckBox fx:id="cbTipoNecessidade5" layoutX="711.0" layoutY="185.0" mnemonicParsing="false" text="Outro" />
+                  <Separator layoutX="51.0" layoutY="393.0" prefHeight="3.0" prefWidth="797.0" />
+                  <TextArea fx:id="taObservacoes" layoutX="52.0" layoutY="278.0" prefHeight="67.0" prefWidth="797.0" />
+                  <Label layoutX="51.0" layoutY="260.0" text="Observações" />
+                  <Label layoutX="51.0" layoutY="212.0" text="Número do Laudo" />
+                  <TextField fx:id="tfNumeroLaudo" layoutX="51.0" layoutY="229.0" prefHeight="25.0" prefWidth="150.0" />
+                  <Label layoutX="51.0" layoutY="400.0" text="Dados do Responsável" />
+                  <TextField fx:id="tdNomeResponsavel" layoutX="51.0" layoutY="438.0" prefHeight="25.0" prefWidth="416.0" />
+                  <Label layoutX="52.0" layoutY="421.0" text="Nome" />
+                  <ChoiceBox fx:id="chParentesco" layoutX="492.0" layoutY="438.0" prefWidth="150.0" />
+                  <Label fx:id="chParentesco" layoutX="492.0" layoutY="421.0" text="Parentesco" />
+                  <TextField fx:id="tfTelefone" layoutX="51.0" layoutY="487.0" prefHeight="25.0" prefWidth="150.0" />
+                  <TextField fx:id="tfEmail" layoutX="227.0" layoutY="487.0" prefHeight="25.0" prefWidth="416.0" />
+                  <Label layoutX="52.0" layoutY="470.0" text="Telefone" />
+                  <Label layoutX="227.0" layoutY="470.0" text="Email" />
+                  <DatePicker fx:id="dpDataLaudo" layoutX="227.0" layoutY="229.0" prefHeight="25.0" prefWidth="166.0" />
+                  <Label layoutX="227.0" layoutY="212.0" text="Data do Laudo" />
+                  <Label layoutX="419.0" layoutY="212.0" text="Profissional" />
+                  <TextField fx:id="tfProfissional" layoutX="418.0" layoutY="229.0" prefHeight="25.0" prefWidth="430.0" />
+                  <Button fx:id="btAdicionar" layoutX="729.0" layoutY="354.0" mnemonicParsing="false" onAction="#onClickAdicionar" prefHeight="27.0" prefWidth="120.0" text="Adicionar " />
+          </children>
+        </AnchorPane>
+      </items>
+    </SplitPane>
+    <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="882.0" spacing="5.0" VBox.vgrow="NEVER">
+      <children>
+        <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+      </children>
+      <padding>
+        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+      </padding>
+    </HBox>
+  </children>
+</VBox>
