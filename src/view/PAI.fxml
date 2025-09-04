@@ -83,33 +83,38 @@
       <items>
         <AnchorPane>
                <children>
-                  <Button fx:id="btSalvar" layoutX="713.0" layoutY="369.0" mnemonicParsing="false" onAction="#onClickSalvar" prefHeight="27.0" prefWidth="120.0" text="Salvar" />
-                  <DatePicker fx:id="dpRevisaoPlano" layoutX="504.0" layoutY="354.0" />
-                  <Separator layoutX="63.0" layoutY="211.0" prefHeight="6.0" prefWidth="774.0" />
-                  <TextArea fx:id="taDescricaoPlano" layoutX="63.0" layoutY="406.0" prefHeight="63.0" prefWidth="620.0" />
-                  <TextField fx:id="tfRA" layoutX="647.0" layoutY="170.0" prefHeight="25.0" prefWidth="190.0" />
-                  <Label layoutX="285.0" layoutY="98.0" text="Plano de Acompanhamento Individual (PAI)" textFill="#3d5390">
+                  <Button fx:id="btSalvar" layoutX="713.0" layoutY="400.0" mnemonicParsing="false" onAction="#onClickSalvar" prefHeight="27.0" prefWidth="120.0" text="Salvar" />
+                  <DatePicker fx:id="dpRevisaoPlano" layoutX="504.0" layoutY="385.0" />
+                  <Separator layoutX="63.0" layoutY="180.0" prefHeight="6.0" prefWidth="774.0" />
+                  <TextArea fx:id="taDescricaoPlano" layoutX="63.0" layoutY="437.0" prefHeight="63.0" prefWidth="620.0" />
+                  <TextField fx:id="tfRA" layoutX="647.0" layoutY="139.0" prefHeight="25.0" prefWidth="190.0" />
+                  <Label layoutX="285.0" layoutY="67.0" text="Plano de Acompanhamento Individual (PAI)" textFill="#3d5390">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <Label layoutX="63.0" layoutY="388.0" text="Descrição" />
-                  <Label layoutX="63.0" layoutY="310.0" text="Plano Especifico" />
-                  <Label layoutX="63.0" layoutY="153.0" text="Nome" />
-                  <Label layoutX="471.0" layoutY="153.0" text="Série/Turma" />
-                  <Label layoutX="647.0" layoutY="153.0" text="RA" />
-                  <Label layoutX="62.0" layoutY="220.0" text="Metas do Aluno" />
-                  <TextField fx:id="tfMeta" layoutX="63.0" layoutY="259.0" prefHeight="25.0" prefWidth="620.0" />
-                  <Label layoutX="63.0" layoutY="242.0" text="Meta 1" />
-                  <Button fx:id="btAdicionarMeta" layoutX="709.0" layoutY="259.0" mnemonicParsing="false" onAction="#onClickAdicionarMeta" text="Adicionar Nova Meta" />
-                  <Separator layoutX="63.0" layoutY="301.0" prefHeight="6.0" prefWidth="774.0" />
-                  <Button fx:id="btVoltar" layoutX="713.0" layoutY="442.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="120.0" text="Voltar" />
-                  <Button fx:id="btLimpar" layoutX="713.0" layoutY="406.0" mnemonicParsing="false" onAction="#onClickLimpar" prefHeight="27.0" prefWidth="120.0" text="Limpar" />
-                  <TextField fx:id="tfRecursos" layoutX="63.0" layoutY="354.0" prefHeight="25.0" prefWidth="418.0" />
-                  <Label layoutX="63.0" layoutY="337.0" text="Recursos Necessários" />
-                  <Label layoutX="504.0" layoutY="337.0" text="Prazo de Revisão do Plano" />
-                  <ChoiceBox fx:id="chNome" layoutX="63.0" layoutY="170.0" prefHeight="25.0" prefWidth="379.0" />
-                  <TextField fx:id="tfSerieTurma" layoutX="471.0" layoutY="170.0" prefHeight="25.0" prefWidth="150.0" />
+                  <Label layoutX="63.0" layoutY="419.0" text="Descrição" />
+                  <Label layoutX="63.0" layoutY="341.0" text="Plano Especifico" />
+                  <Label layoutX="63.0" layoutY="122.0" text="Nome" />
+                  <Label layoutX="471.0" layoutY="122.0" text="Série/Turma" />
+                  <Label layoutX="647.0" layoutY="122.0" text="RA" />
+                  <Label layoutX="62.0" layoutY="251.0" text="Metas do Aluno" />
+                  <TextField fx:id="tfMeta" layoutX="63.0" layoutY="290.0" prefHeight="25.0" prefWidth="620.0" />
+                  <Label layoutX="63.0" layoutY="273.0" text="Meta 1" />
+                  <Button fx:id="btAdicionarMeta" layoutX="709.0" layoutY="290.0" mnemonicParsing="false" onAction="#onClickAdicionarMeta" text="Adicionar Nova Meta" />
+                  <Separator layoutX="63.0" layoutY="332.0" prefHeight="6.0" prefWidth="774.0" />
+                  <Button fx:id="btVoltar" layoutX="713.0" layoutY="473.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="120.0" text="Voltar" />
+                  <Button fx:id="btLimpar" layoutX="713.0" layoutY="437.0" mnemonicParsing="false" onAction="#onClickLimpar" prefHeight="27.0" prefWidth="120.0" text="Limpar" />
+                  <TextField fx:id="tfRecursos" layoutX="63.0" layoutY="385.0" prefHeight="25.0" prefWidth="418.0" />
+                  <Label layoutX="63.0" layoutY="368.0" text="Recursos Necessários" />
+                  <Label layoutX="504.0" layoutY="368.0" text="Prazo de Revisão do Plano" />
+                  <ChoiceBox fx:id="chNome" layoutX="63.0" layoutY="139.0" prefHeight="25.0" prefWidth="379.0" />
+                  <TextField fx:id="tfSerieTurma" layoutX="471.0" layoutY="139.0" prefHeight="25.0" prefWidth="150.0" />
+                  <Separator layoutX="62.0" layoutY="245.0" prefHeight="6.0" prefWidth="774.0" />
+                  <TextField fx:id="tfTituloPlano" layoutX="63.0" layoutY="209.0" prefHeight="25.0" prefWidth="418.0" />
+                  <Label layoutX="63.0" layoutY="192.0" text="Título do Plano" />
+                  <ChoiceBox fx:id="chResponsavelPlano" layoutX="504.0" layoutY="209.0" prefHeight="25.0" prefWidth="331.0" />
+                  <Label layoutX="504.0" layoutY="192.0" text="Responsável do Plano" />
                </children>
         </AnchorPane>
       </items>
