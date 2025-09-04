@@ -1,0 +1,80 @@
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+
+public class IntervencoesController {
+
+    @FXML
+    private Button btAdicionarIntervencao;
+
+    @FXML
+    private Button btLimpar;
+
+    @FXML
+    private Button btSalvar;
+
+    @FXML
+    private Button btVoltar;
+
+    @FXML
+    private CheckBox cbTipoIntervencao1;
+
+    @FXML
+    private CheckBox cbTipoIntervencao2;
+
+    @FXML
+    private CheckBox cbTipoIntervencao3;
+
+    @FXML
+    private CheckBox cbTipoIntervencao4;
+
+    @FXML
+    private CheckBox cbTipoIntervencao5;
+
+    @FXML
+    private ChoiceBox<?> chNome;
+
+    @FXML
+    private ChoiceBox<?> chResponsavel;
+
+    @FXML
+    private DatePicker dpDataIntervencao;
+
+    @FXML
+    private TextArea taObservacoes;
+
+    @FXML
+    private TextField tfOutroTipoIntervencao;
+
+    @FXML
+    private TextField tfRA;
+
+    @FXML
+    private TextField tfSerieTurma;
+
+    @FXML
+    void onClickAdicionarIntervencao(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onClickLimpar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onClickSalvar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onClickVoltar(ActionEvent event) {
+
+    }
+
+}
