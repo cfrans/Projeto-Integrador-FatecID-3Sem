@@ -60,7 +60,8 @@
         <Menu mnemonicParsing="false" text="Menu">
           <items>
             <MenuItem mnemonicParsing="false" text="Novo Cadastro" />
-            <MenuItem mnemonicParsing="false" text="Plano de Acompanhamento Individual" />
+            <MenuItem mnemonicParsing="false" text="Plano de Acompanhamento Individual (PAI)" />
+                  <MenuItem mnemonicParsing="false" text="Acompanhamento PAI" />
             <MenuItem mnemonicParsing="false" text="Histórico de Intervenções" />
                   <MenuItem mnemonicParsing="false" text="Cadastro de Rendimento" />
             <MenuItem mnemonicParsing="false" text="Acompanhamento Escolar" />

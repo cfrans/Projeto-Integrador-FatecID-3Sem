@@ -33,12 +33,15 @@
 -->
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -49,39 +52,27 @@
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
+        <Menu mnemonicParsing="false" text="Menu">
           <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
+            <MenuItem mnemonicParsing="false" text="Novo Cadastro" />
+            <MenuItem mnemonicParsing="false" text="Plano de Acompanhamento Individual (PAI)" />
+            <MenuItem mnemonicParsing="false" text="Acompanhamento PAI" />
+            <MenuItem mnemonicParsing="false" text="Historico de Intervenções" />
+            <MenuItem mnemonicParsing="false" text="Cadastro de Rendimento" />
+            <MenuItem mnemonicParsing="false" text="Acompanhamento Escolar" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
+            <MenuItem mnemonicParsing="false" text="Sair" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
+        <Menu mnemonicParsing="false" text="Editar">
           <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
+            <MenuItem mnemonicParsing="false" text="Perfil" />
+            <MenuItem mnemonicParsing="false" text="Dados do Aluno/Responsável" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Help">
+        <Menu mnemonicParsing="false" text="Sobre">
           <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+            <MenuItem mnemonicParsing="false" text="Projeto" />
           </items>
         </Menu>
       </menus>
@@ -90,13 +81,22 @@
       <items>
         <AnchorPane>
                <children>
-                  <Label layoutX="237.0" layoutY="68.0" text="Andamento dos Planos de Acompanhamento Individual " textFill="#3d5390">
+                  <Label layoutX="237.0" layoutY="98.0" text="Andamento dos Planos de Acompanhamento Individual " textFill="#3d5390">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <Pane layoutX="70.0" layoutY="154.0" prefHeight="147.0" prefWidth="758.0" style="-fx-background-color: #F0F0F0;" />
-                  <Pane layoutX="70.0" layoutY="315.0" prefHeight="147.0" prefWidth="758.0" style="-fx-background-color: #F0F0F0;" />
+                  <Pane layoutX="70.0" layoutY="184.0" prefHeight="130.0" prefWidth="758.0" style="-fx-background-color: #E8E8E8;">
+                     <children>
+                        <Button fx:id="btAbrirDescricao" layoutX="488.0" layoutY="89.0" mnemonicParsing="false" onAction="#onClickAbrirDescricao" prefHeight="27.0" prefWidth="120.0" text="Descrição" />
+                        <TextField fx:id="tfTituloPlano" layoutX="20.0" layoutY="17.0" prefHeight="25.0" prefWidth="285.0" text="Título do Plano" />
+                        <TextField fx:id="tfNomeAluno" layoutX="314.0" layoutY="17.0" prefHeight="25.0" prefWidth="424.0" text="Aluno " />
+                        <TextField fx:id="tfResponsavelPlano" layoutX="314.0" layoutY="52.0" prefHeight="25.0" prefWidth="424.0" text="Responsável pelo Plano" />
+                        <TextField fx:id="tfStatus" layoutX="20.0" layoutY="54.0" prefHeight="25.0" prefWidth="107.0" text="Status" />
+                        <DatePicker fx:id="dpRevisaoDoPlano" layoutX="131.0" layoutY="54.0" />
+                        <Button fx:id="btCriarFinalizacao" layoutX="618.0" layoutY="89.0" mnemonicParsing="false" onAction="#onClickCriarFinalizacao" prefHeight="27.0" prefWidth="120.0" text="Finalização" />
+                     </children></Pane>
+                  <Label layoutX="70.0" layoutY="159.0" text="Planos em Aberto:" />
                </children>
         </AnchorPane>
       </items>
