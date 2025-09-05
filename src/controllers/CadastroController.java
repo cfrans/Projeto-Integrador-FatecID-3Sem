@@ -1,3 +1,5 @@
+package controllers;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -40,7 +42,10 @@ public class CadastroController {
     private CheckBox cbTipoNecessidade5;
 
     @FXML
-    private Label chParentesco;
+    private Label lbParentesco;
+
+    @FXML
+    private ChoiceBox<String> chParentesco;
 
     @FXML
     private ChoiceBox<?> chSerieTurma;
@@ -80,23 +85,23 @@ public class CadastroController {
 
     @FXML
     void onClickAdicionar(ActionEvent event) {
-
+        System.out.println("Adicionar clicado");
     }
 
     @FXML
     void onClickLimpar(ActionEvent event) {
-
+        System.out.println("Limpar clicado");
     }
 
     @FXML
     void onClickSalvar(ActionEvent event) {
-
+        System.out.println("Salvar clicado");
     }
 
     @FXML
     void onClickVoltar(ActionEvent event) {
-
+        System.out.println("Voltar clicado");
     }
-
 }
+
 

@@ -13,7 +13,7 @@
       prefHeight="551.0" prefWidth="898.0"
       xmlns="http://javafx.com/javafx/24.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controllers.LoginController">   <!-- 👈 ajuste o pacote -->
+      fx:controller="controllers.LoginController">
 
    <children>
       <Button fx:id="btIrParaCadastro" layoutX="315.0" layoutY="373.0" mnemonicParsing="false"

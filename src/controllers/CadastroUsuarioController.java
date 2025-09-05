@@ -1,3 +1,6 @@
+package controllers;
+
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,12 +41,20 @@ public class CadastroUsuarioController {
     void onClickCadastrar(ActionEvent event) {
         // lógica de cadastro
         System.out.println("Cadastro feito para: " + tfNomeAcesso.getText());
+
+        try {
+            // depois de cadastrar, vai para a tela de Menu
+            mudarTela(event, "/view/Menu.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erro ao carregar a tela de Menu: " + e.getMessage());
+        }
     }
 
     @FXML
     void onClickVoltar(ActionEvent event) {
         try {
-            mudarTela(event, "/view/Login.fxml"); // caminho do seu FXML
+            mudarTela(event, "/view/Login.fxml"); // volta para a tela de login
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,5 +67,3 @@ public class CadastroUsuarioController {
         stage.show();
     }
 }
-
-
