@@ -13,6 +13,8 @@ import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 
+import static java.lang.System.exit;
+
 public class NavegadorUtil {
 
     private NavegadorUtil() {}
@@ -35,6 +37,13 @@ public class NavegadorUtil {
         mudarTela(event, "/view/Menu.fxml");
     }
 
+    // Metodo temporário que fecha a aplicação. Posteriormente fazer um popup de confirmaçao
+    // e talvez fazer uma opção de sair (deslogar) e outra de fechar a aplicação.
+    public static void fecharAplicacao() {
+        exit(0);
+    }
+
+    // Metodo que exibe uma mensagem de sucesso e volta ao Menu Principal.
     public static void exibirSucessoEVOLTAR(ActionEvent event, String titulo, String mensagem) {
 
         // Alerta de sucesso

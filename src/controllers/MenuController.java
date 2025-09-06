@@ -62,6 +62,12 @@ public class MenuController {
         mudarTela("/view/Rendimento.fxml");
     }
 
+    @FXML
+    void sairSistema() throws IOException {
+        // Metodo temporario para encerrar a aplicação.
+        NavegadorUtil.fecharAplicacao();
+    }
+
     // --------- Método genérico para trocar de tela ----------
     private void mudarTela(String caminhoFXML) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(caminhoFXML));
