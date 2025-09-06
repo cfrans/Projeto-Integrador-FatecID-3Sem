@@ -1,3 +1,5 @@
+package controllers;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -69,12 +71,17 @@ public class IntervencoesController {
 
     @FXML
     void onClickSalvar(ActionEvent event) {
-
+        // Chama o metodo estatico da NavegadorUtil
+        System.out.println("Salvar clicado\nChamando o método estático de alerta de sucesso.");
+        NavegadorUtil.exibirSucessoEVOLTAR(event, "Salvo com sucesso!",
+                "Intervenção salvo com sucesso!");
     }
 
     @FXML
     void onClickVoltar(ActionEvent event) {
-
+        System.out.println("Clicado em voltar.\nChamando o método estático de voltar ao menu");
+        // Chama o metodo estatico da NavegadorUtil
+        NavegadorUtil.voltarParaMenu(event);
     }
 
 }
