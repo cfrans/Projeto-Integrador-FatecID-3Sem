@@ -61,7 +61,10 @@ public class PAIController {
 
     @FXML
     void onClickSalvar(ActionEvent event) {
-
+        // Chama o metodo estatico da NavegadorUtil
+        System.out.println("Salvar clicado\nChamando o método estático de alerta de sucesso.");
+        NavegadorUtil.exibirSucessoEVOLTAR(event, "Salvo com sucesso!",
+                "Plano de Acompanhamento Individual salvo com sucesso!");
     }
 
     @FXML

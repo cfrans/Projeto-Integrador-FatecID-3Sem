@@ -107,45 +107,16 @@ public class CadastroController {
 
     @FXML
     void onClickSalvar(ActionEvent event) {
-        System.out.println("Salvar clicado");
-
-        // Alerta de sucesso
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Cadastro");
-        alert.setHeaderText(null);
-        alert.setContentText("Aluno/Responsável salvo com sucesso!");
-        // Tenta carregar a imagem de sucesso do ícone
-        try {
-            Image checkIcon = new Image(getClass().getResourceAsStream("/resources/images/success.png"));
-            if (checkIcon.isError()) {
-                System.err.println("Imagem do ícone carregada, mas contém erro.");
-            } else {
-                ImageView imageView = new ImageView(checkIcon);
-                imageView.setFitWidth(50);
-                imageView.setFitHeight(50);
-                alert.setGraphic(imageView);
-            }
-        } catch (NullPointerException e) {
-            System.err.println("ERRO: Ícone de sucesso não encontrado em '/resources/images/success.png'. Verifique o caminho!");
-        } catch (Exception e) {
-            System.err.println("Erro geral ao carregar ícone: " + e.getMessage());
-        }
-        // Aguarda o usuário clicar em ok para continuar
-        alert.showAndWait();
-
-        // Chama a função mudarTela para ir para a TelaPrincipal.fxml
-        try {
-            mudarTela(event, "/view/Menu.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Erro ao carregar a tela principal: " + e.getMessage());
-        }
+        // Chama o metodo estatico da NavegadorUtil
+        System.out.println("Salvar clicado\nChamando o método estático de alerta de sucesso.");
+        NavegadorUtil.exibirSucessoEVOLTAR(event, "Salvo com sucesso!",
+                "Aluno/Responsável salvo com sucesso!");
     }
 
     @FXML
     void onClickVoltar(ActionEvent event) {
         // Chama o metodo estatico da NavegadorUtil
-        System.out.println("Clicado em voltar.\nChamando o método estático de voltar ao menu");
+        System.out.println("Clicado em voltar.\nChamando o método estático de voltar ao menu.");
         NavegadorUtil.voltarParaMenu(event);
     }
 
