@@ -23,7 +23,7 @@
                         <MenuItem fx:id="menuRendimento" mnemonicParsing="false" text="Cadastro de Rendimento" onAction="#abrirRendimento"/>
                         <MenuItem fx:id="menuAcompanhamento" mnemonicParsing="false" text="Acompanhamento Escolar"/>
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="menuSair" mnemonicParsing="false" text="Sair"/>
+                        <MenuItem fx:id="menuSair" mnemonicParsing="false" text="Sair" onAction="#sairSistema"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Editar">
