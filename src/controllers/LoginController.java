@@ -78,7 +78,7 @@ public class LoginController {
 
         try {
 
-// Chama a função mudarTela para ir para a TelaPrincipal.fxml
+        // Chama a função mudarTela para ir para a TelaPrincipal.fxml
 
             mudarTela(event, "/view/Menu.fxml");
 

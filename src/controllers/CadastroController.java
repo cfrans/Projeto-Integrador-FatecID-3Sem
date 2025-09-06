@@ -2,6 +2,10 @@ package controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -11,6 +15,14 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import java.io.IOException;
+import java.util.Objects;
 
 public class CadastroController {
 
@@ -95,12 +107,26 @@ public class CadastroController {
 
     @FXML
     void onClickSalvar(ActionEvent event) {
-        System.out.println("Salvar clicado");
+        // Chama o metodo estatico da NavegadorUtil
+        System.out.println("Salvar clicado\nChamando o método estático de alerta de sucesso.");
+        NavegadorUtil.exibirSucessoEVOLTAR(event, "Salvo com sucesso!",
+                "Aluno/Responsável salvo com sucesso!");
     }
 
     @FXML
     void onClickVoltar(ActionEvent event) {
-        System.out.println("Voltar clicado");
+        // Chama o metodo estatico da NavegadorUtil
+        System.out.println("Clicado em voltar.\nChamando o método estático de voltar ao menu.");
+        NavegadorUtil.voltarParaMenu(event);
+    }
+
+    private void mudarTela(ActionEvent event, String caminhoFXML) throws IOException {
+
+        Parent root = FXMLLoader.load(getClass().getResource(caminhoFXML));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+
     }
 }
 

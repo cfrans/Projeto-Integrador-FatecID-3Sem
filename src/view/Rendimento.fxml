@@ -51,7 +51,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="600.0" prefWidth="900.0"
+      xmlns="http://javafx.com/javafx/24.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.RendimentoController">
+
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -109,7 +113,7 @@
                   <Label layoutX="64.0" layoutY="287.0" text="Entrega de Trabalhos" />
                   <CheckBox fx:id="cbTipoEntrega1" layoutX="64.0" layoutY="314.0" mnemonicParsing="false" text="Totalmente Entregues" />
                   <CheckBox fx:id="cbTipoEntrega2" layoutX="212.0" layoutY="315.0" mnemonicParsing="false" text="Parcialmente Entregues" />
-                  <CheckBox fx:id="cbTipoEntrega2" layoutX="370.0" layoutY="316.0" mnemonicParsing="false" text="Nenhum Entregue" />
+                  <CheckBox fx:id="cbTipoEntrega3" layoutX="370.0" layoutY="316.0" mnemonicParsing="false" text="Nenhum Entregue" />
                   <TextArea fx:id="taJustificativa" layoutX="62.0" layoutY="359.0" prefHeight="103.0" prefWidth="562.0" />
                   <Label layoutX="62.0" layoutY="342.0" text="Justificativa" />
                   <Button fx:id="btSalvar" layoutX="711.0" layoutY="362.0" mnemonicParsing="false" onAction="#onClickSalvar" prefHeight="27.0" prefWidth="120.0" text="Salvar" />
