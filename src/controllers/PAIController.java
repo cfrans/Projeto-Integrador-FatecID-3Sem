@@ -1,3 +1,5 @@
+package controllers;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -64,7 +66,9 @@ public class PAIController {
 
     @FXML
     void onClickVoltar(ActionEvent event) {
-
+        System.out.println("Clicado em voltar.\nChamando o método estático de voltar ao menu");
+        // Chama o metodo estatico da NavegadorUtil
+        NavegadorUtil.voltarParaMenu(event);
     }
 
 }

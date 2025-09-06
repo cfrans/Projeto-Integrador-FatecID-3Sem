@@ -144,16 +144,9 @@ public class CadastroController {
 
     @FXML
     void onClickVoltar(ActionEvent event) {
-        // Debug
-        System.out.println("Voltar clicado");
-
-        // Chama a função mudarTela para ir para a TelaPrincipal.fxml
-        try {
-            mudarTela(event, "/view/Menu.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Erro ao carregar a tela principal: " + e.getMessage());
-        }
+        // Chama o metodo estatico da NavegadorUtil
+        System.out.println("Clicado em voltar.\nChamando o método estático de voltar ao menu");
+        NavegadorUtil.voltarParaMenu(event);
     }
 
     private void mudarTela(ActionEvent event, String caminhoFXML) throws IOException {
