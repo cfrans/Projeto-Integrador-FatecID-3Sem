@@ -7,42 +7,39 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="400.0" prefWidth="640.0"
-      xmlns="http://javafx.com/javafx/24.0.1"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controllers.MenuController">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
 
     <children>
         <MenuBar prefHeight="76.0" prefWidth="640.0" VBox.vgrow="NEVER">
             <menus>
                 <Menu mnemonicParsing="false" text="Menu">
                     <items>
-                        <MenuItem fx:id="menuNovoCadastro" mnemonicParsing="false" text="Novo Cadastro" onAction="#abrirNovoCadastro"/>
-                        <MenuItem fx:id="menuPlano" mnemonicParsing="false" text="Plano de Acompanhamento Individual" onAction="#abrirPlano"/>
-                        <MenuItem fx:id="menuHistorico" mnemonicParsing="false" text="Historico de Intervenções" onAction="#abrirHistorico"/>
-                        <MenuItem fx:id="menuRendimento" mnemonicParsing="false" text="Cadastro de Rendimento" onAction="#abrirRendimento"/>
-                        <MenuItem fx:id="menuAcompanhamento" mnemonicParsing="false" text="Acompanhamento Escolar"/>
+                        <MenuItem fx:id="menuNovoCadastro" mnemonicParsing="false" onAction="#abrirNovoCadastro" text="Novo Cadastro" />
+                        <MenuItem fx:id="menuPlano" mnemonicParsing="false" onAction="#abrirPlano" text="Plano de Acompanhamento Individual" />
+                  <MenuItem fx:id="menuRendimento1" mnemonicParsing="false" onAction="#abrirRendimento" text="Andamento PAI" />
+                        <MenuItem fx:id="menuHistorico" mnemonicParsing="false" onAction="#abrirHistorico" text="Historico de Intervenções" />
+                        <MenuItem fx:id="menuRendimento" mnemonicParsing="false" onAction="#abrirRendimento" text="Cadastro de Rendimento" />
+                        <MenuItem fx:id="menuAcompanhamento" mnemonicParsing="false" text="Acompanhamento Escolar" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="menuSair" mnemonicParsing="false" text="Sair" onAction="#sairSistema"/>
+                        <MenuItem fx:id="menuSair" mnemonicParsing="false" onAction="#sairSistema" text="Sair" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Editar">
                     <items>
-                        <MenuItem fx:id="menuPerfil" mnemonicParsing="false" text="Perfil"/>
-                        <MenuItem fx:id="menuDadosAluno" mnemonicParsing="false" text="Dados do Aluno/Responsável"/>
+                        <MenuItem fx:id="menuPerfil" mnemonicParsing="false" text="Perfil" />
+                        <MenuItem fx:id="menuDadosAluno" mnemonicParsing="false" text="Dados do Aluno/Responsável" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Sobre">
                     <items>
-                        <MenuItem fx:id="menuProjeto" mnemonicParsing="false" text="Projeto"/>
+                        <MenuItem fx:id="menuProjeto" mnemonicParsing="false" text="Projeto" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
 
         <!-- Adicione fx:id para pegar a Stage -->
-        <AnchorPane fx:id="anchorRoot" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity"
-                    prefHeight="551.0" prefWidth="898.0" VBox.vgrow="ALWAYS" />
+        <AnchorPane fx:id="anchorRoot" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="551.0" prefWidth="898.0" VBox.vgrow="ALWAYS" />
 
     </children>
 </VBox>
