@@ -51,10 +51,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0"
-      xmlns="http://javafx.com/javafx/24.0.1"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controllers.RendimentoController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RendimentoController">
 
   <children>
     <MenuBar VBox.vgrow="NEVER">
@@ -88,39 +85,44 @@
       <items>
         <AnchorPane>
                <children>
-                  <ChoiceBox fx:id="chNome" layoutX="64.0" layoutY="160.0" prefHeight="25.0" prefWidth="379.0" />
-                  <Label layoutX="288.0" layoutY="89.0" text="Cadastro de Rendimento Trimestral do Aluno" textFill="#3d5390">
+                  <ChoiceBox fx:id="chNome" layoutX="64.0" layoutY="146.0" prefHeight="25.0" prefWidth="379.0" />
+                  <Label layoutX="288.0" layoutY="75.0" text="Cadastro de Rendimento Trimestral do Aluno" textFill="#3d5390">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tfSerieTurma" layoutX="468.0" layoutY="160.0" prefHeight="25.0" prefWidth="150.0" />
-                  <TextField fx:id="tfRA" layoutX="646.0" layoutY="160.0" prefHeight="25.0" prefWidth="190.0" />
-                  <Label layoutX="64.0" layoutY="143.0" text="Nome" />
-                  <Label layoutX="468.0" layoutY="143.0" text="Série/Turma" />
-                  <Label layoutX="646.0" layoutY="143.0" text="RA" />
-                  <Separator layoutX="64.0" layoutY="198.0" prefHeight="0.0" prefWidth="770.0" />
-                  <Label layoutX="64.0" layoutY="202.0" text="Avaliações do Trimestre" />
-                  <TextField fx:id="tfAvaliacao1" layoutX="351.0" layoutY="245.0" prefHeight="25.0" prefWidth="103.0" />
-                  <TextField fx:id="tfAvaliacao" layoutX="476.0" layoutY="245.0" prefWidth="103.0" />
-                  <TextField fx:id="tfAtitudeAcademica" layoutX="603.0" layoutY="245.0" prefWidth="103.0" />
-                  <TextField fx:id="tfSimulado" layoutX="730.0" layoutY="245.0" prefWidth="103.0" />
-                  <Label layoutX="351.0" layoutY="228.0" text="Avaliação 1" />
-                  <Label layoutX="476.0" layoutY="228.0" text="Avaliação 2" />
-                  <Label layoutX="603.0" layoutY="228.0" text="Atitude Acadêmica" />
-                  <Label layoutX="730.0" layoutY="228.0" text="Simulado" />
-                  <Separator layoutX="64.0" layoutY="283.0" prefHeight="0.0" prefWidth="770.0" />
-                  <Label layoutX="64.0" layoutY="287.0" text="Entrega de Trabalhos" />
-                  <CheckBox fx:id="cbTipoEntrega1" layoutX="64.0" layoutY="314.0" mnemonicParsing="false" text="Totalmente Entregues" />
-                  <CheckBox fx:id="cbTipoEntrega2" layoutX="212.0" layoutY="315.0" mnemonicParsing="false" text="Parcialmente Entregues" />
-                  <CheckBox fx:id="cbTipoEntrega3" layoutX="370.0" layoutY="316.0" mnemonicParsing="false" text="Nenhum Entregue" />
-                  <TextArea fx:id="taJustificativa" layoutX="62.0" layoutY="359.0" prefHeight="103.0" prefWidth="562.0" />
-                  <Label layoutX="62.0" layoutY="342.0" text="Justificativa" />
-                  <Button fx:id="btSalvar" layoutX="711.0" layoutY="362.0" mnemonicParsing="false" onAction="#onClickSalvar" prefHeight="27.0" prefWidth="120.0" text="Salvar" />
-                  <Button fx:id="btLimpar" layoutX="711.0" layoutY="397.0" mnemonicParsing="false" onAction="#onClickLimpar" prefHeight="27.0" prefWidth="120.0" text="Limpar" />
-                  <Button fx:id="btVoltar" layoutX="711.0" layoutY="433.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="120.0" text="Voltar" />
-                  <ChoiceBox fx:id="chNome1" layoutX="65.0" layoutY="245.0" prefHeight="25.0" prefWidth="263.0" />
-                  <Label layoutX="64.0" layoutY="228.0" text="Matéria" />
+                  <TextField fx:id="tfSerieTurma" layoutX="468.0" layoutY="146.0" prefHeight="25.0" prefWidth="150.0" />
+                  <TextField fx:id="tfRA" layoutX="646.0" layoutY="146.0" prefHeight="25.0" prefWidth="190.0" />
+                  <Label layoutX="64.0" layoutY="129.0" text="Nome" />
+                  <Label layoutX="468.0" layoutY="129.0" text="Série/Turma" />
+                  <Label layoutX="646.0" layoutY="129.0" text="RA" />
+                  <Separator layoutX="64.0" layoutY="184.0" prefHeight="0.0" prefWidth="770.0" />
+                  <Label layoutX="64.0" layoutY="188.0" text="Avaliações do Trimestre" />
+                  <TextField fx:id="tfAvaliacao1" layoutX="351.0" layoutY="231.0" prefHeight="25.0" prefWidth="103.0" />
+                  <TextField fx:id="tfAvaliacao2" layoutX="476.0" layoutY="231.0" prefWidth="103.0" />
+                  <TextField fx:id="tfAtitudeAcademica" layoutX="603.0" layoutY="231.0" prefWidth="103.0" />
+                  <TextField fx:id="tfSimulado" layoutX="730.0" layoutY="231.0" prefWidth="103.0" />
+                  <Label layoutX="351.0" layoutY="214.0" text="Avaliação 1" />
+                  <Label layoutX="476.0" layoutY="214.0" text="Avaliação 2" />
+                  <Label layoutX="603.0" layoutY="214.0" text="Atitude Acadêmica" />
+                  <Label layoutX="730.0" layoutY="214.0" text="Simulado" />
+                  <Separator layoutX="64.0" layoutY="269.0" prefHeight="0.0" prefWidth="770.0" />
+                  <Label layoutX="64.0" layoutY="273.0" text="Entrega de Trabalhos" />
+                  <CheckBox fx:id="cbTipoEntrega1" layoutX="64.0" layoutY="300.0" mnemonicParsing="false" text="Totalmente Entregues" />
+                  <CheckBox fx:id="cbTipoEntrega2" layoutX="212.0" layoutY="301.0" mnemonicParsing="false" text="Parcialmente Entregues" />
+                  <CheckBox fx:id="cbTipoEntrega3" layoutX="370.0" layoutY="302.0" mnemonicParsing="false" text="Nenhum Entregue" />
+                  <TextArea fx:id="taJustificativa" layoutX="62.0" layoutY="342.0" prefHeight="52.0" prefWidth="770.0" />
+                  <Label layoutX="62.0" layoutY="325.0" text="Justificativa" />
+                  <Button fx:id="btSalvar" layoutX="452.0" layoutY="466.0" mnemonicParsing="false" onAction="#onClickSalvar" prefHeight="27.0" prefWidth="120.0" text="Salvar" />
+                  <Button fx:id="btLimpar" layoutX="582.0" layoutY="466.0" mnemonicParsing="false" onAction="#onClickLimpar" prefHeight="27.0" prefWidth="120.0" text="Limpar" />
+                  <Button fx:id="btVoltar" layoutX="712.0" layoutY="466.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="120.0" text="Voltar" />
+                  <ChoiceBox fx:id="chNome1" layoutX="65.0" layoutY="231.0" prefHeight="25.0" prefWidth="263.0" />
+                  <Label layoutX="64.0" layoutY="214.0" text="Matéria" />
+                  <Separator layoutX="62.0" layoutY="405.0" prefHeight="0.0" prefWidth="770.0" />
+                  <Label layoutX="62.0" layoutY="409.0" text="Participação" />
+                  <ChoiceBox fx:id="chNivelParticipacao" layoutX="63.0" layoutY="427.0" prefHeight="25.0" prefWidth="263.0" />
+                  <TextField fx:id="tfJustificativaPartifipacao" layoutX="348.0" layoutY="427.0" prefHeight="25.0" prefWidth="484.0" />
+                  <Label layoutX="348.0" layoutY="410.0" text="Justificativa" />
                </children></AnchorPane>
       </items>
     </SplitPane>

@@ -27,6 +27,9 @@ public class RendimentoController
     private CheckBox cbTipoEntrega2;
 
     @FXML
+    private ChoiceBox<?> chNivelParticipacao;
+
+    @FXML
     private ChoiceBox<?> chNome;
 
     @FXML
@@ -39,10 +42,13 @@ public class RendimentoController
     private TextField tfAtitudeAcademica;
 
     @FXML
-    private TextField tfAvaliacao;
+    private TextField tfAvaliacao1;
 
     @FXML
-    private TextField tfAvaliacao1;
+    private TextField tfAvaliacao2;
+
+    @FXML
+    private TextField tfJustificativaPartifipacao;
 
     @FXML
     private TextField tfRA;
