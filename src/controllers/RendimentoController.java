@@ -61,7 +61,33 @@ public class RendimentoController
 
     @FXML
     void onClickLimpar(ActionEvent event) {
+        System.out.println("Limpando formulário de Rendimento...");
 
+        //Limpando ChoiceBoxes (Dropdowns)
+        chNome.getSelectionModel().clearSelection();
+        chNome1.getSelectionModel().clearSelection();
+        chNivelParticipacao.getSelectionModel().clearSelection();
+
+        //Limpando TextFields
+        tfSerieTurma.clear();
+        tfRA.clear();
+        tfAvaliacao1.clear();
+        tfAvaliacao2.clear();
+        tfAtitudeAcademica.clear();
+        tfSimulado.clear();
+        tfJustificativaPartifipacao.clear();
+
+        //Limpando CheckBoxes
+        cbTipoEntrega1.setSelected(false);
+        cbTipoEntrega2.setSelected(false);
+        //Entender o pq nao ta pegando o item de baixo
+        //cbTipoEntrega3.setSelected(false);
+
+        //Limpando o TextArea
+        taJustificativa.clear();
+
+        //Foco no primeiro campo
+        chNome.requestFocus();
     }
 
     @FXML
