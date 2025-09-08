@@ -63,6 +63,11 @@ public class MenuController {
     }
 
     @FXML
+    void abrirAndamento() throws IOException {
+        mudarTela("/view/AndamentoPAI.fxml");
+    }
+
+    @FXML
     void sairSistema() throws IOException {
         // Metodo temporario para encerrar a aplicação.
         NavegadorUtil.fecharAplicacao();
