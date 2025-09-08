@@ -56,7 +56,27 @@ public class PAIController {
 
     @FXML
     void onClickLimpar(ActionEvent event) {
+        System.out.println("Limpando formulário PAI...");
 
+        //Limpando TextFields
+        tfRA.clear();
+        tfMeta.clear();
+        tfRecursos.clear();
+        tfSerieTurma.clear();
+        tfTituloPlano.clear();
+
+        //Limpando ChoiceBoxes (Dropdowns)
+        chNome.getSelectionModel().clearSelection();
+        chResponsavelPlano.getSelectionModel().clearSelection();
+
+        //Limpando o DatePicker
+        dpRevisaoPlano.setValue(null);
+
+        //Limpando o TextArea
+        taDescricaoPlano.clear();
+
+        //Coloca o foco do cursor de volta no primeiro campo
+        chNome.requestFocus();
     }
 
     @FXML

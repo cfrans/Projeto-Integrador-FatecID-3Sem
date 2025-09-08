@@ -66,7 +66,32 @@ public class IntervencoesController {
 
     @FXML
     void onClickLimpar(ActionEvent event) {
+        System.out.println("Limpando formulário de Intervenções...");
 
+        //Limpando ChoiceBoxes (Dropdowns)
+        chNome.getSelectionModel().clearSelection();
+        chResponsavel.getSelectionModel().clearSelection();
+
+        //Limpando TextFields
+        tfRA.clear();
+        tfSerieTurma.clear();
+        tfOutroTipoIntervencao.clear();
+
+        //Limpando o DatePicker
+        dpDataIntervencao.setValue(null);
+
+        //Limpando o TextArea
+        taObservacoes.clear();
+
+        //Limpando os CheckBoxes
+        cbTipoIntervencao1.setSelected(false);
+        cbTipoIntervencao2.setSelected(false);
+        cbTipoIntervencao3.setSelected(false);
+        cbTipoIntervencao4.setSelected(false);
+        cbTipoIntervencao5.setSelected(false);
+
+        //Coloca o foco do cursor de volta no primeiro campo (o ChoiceBox do nome)
+        chNome.requestFocus();
     }
 
     @FXML

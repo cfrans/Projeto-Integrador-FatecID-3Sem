@@ -102,7 +102,36 @@ public class CadastroController {
 
     @FXML
     void onClickLimpar(ActionEvent event) {
-        System.out.println("Limpar clicado");
+        System.out.println("Limpando formulário de cadastro...");
+
+        //Limpando TextFields
+        tfNome.clear();
+        tfNumeroLaudo.clear();
+        tfProfissional.clear();
+        tdNomeResponsavel.clear();
+        tfTelefone.clear();
+        tfEmail.clear();
+
+        //Limpando DatePickers (Datas)
+        dpDataNascimento.setValue(null);
+        dpDataLaudo.setValue(null);
+
+        //Limpando ChoiceBoxes (Dropdowns)
+        chSerieTurma.getSelectionModel().clearSelection();
+        chParentesco.getSelectionModel().clearSelection();
+
+        //Limpando CheckBoxes (Necessidades)
+        cbTipoNecessidade1.setSelected(false);
+        cbTipoNecessidade2.setSelected(false);
+        cbTipoNecessidade3.setSelected(false);
+        cbTipoNecessidade4.setSelected(false);
+        cbTipoNecessidade5.setSelected(false);
+
+        //Limpando TextArea (Observações)
+        taObservacoes.clear();
+
+        //Coloca o cursor de volta no primeiro campo
+        tfNome.requestFocus();
     }
 
     @FXML
