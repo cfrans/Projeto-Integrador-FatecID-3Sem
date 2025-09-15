@@ -30,6 +30,9 @@ public class CadastroController {
     private Button btAdicionar;
 
     @FXML
+    private Button btAdicionarResponsavel;
+
+    @FXML
     private Button btLimpar;
 
     @FXML

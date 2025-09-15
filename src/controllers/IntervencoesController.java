@@ -60,6 +60,9 @@ public class IntervencoesController {
     private TextField tfSerieTurma;
 
     @FXML
+    private TextField tfTituloIntervencao;
+
+    @FXML
     void onClickAdicionarIntervencao(ActionEvent event) {
 
     }
