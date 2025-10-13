@@ -50,6 +50,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.FinalizacaoPAIController"
+            prefHeight="600.0" prefWidth="800.0">
+
 <VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <MenuBar VBox.vgrow="NEVER">
@@ -129,3 +132,4 @@
     </HBox>
   </children>
 </VBox>
+</AnchorPane>
