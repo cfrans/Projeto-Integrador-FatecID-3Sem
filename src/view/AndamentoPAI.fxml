@@ -98,6 +98,7 @@
                         <Button fx:id="btCriarFinalizacao" layoutX="618.0" layoutY="89.0" mnemonicParsing="false" onAction="#onClickCriarFinalizacao" prefHeight="27.0" prefWidth="120.0" text="Finalização" />
                      </children></Pane>
                   <Label layoutX="71.0" layoutY="163.0" text="Planos em Aberto:" />
+                  <Button fx:id="btVoltar" layoutX="708.0" layoutY="485.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="120.0" text="Voltar" />
                </children>
         </AnchorPane>
       </items>
