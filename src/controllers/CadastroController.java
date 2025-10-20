@@ -219,10 +219,6 @@ public class CadastroController {
 
     }
 
-    @FXML
-    void onClickAdicionarResponsavel(ActionEvent event) {
-        System.out.println("Adicionar Responsável clicado!");
-    }
 
 }
 
