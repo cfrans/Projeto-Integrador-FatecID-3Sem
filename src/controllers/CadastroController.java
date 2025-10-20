@@ -102,6 +102,9 @@ public class CadastroController {
     private TextField tfTelefone;
 
     @FXML
+    private TextField tfRA;
+
+    @FXML
     private Font x1;
 
     @FXML
@@ -215,6 +218,12 @@ public class CadastroController {
         stage.show();
 
     }
+
+    @FXML
+    void onClickAdicionarResponsavel(ActionEvent event) {
+        System.out.println("Adicionar Responsável clicado!");
+    }
+
 }
 
 
