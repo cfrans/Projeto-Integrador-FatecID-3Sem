@@ -67,7 +67,28 @@ public class IntervencoesController {
     @FXML
     void onClickLimpar(ActionEvent event) {
 
+        tfRA.clear();
+        tfSerieTurma.clear();
+        tfOutroTipoIntervencao.clear();
+        taObservacoes.clear();
+
+
+        dpDataIntervencao.setValue(null);
+
+
+        cbTipoIntervencao1.setSelected(false);
+        cbTipoIntervencao2.setSelected(false);
+        cbTipoIntervencao3.setSelected(false);
+        cbTipoIntervencao4.setSelected(false);
+        cbTipoIntervencao5.setSelected(false);
+
+
+        chNome.getSelectionModel().clearSelection();
+        chResponsavel.getSelectionModel().clearSelection();
+
+        System.out.println("Todos os campos foram limpos.");
     }
+
 
     @FXML
     void onClickSalvar(ActionEvent event) {

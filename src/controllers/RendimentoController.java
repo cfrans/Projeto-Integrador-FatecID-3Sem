@@ -56,7 +56,25 @@ public class RendimentoController
     @FXML
     void onClickLimpar(ActionEvent event) {
 
+        tfRA.clear();
+        tfSerieTurma.clear();
+        tfAvaliacao.clear();
+        tfAvaliacao1.clear();
+        tfSimulado.clear();
+        tfAtitudeAcademica.clear();
+
+        taJustificativa.clear();
+
+        cbTipoEntrega1.setSelected(false);
+        cbTipoEntrega2.setSelected(false);
+
+        chNome.getSelectionModel().clearSelection();
+        chNome1.getSelectionModel().clearSelection();
+
+
+        System.out.println("Todos os campos foram limpos.");
     }
+
 
     @FXML
     void onClickSalvar(ActionEvent event) {

@@ -54,10 +54,26 @@ public class PAIController {
 
     }
 
+
     @FXML
     void onClickLimpar(ActionEvent event) {
 
+        tfRA.clear();
+        tfSerieTurma.clear();
+        tfTituloPlano.clear();
+        tfMeta.clear();
+        tfRecursos.clear();
+
+        taDescricaoPlano.clear();
+
+        dpRevisaoPlano.setValue(null);
+
+        chNome.getSelectionModel().clearSelection();
+        chResponsavelPlano.getSelectionModel().clearSelection();
+
+        System.out.println("Todos os campos foram limpos.");
     }
+
 
     @FXML
     void onClickSalvar(ActionEvent event) {
