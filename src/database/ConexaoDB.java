@@ -47,4 +47,37 @@ public class ConexaoDB {
         // Toda vez que getConexao() é chamado, ele cria e retorna uma nova conexão
         return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
     }
+
+    /**
+     * METODO DE TESTE SIMPLES
+     * Para rodar: clique com o botão direito DENTRO deste metodo e
+     * selecione "Run 'ConexaoDB.main()'"
+     */
+    public static void main(String[] args) {
+        System.out.println("--- Teste de Conexão ao Banco ---");
+        System.out.println("Tentando carregar a classe ConexaoDB...");
+
+        try (Connection conn = ConexaoDB.getConexao()) {
+            // Se a linha acima funcionou, a classe carregou E a conexão foi feita
+
+            if (conn != null) {
+                System.out.println("✅ SUCESSO! Conexão estabelecida.");
+                System.out.println("URL: " + conn.getMetaData().getURL());
+                System.out.println("Usuário: " + conn.getMetaData().getUserName());
+            } else {
+                System.err.println("❌ FALHA! A conexão retornou nula.");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("❌ FALHA! Erro de SQL ao conectar:");
+            System.err.println("Verifique seu 'database.properties' (URL, usuário, senha) e se o Postgres está rodando.");
+            e.printStackTrace();
+        } catch (ExceptionInInitializerError e) {
+            System.err.println("❌ FALHA! Erro ao inicializar a classe ConexaoDB.");
+            System.err.println("Isso quase sempre significa um de dois problemas:");
+            System.err.println("  1. (O que aconteceu com você) O .jar do driver não foi encontrado.");
+            System.err.println("  2. O arquivo 'database.properties' não foi encontrado no caminho (ex: /resources/database.properties).");
+            e.printStackTrace();
+        }
+    }
 }
