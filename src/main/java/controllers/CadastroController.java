@@ -1,8 +1,6 @@
 package controllers;
 
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.time.LocalDate;
 
 import javafx.collections.FXCollections; // Import para popular ChoiceBox
 import javafx.event.ActionEvent;
@@ -23,12 +21,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+
 import java.io.IOException;
 import java.net.URL; // Para o Initializable
-import java.util.Objects;
 import java.util.ResourceBundle; // Para o Initializable
 import java.util.stream.Collectors; // Import para juntar os tipos
 import java.util.List; // Import para a lista de checkboxes
