@@ -51,10 +51,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0"
-      xmlns="http://javafx.com/javafx/24.0.1"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controllers.PAIController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PAIController">
 
     <children>
     <MenuBar VBox.vgrow="NEVER">
@@ -104,9 +101,8 @@
                   <Label layoutX="471.0" layoutY="122.0" text="Série/Turma" />
                   <Label layoutX="647.0" layoutY="122.0" text="RA" />
                   <Label layoutX="62.0" layoutY="251.0" text="Metas do Aluno" />
-                  <TextField fx:id="tfMeta" layoutX="63.0" layoutY="290.0" prefHeight="25.0" prefWidth="620.0" />
+                  <TextField fx:id="tfMeta" layoutX="63.0" layoutY="290.0" prefHeight="25.0" prefWidth="239.0" />
                   <Label layoutX="63.0" layoutY="273.0" text="Meta 1" />
-                  <Button fx:id="btAdicionarMeta" layoutX="709.0" layoutY="290.0" mnemonicParsing="false" onAction="#onClickAdicionarMeta" text="Adicionar Nova Meta" />
                   <Separator layoutX="63.0" layoutY="332.0" prefHeight="6.0" prefWidth="774.0" />
                   <Button fx:id="btVoltar" layoutX="713.0" layoutY="473.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="120.0" text="Voltar" />
                   <Button fx:id="btLimpar" layoutX="713.0" layoutY="437.0" mnemonicParsing="false" onAction="#onClickLimpar" prefHeight="27.0" prefWidth="120.0" text="Limpar" />
@@ -120,6 +116,10 @@
                   <Label layoutX="63.0" layoutY="192.0" text="Título do Plano" />
                   <ChoiceBox fx:id="chResponsavelPlano" layoutX="504.0" layoutY="209.0" prefHeight="25.0" prefWidth="331.0" />
                   <Label layoutX="504.0" layoutY="192.0" text="Responsável do Plano" />
+                  <TextField fx:id="tfMeta3" layoutX="594.0" layoutY="290.0" prefHeight="25.0" prefWidth="239.0" />
+                  <Label layoutX="594.0" layoutY="273.0" text="Meta 3" />
+                  <TextField fx:id="tfMeta2" layoutX="329.0" layoutY="290.0" prefHeight="25.0" prefWidth="239.0" />
+                  <Label layoutX="329.0" layoutY="273.0" text="Meta 2" />
                </children>
         </AnchorPane>
       </items>

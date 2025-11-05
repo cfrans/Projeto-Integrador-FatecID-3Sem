@@ -11,8 +11,6 @@ import javafx.scene.control.TextField;
 
 public class IntervencoesController {
 
-    @FXML
-    private Button btAdicionarIntervencao;
 
     @FXML
     private Button btLimpar;
