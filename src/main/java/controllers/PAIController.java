@@ -27,7 +27,8 @@ import util.CoordenadorItem;
 
 public class PAIController implements Initializable {
 
-    @FXML private Button btAdicionarMeta;
+    @FXML private TextField tfMeta2;
+    @FXML private TextField tfMeta3;
     @FXML private Button btLimpar;
     @FXML private Button btSalvar;
     @FXML private Button btVoltar;
@@ -228,6 +229,8 @@ public class PAIController implements Initializable {
         //Limpando TextFields
         tfRA.clear();
         tfMeta.clear();
+        tfMeta2.clear();
+        tfMeta3.clear();
         tfRecursos.clear();
         tfSerieTurma.clear();
         tfTituloPlano.clear();

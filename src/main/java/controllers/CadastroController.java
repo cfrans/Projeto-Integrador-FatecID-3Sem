@@ -39,8 +39,7 @@ import database.ConexaoDB;
 
 public class CadastroController implements Initializable {
 
-    @FXML private Button btAdicionar;
-    @FXML private Button btAdicionarResponsavel;
+
     @FXML private Button btLimpar;
     @FXML private Button btSalvar;
     @FXML private Button btVoltar;

@@ -50,8 +50,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.FinalizacaoPAIController"
-            prefHeight="600.0" prefWidth="800.0">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/24.0.1" fx:controller="controllers.FinalizacaoPAIController">
 
 <VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <children>
@@ -113,8 +112,8 @@
                   <Separator layoutX="66.0" layoutY="322.0" prefHeight="6.0" prefWidth="767.0" />
                   <Label layoutX="66.0" layoutY="328.0" text="Relatório do Plano" />
                   <TextArea fx:id="taRelatorioPlano" layoutX="65.0" layoutY="345.0" prefHeight="110.0" prefWidth="767.0" />
-                  <Button fx:id="btSalvar" layoutX="137.0" layoutY="468.0" mnemonicParsing="false" onAction="#onClickSalvar" prefHeight="27.0" prefWidth="120.0" text="Salvar" />
-                  <Button fx:id="btSalvarCriar" layoutX="271.0" layoutY="468.0" mnemonicParsing="false" onAction="#onClickSalvarCriar" prefHeight="27.0" prefWidth="159.0" text="Salvar e Criar Novo Plano" />
+                  <Button fx:id="btSalvar" layoutX="66.0" layoutY="468.0" mnemonicParsing="false" onAction="#onClickSalvar" prefHeight="27.0" prefWidth="120.0" text="Salvar" />
+                  <Button fx:id="btSalvarCriar" layoutX="203.0" layoutY="468.0" mnemonicParsing="false" onAction="#onClickSalvarCriar" prefHeight="27.0" prefWidth="227.0" text="Salvar e Criar Novo Plano" />
                   <Button fx:id="btVoltar" layoutX="710.0" layoutY="468.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="120.0" text="Voltar" />
                   <Button fx:id="btLmpar" layoutX="578.0" layoutY="468.0" mnemonicParsing="false" onAction="#onClickLimpar" prefHeight="27.0" prefWidth="120.0" text="Limpar" />
                   <Button fx:id="btImprimir" layoutX="444.0" layoutY="468.0" mnemonicParsing="false" onAction="#onClickImprimir" prefHeight="27.0" prefWidth="120.0" text="Imprimir" />
