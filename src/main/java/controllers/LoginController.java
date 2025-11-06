@@ -94,23 +94,9 @@ public class LoginController {
 
 
 
-    @FXML
 
-    void onClickIrParaCadastro(ActionEvent event) {
 
-        try {
 
-            mudarTela(event, "/view/CadastroUsuario.fxml");
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
-            System.err.println("Erro ao carregar a tela de cadastro: " + e.getMessage());
-
-        }
-
-    }
 
 
 

@@ -19,16 +19,11 @@
                   <MenuItem fx:id="menuAndamento" mnemonicParsing="false" onAction="#abrirAndamento" text="Andamento PAI" />
                         <MenuItem fx:id="menuHistorico" mnemonicParsing="false" onAction="#abrirHistorico" text="Historico de Intervenções" />
                         <MenuItem fx:id="menuRendimento" mnemonicParsing="false" onAction="#abrirRendimento" text="Cadastro de Rendimento" />
-                        <MenuItem fx:id="menuAcompanhamento" mnemonicParsing="false"
-                                  text="Acompanhamento Escolar" onAction="#abrirConsultaRendimento" />
+                        <MenuItem fx:id="menuAcompanhamento" mnemonicParsing="false" onAction="#abrirConsultaRendimento" text="Acompanhamento Escolar" />
                         <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="menuCadastrarUsuario" mnemonicParsing="false" onAction="#abrirCadastrarUsuario" text="Cadastrar Usuário" />
+                  <MenuItem fx:id="menuTrocarUsuario" mnemonicParsing="false" onAction="#trocarUsuario" text="Trocar Usuário" />
                         <MenuItem fx:id="menuSair" mnemonicParsing="false" onAction="#sairSistema" text="Sair" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Editar">
-                    <items>
-                        <MenuItem fx:id="menuPerfil" mnemonicParsing="false" text="Perfil" />
-                        <MenuItem fx:id="menuDadosAluno" mnemonicParsing="false" text="Dados do Aluno/Responsável" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Sobre">
