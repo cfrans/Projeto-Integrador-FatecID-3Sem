@@ -54,7 +54,7 @@ public class CadastroUsuarioController {
     @FXML
     void onClickVoltar(ActionEvent event) {
         try {
-            mudarTela(event, "/view/Login.fxml"); // volta para a tela de login
+            mudarTela(event, "/view/Menu.fxml"); // volta para a tela de login
         } catch (IOException e) {
             e.printStackTrace();
         }

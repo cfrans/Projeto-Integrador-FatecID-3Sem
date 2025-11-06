@@ -1,5 +1,6 @@
 package controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,6 +23,9 @@ public class MenuController {
     private MenuItem menuPlano;
 
     @FXML
+    private MenuItem menuCadastrarUsuario;
+
+    @FXML
     private MenuItem menuHistorico;
 
     @FXML
@@ -34,13 +38,16 @@ public class MenuController {
     private MenuItem menuSair;
 
     @FXML
-    private MenuItem menuPerfil;
-
-    @FXML
-    private MenuItem menuDadosAluno;
+    private MenuItem menuTrocarUsuario;
 
     @FXML
     private MenuItem menuProjeto;
+
+
+    @FXML
+    void abrirCadastrarUsuario() throws IOException {
+        mudarTela("/view/CadastroUsuario.fxml");
+    }
 
     @FXML
     void abrirNovoCadastro() throws IOException {
@@ -70,6 +77,11 @@ public class MenuController {
     @FXML
     void abrirConsultaRendimento() throws IOException {
         mudarTela("/view/ConsultaRendimento.fxml");
+    }
+
+    @FXML
+    void trocarUsuario() throws IOException {
+        mudarTela("/view/Login.fxml");
     }
 
     @FXML
