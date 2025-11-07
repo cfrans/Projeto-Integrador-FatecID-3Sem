@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -23,6 +24,13 @@ public class ConsultaRendimentoController {
 
     @FXML
     private ChoiceBox<?> chNome;
+
+    @FXML
+    private DatePicker dpDataFinal;
+
+    @FXML
+    private DatePicker dpDataInicio;
+
 
     @FXML
     private TextField tfMateria1;
