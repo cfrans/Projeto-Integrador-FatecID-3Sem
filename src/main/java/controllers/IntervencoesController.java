@@ -40,7 +40,7 @@ public class IntervencoesController {
     private ChoiceBox<?> chNome;
 
     @FXML
-    private ChoiceBox<?> chResponsavel;
+    private TextField tfResponsavel;
 
     @FXML
     private DatePicker dpDataIntervencao;
@@ -60,10 +60,6 @@ public class IntervencoesController {
     @FXML
     private TextField tfTituloIntervencao;
 
-    @FXML
-    void onClickAdicionarIntervencao(ActionEvent event) {
-
-    }
 
     @FXML
     void onClickLimpar(ActionEvent event) {
@@ -71,12 +67,13 @@ public class IntervencoesController {
 
         //Limpando ChoiceBoxes (Dropdowns)
         chNome.getSelectionModel().clearSelection();
-        chResponsavel.getSelectionModel().clearSelection();
+
 
         //Limpando TextFields
         tfRA.clear();
         tfSerieTurma.clear();
         tfOutroTipoIntervencao.clear();
+        tfResponsavel.clear();
 
         //Limpando o DatePicker
         dpDataIntervencao.setValue(null);

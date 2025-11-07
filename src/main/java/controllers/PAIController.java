@@ -40,7 +40,7 @@ public class PAIController implements Initializable {
     @FXML private TextField tfSerieTurma;
     @FXML private TextField tfTituloPlano;
     @FXML private ChoiceBox<AlunoItem> chNome;
-    @FXML private ChoiceBox<UsuarioItem> chResponsavelPlano;
+    @FXML private TextField tfResponsavelPlano;
 
     // Listas para guardar os dados do banco
     private ObservableList<AlunoItem> listaAlunos = FXCollections.observableArrayList();
@@ -50,11 +50,11 @@ public class PAIController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         // 1. Vincular as listas aos ChoiceBoxes
         chNome.setItems(listaAlunos);
-        chResponsavelPlano.setItems(listaUsuarios);
+
 
         // 2. Carregar os dados
         carregarAlunos();
-        carregarUsuarios();
+
 
         // 3. Fazer os campos RA e Turma atualizarem sozinhos
         chNome.getSelectionModel().selectedItemProperty().addListener(
@@ -84,7 +84,7 @@ public class PAIController implements Initializable {
     /**
      * Carrega os USUÁRIOS (ex: Coordenadores) do banco
      */
-    private void carregarUsuarios() {
+   /* private void carregarUsuarios() {
         String sql = "SELECT id_usuario, nome FROM usuario ORDER BY nome";
         try (Connection conn = ConexaoDB.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -101,7 +101,7 @@ public class PAIController implements Initializable {
             System.err.println("Erro ao carregar usuários!");
             e.printStackTrace();
         }
-    }
+    }*/
 
     // Metodo que é chamado quando um aluno é selecionado no dropdown
     private void preencherDadosAluno(AlunoItem aluno) {
@@ -140,10 +140,10 @@ public class PAIController implements Initializable {
 
         // Pegar os IDs dos itens selecionados nos ChoiceBoxes
         AlunoItem alunoSel = chNome.getValue();
-        UsuarioItem usuarioSel = chResponsavelPlano.getValue();
+        //UsuarioItem usuarioSel = tfResponsavelPlano.getValue();
 
-        // Validação
-        if (alunoSel == null || usuarioSel == null || tfTituloPlano.getText().isEmpty() || dpRevisaoPlano.getValue() == null) {
+        // Validação if (alunoSel == null || usuarioSel == null || tfTituloPlano.getText().isEmpty() || dpRevisaoPlano.getValue() == null) {
+        if (alunoSel == null || tfTituloPlano.getText().isEmpty() || dpRevisaoPlano.getValue() == null) {
             exibirAlertaErro("Erro de Validação", "Campos obrigatórios", "Aluno, Responsável, Título e Prazo de Revisão são obrigatórios.");
             return;
         }
@@ -154,7 +154,7 @@ public class PAIController implements Initializable {
             // --- 1. Inserir o PAI ---
             System.out.println("---  Inserindo novo PAI ---");
             System.out.println("ID Aluno: " + alunoSel.getId());
-            System.out.println("ID Usuário (Responsável): " + usuarioSel.getId());
+           // System.out.println("ID Usuário (Responsável): " + usuarioSel.getId());
 
             stmtInsertPAI.setString(1, tfTituloPlano.getText());
             stmtInsertPAI.setString(2, taDescricaoPlano.getText());
@@ -166,7 +166,7 @@ public class PAIController implements Initializable {
             stmtInsertPAI.setDate(5, Date.valueOf(dpRevisaoPlano.getValue()));
             stmtInsertPAI.setString(6, "Em Andamento"); // Status inicial
             stmtInsertPAI.setInt(7, alunoSel.getId()); // ID do Aluno
-            stmtInsertPAI.setInt(8, usuarioSel.getId()); // ID do Usuário Responsável (do ChoiceBox)
+            //stmtInsertPAI.setInt(8, usuarioSel.getId()); // ID do Usuário Responsável (do ChoiceBox)
 
             stmtInsertPAI.executeUpdate();
 
@@ -206,10 +206,11 @@ public class PAIController implements Initializable {
         tfRecursos.clear();
         tfSerieTurma.clear();
         tfTituloPlano.clear();
+        tfResponsavelPlano.clear();
 
         //Limpando ChoiceBoxes (Dropdowns)
         chNome.getSelectionModel().clearSelection();
-        chResponsavelPlano.getSelectionModel().clearSelection();
+
 
         //Limpando o DatePicker
         dpRevisaoPlano.setValue(null);

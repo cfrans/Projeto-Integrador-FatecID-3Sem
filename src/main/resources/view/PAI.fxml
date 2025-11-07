@@ -114,12 +114,12 @@
                   <Separator layoutX="62.0" layoutY="245.0" prefHeight="6.0" prefWidth="774.0" />
                   <TextField fx:id="tfTituloPlano" layoutX="63.0" layoutY="209.0" prefHeight="25.0" prefWidth="418.0" />
                   <Label layoutX="63.0" layoutY="192.0" text="Título do Plano" />
-                  <ChoiceBox fx:id="chResponsavelPlano" layoutX="504.0" layoutY="209.0" prefHeight="25.0" prefWidth="331.0" />
                   <Label layoutX="504.0" layoutY="192.0" text="Responsável do Plano" />
                   <TextField fx:id="tfMeta3" layoutX="594.0" layoutY="290.0" prefHeight="25.0" prefWidth="239.0" />
                   <Label layoutX="594.0" layoutY="273.0" text="Meta 3" />
                   <TextField fx:id="tfMeta2" layoutX="329.0" layoutY="290.0" prefHeight="25.0" prefWidth="239.0" />
                   <Label layoutX="329.0" layoutY="273.0" text="Meta 2" />
+                  <TextField fx:id="tfResponsavelPlano" layoutX="504.0" layoutY="209.0" prefHeight="25.0" prefWidth="331.0" />
                </children>
         </AnchorPane>
       </items>
