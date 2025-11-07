@@ -161,6 +161,7 @@ CREATE TABLE usuario (
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     id_funcao INT NOT NULL,
+    senha_hash VARCHAR(100),
     CONSTRAINT fk_usuario_funcao
         FOREIGN KEY (id_funcao)
         REFERENCES funcao (id_funcao)
@@ -268,10 +269,10 @@ CREATE TABLE tipo_participacao (
 -- Tabela: rendimento
 CREATE TABLE rendimento (
     id_rendimento SERIAL PRIMARY KEY,
-    avaliacao1 NUMERIC(2,1) NOT NULL,
-    avaliacao2 NUMERIC(2,1) NOT NULL,
-    simulado NUMERIC(2,1) NOT NULL,
-    atitude_academica NUMERIC(2,1) NOT NULL,
+    avaliacao1 NUMERIC(3,1) NOT NULL,
+    avaliacao2 NUMERIC(3,1) NOT NULL,
+    simulado NUMERIC(3,1) NOT NULL,
+    atitude_academica NUMERIC(3,1) NOT NULL,
     data TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     justificativa_participacao TEXT,
     justificativa_entrega TEXT,
@@ -293,3 +294,107 @@ CREATE TABLE rendimento (
         FOREIGN KEY (id_tipo_participacao)
         REFERENCES tipo_participacao (id_tipo_participacao)
 );
+
+
+
+-------------------------------------------------------- INSERTS PARA TESTE
+-- NÍVEL 0: Tabelas "Mãe" (Sem dependências)
+-- Inserir Funções (Ex: Coordenador, Professor)
+INSERT INTO funcao (nome) VALUES
+('Coordenador'),
+('Professor'),
+('Administrador'),
+('T.I.');
+-- IDs gerados: 1, 2, 3
+
+-- Inserir Tipos de Responsável (Ex: Mãe, Pai)
+INSERT INTO tipo_responsavel (nome) VALUES
+('Mãe'),
+('Pai'),
+('Avó/Avô'),
+('Responsável Legal');
+-- IDs gerados: 1, 2, 3, 4
+
+-- Inserir Séries/Turmas
+INSERT INTO serie_turma (nome) VALUES
+('1º Ano A'),
+('5º Ano B'),
+('9º Ano A');
+-- IDs gerados: 1, 2, 3
+
+-- Inserir Matérias
+INSERT INTO materia (nome) VALUES
+('Matemática'),
+('Português'),
+('Ciências'),
+('História');
+-- IDs gerados: 1, 2, 3, 4
+
+-- Inserir Tipos de Participação (para Rendimento)
+INSERT INTO tipo_participacao (nome) VALUES
+('Muito Alta'),
+('Alta'),
+('Média'),
+('Baixa'),
+('Nenhuma');
+-- IDs gerados: 1, 2, 3, 4, 5
+
+---
+-- NÍVEL 1: Dependem do Nível 0
+---
+
+select * from funcao
+-- Inserir Usuários (depende de 'funcao')
+INSERT INTO usuario (nome, email, id_funcao) VALUES
+('Ana Coordenadora', 'ana@escola.com', 1), -- ID 1 (Coordenador)
+('Bruno Professor', 'bruno@escola.com', 2), -- ID 2 (Professor)
+('Carla Professora', 'carla@escola.com', 2), -- ID 3 (Professor)
+('Davi Admin', 'davi@escola.com', 3);        -- ID 4 (Admin)
+-- IDs gerados: 1, 2, 3, 4
+
+-- Inserir Responsáveis (depende de 'tipo_responsavel')
+INSERT INTO responsavel (nome, telefone, email, id_tipo_responsavel) VALUES
+('Maria Silva', '11999991111', 'maria@email.com', 1), -- ID 1 (Mãe)
+('João Santos', '19988882222', 'joao@email.com', 2),  -- ID 2 (Pai)
+('Laura Oliveira', '21977773333', 'laura@email.com', 1); -- ID 3 (Mãe)
+-- IDs gerados: 1, 2, 3
+
+---
+-- NÍVEL 2: Dependem do Nível 1
+---
+
+-- Inserir Alunos (depende de 'responsavel' e 'serie_turma')
+INSERT INTO aluno (nome, ra, data_nascimento, id_responsavel, id_serie_turma) VALUES
+('Caio Silva', 'RA1001', '2015-03-10', 1, 2), -- ID 1 (Resp: Maria, Turma: 5º Ano B)
+('Beatriz Santos', 'RA1002', '2017-07-20', 2, 1), -- ID 2 (Resp: João, Turma: 1º Ano A)
+('Lucas Oliveira', 'RA1003', '2010-11-05', 3, 3); -- ID 3 (Resp: Laura, Turma: 9º Ano A)
+-- IDs gerados: 1, 2, 3
+
+---
+-- NÍVEL 3: Tabelas de "Ação" (Dependem de Alunos, Usuários, etc.)
+---
+
+-- Inserir PAIs (depende de 'aluno' e 'usuario')
+INSERT INTO pai (titulo, descricao, meta, recurso_necessario, prazo_revisao, status, id_aluno, id_usuario) VALUES
+('PAI de Leitura 2025', 'Foco em alfabetização e interpretação de texto.', 'Ler 1 livro por mês', 'Livros da biblioteca', '2025-12-31', 'Em Andamento', 2, 1), -- PAI da Beatriz(2), criado pela Ana(1)
+('PAI de Matemática', 'Foco em operações de multiplicação.', 'Dominar tabuada do 7', 'Jogos educativos', '2025-06-30', 'Em Andamento', 1, 2); -- PAI do Caio(1), criado pelo Bruno(2)
+
+-- Inserir Laudos (depende de 'aluno')
+INSERT INTO laudo (numero, data, descricao, tipo, id_aluno) VALUES
+('LDO-456', '2024-02-15', 'Laudo fonoaudiológico sobre dificuldades na fala.', 'Dislexia', 2), -- Laudo da Beatriz(2)
+('LDO-789', '2024-05-20', 'Laudo neurológico sobre foco e atenção.', 'TDAH', 1); -- Laudo do Caio(1)
+
+-- Inserir Intervenções (depende de 'aluno' e 'usuario')
+INSERT INTO intervencao (observacao, titulo, data, id_aluno, id_usuario) VALUES
+('Aluno apresentou dificuldade com sílabas complexas (lh, nh). Foi usada atividade lúdica.', 'Sessão de Reforço 1', '2025-03-10', 2, 3), -- Intervenção na Beatriz(2) pela Carla(3)
+('Reunião com os pais sobre a importância de rotina de estudos em casa.', 'Alinhamento Familiar', '2025-04-15', 1, 1); -- Intervenção no Caio(1) pela Ana(1)
+
+-- Inserir Rendimentos (depende de 'materia', 'aluno', 'usuario', 'tipo_participacao')
+INSERT INTO rendimento (avaliacao1, avaliacao2, simulado, atitude_academica, entrega, id_materia, id_aluno, id_usuario, id_tipo_participacao, justificativa_participacao) VALUES
+(7.5, 8.0, 6.5, 9.0, 'Totalmente Entregue', 1, 1, 2, 2, 'Participa bem das aulas de exatas'); -- Rend. Caio(1) em Mat.(1) pelo Bruno(2), part. Alta(2)
+
+INSERT INTO rendimento (avaliacao1, avaliacao2, simulado, atitude_academica, entrega, id_materia, id_aluno, id_usuario, id_tipo_participacao, justificativa_entrega) VALUES
+(9.0, 9.5, 8.0, 10.0, 'Totalmente Entregue', 2, 2, 3, 1, 'Excelente aluna, muito dedicada.'); -- Rend. Beatriz(2) em Port.(2) pela Carla(3), part. Muito Alta(1)
+
+INSERT INTO rendimento (avaliacao1, avaliacao2, simulado, atitude_academica, entrega, id_materia, id_aluno, id_usuario, id_tipo_participacao, justificativa_entrega) VALUES
+(5.0, 4.5, 3.0, 6.0, 'Parcialmente Entregue', 3, 1, 2, 4, 'Esqueceu metade dos trabalhos'); -- Rend. Caio(1) em Ciên.(3) pelo Bruno(2), part. Baixa(4)

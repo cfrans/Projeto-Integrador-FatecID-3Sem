@@ -15,37 +15,36 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-
 import database.ConexaoDB;
 import util.AlunoItem;
 import util.DisciplinaItem;
+import util.SessaoUsuario;
+import util.TipoParticipacaoItem;
 
 public class RendimentoController implements Initializable {
 
     @FXML private Button btLimpar;
     @FXML private Button btSalvar;
     @FXML private Button btVoltar;
-    @FXML private CheckBox cbTipoEntrega1; // [cite: 35]
-    @FXML private CheckBox cbTipoEntrega2; // [cite: 35]
-
-    // NOTA: O FXML [cite: 35] chama este item de 'cbTipoEntrega3'
+    @FXML private CheckBox cbTipoEntrega1;
+    @FXML private CheckBox cbTipoEntrega2;
     @FXML private CheckBox cbTipoEntrega3;
-
-    @FXML private TextArea taJustificativa; // [cite: 36]
-    @FXML private TextField tfAtitudeAcademica; // [cite: 33]
-    @FXML private TextField tfAvaliacao1; // [cite: 33]
-    @FXML private TextField tfAvaliacao2; // [cite: 33]
-    @FXML private TextField tfJustificativaPartifipacao; // [cite: 38]
-    @FXML private TextField tfRA; // [cite: 31]
-    @FXML private TextField tfSerieTurma; // [cite: 31]
-    @FXML private TextField tfSimulado; // [cite: 33]
-    @FXML private ChoiceBox<AlunoItem> chNome; // [cite: 30]
-    @FXML private ChoiceBox<DisciplinaItem> chNome1; // [cite: 37]
-    @FXML private ChoiceBox<String> chNivelParticipacao; // [cite: 38]
+    @FXML private TextArea taJustificativa;
+    @FXML private TextField tfAtitudeAcademica;
+    @FXML private TextField tfAvaliacao1;
+    @FXML private TextField tfAvaliacao2;
+    @FXML private TextField tfJustificativaPartifipacao;
+    @FXML private TextField tfRA;
+    @FXML private TextField tfSerieTurma;
+    @FXML private TextField tfSimulado;
+    @FXML private ChoiceBox<AlunoItem> chNome;
+    @FXML private ChoiceBox<DisciplinaItem> chNome1; // (Carrega 'materia' aqui)
+    @FXML private ChoiceBox<TipoParticipacaoItem> chNivelParticipacao;
 
     // Listas para guardar os dados do banco
     private ObservableList<AlunoItem> listaAlunos = FXCollections.observableArrayList();
     private ObservableList<DisciplinaItem> listaDisciplinas = FXCollections.observableArrayList();
+    private ObservableList<TipoParticipacaoItem> listaParticipacao = FXCollections.observableArrayList();
 
     // Lista de Checkboxes para o helper
     private List<CheckBox> listaEntregas;
@@ -55,27 +54,24 @@ public class RendimentoController implements Initializable {
         // 1. Vincular as listas aos ChoiceBoxes
         chNome.setItems(listaAlunos);
         chNome1.setItems(listaDisciplinas);
+        chNivelParticipacao.setItems(listaParticipacao);
 
         // 2. Carregar os dados
         carregarAlunos();
-        carregarDisciplinas();
+        carregarMaterias();
+        carregarTiposParticipacao();
 
-        // 3. Popular dados estáticos
-        chNivelParticipacao.setItems(FXCollections.observableArrayList(
-                "Muito Alta", "Alta", "Média", "Baixa", "Nenhuma"
-        ));
-
-        // 4. Agrupar checkboxes
+        // 3. Agrupar checkboxes
         listaEntregas = Arrays.asList(cbTipoEntrega1, cbTipoEntrega2, cbTipoEntrega3);
 
-        // 5. Fazer os campos RA e Turma atualizarem sozinhos
+        // 4. Fazer os campos RA e Turma atualizarem sozinhos
         chNome.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldVal, newVal) -> preencherDadosAluno(newVal)
         );
     }
 
     private void carregarAlunos() {
-        String sql = "SELECT id_aluno, nome, serie_turma, ra FROM aluno ORDER BY nome";
+        String sql = "SELECT id_aluno, nome FROM aluno ORDER BY nome";
         try (Connection conn = ConexaoDB.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
@@ -90,22 +86,50 @@ public class RendimentoController implements Initializable {
         }
     }
 
-    private void carregarDisciplinas() {
-        String sql = "SELECT id_disciplina, nome FROM disciplina ORDER BY nome";
+    /**
+     * Busca da tabela 'materia'
+     */
+    private void carregarMaterias() {
+        String sql = "SELECT id_materia, nome FROM materia ORDER BY nome";
         try (Connection conn = ConexaoDB.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             listaDisciplinas.clear();
             while (rs.next()) {
-                listaDisciplinas.add(new DisciplinaItem(rs.getInt("id_disciplina"), rs.getString("nome")));
+                listaDisciplinas.add(new DisciplinaItem(rs.getInt("id_materia"), rs.getString("nome")));
             }
         } catch (SQLException e) {
-            System.err.println("Erro ao carregar disciplinas!");
+            System.err.println("Erro ao carregar matérias (antigas disciplinas)!");
             e.printStackTrace();
         }
     }
 
+    /**
+     * Carrega os tipos de participação do banco
+     */
+    private void carregarTiposParticipacao() {
+        String sql = "SELECT id_tipo_participacao, nome FROM tipo_participacao ORDER BY id_tipo_participacao";
+        try (Connection conn = ConexaoDB.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            listaParticipacao.clear();
+            while (rs.next()) {
+                listaParticipacao.add(new TipoParticipacaoItem(
+                        rs.getInt("id_tipo_participacao"),
+                        rs.getString("nome")
+                ));
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao carregar tipos de participação!");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Busca a série com JOIN
+     */
     private void preencherDadosAluno(AlunoItem aluno) {
         if (aluno == null) {
             tfRA.clear();
@@ -113,7 +137,10 @@ public class RendimentoController implements Initializable {
             return;
         }
 
-        String sql = "SELECT ra, serie_turma FROM aluno WHERE id_aluno = ?";
+        String sql = "SELECT a.ra, s.nome AS nome_serie FROM aluno a " +
+                "JOIN serie_turma s ON a.id_serie_turma = s.id_serie_turma " +
+                "WHERE a.id_aluno = ?";
+
         try (Connection conn = ConexaoDB.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -121,8 +148,8 @@ public class RendimentoController implements Initializable {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                tfRA.setText(String.valueOf(rs.getInt("ra")));
-                tfSerieTurma.setText(rs.getString("serie_turma"));
+                tfRA.setText(rs.getString("ra"));
+                tfSerieTurma.setText(rs.getString("nome_serie"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -131,55 +158,55 @@ public class RendimentoController implements Initializable {
 
     @FXML
     void onClickSalvar(ActionEvent event) {
-        String sql = "INSERT INTO rendimento (avaliacao_1, avaliacao_2, trimestre, consideracoes, " +
-                "simulado, atitude_academica, id_disciplina, id_aluno) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        String sql = "INSERT INTO rendimento (avaliacao1, avaliacao2, simulado, atitude_academica, " +
+                "justificativa_participacao, justificativa_entrega, entrega, " +
+                "id_materia, id_aluno, id_usuario, id_tipo_participacao) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         // Pegar os IDs dos itens selecionados
         AlunoItem alunoSel = chNome.getValue();
-        DisciplinaItem discSel = chNome1.getValue();
+        DisciplinaItem materiaSel = chNome1.getValue();
+        TipoParticipacaoItem participacaoSel = chNivelParticipacao.getValue();
 
         // Validação
-        if (alunoSel == null || discSel == null) {
-            exibirAlertaErro("Seleção obrigatória", "Você precisa selecionar um Aluno e uma Disciplina.");
+        if (alunoSel == null || materiaSel == null || participacaoSel == null) {
+            exibirAlertaErro("Seleção obrigatória", "Você precisa selecionar um Aluno, uma Matéria e um Nível de Participação.");
             return;
         }
 
         try (Connection conn = ConexaoDB.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            // --- 🚀 Debug Sysout ---
-            System.out.println("---  Salvando Rendimento ---");
-            System.out.println("ID Aluno: " + alunoSel.getId());
-            System.out.println("ID Disciplina: " + discSel.getId());
+            System.out.println("--- Salvando Rendimento ---");
 
-            // 1. avaliacao_1
-            stmt.setInt(1, Integer.parseInt(tfAvaliacao1.getText()));
-            // 2. avaliacao_2
-            stmt.setInt(2, Integer.parseInt(tfAvaliacao2.getText()));
+            // 1. avaliacao1
+            stmt.setDouble(1, Double.parseDouble(tfAvaliacao1.getText()));
+            // 2. avaliacao2
+            stmt.setDouble(2, Double.parseDouble(tfAvaliacao2.getText()));
+            // 3. simulado
+            stmt.setDouble(3, Double.parseDouble(tfSimulado.getText()));
+            // 4. atitude_academica
+            stmt.setDouble(4, Double.parseDouble(tfAtitudeAcademica.getText()));
+            // 5. justificativa_participacao
+            stmt.setString(5, tfJustificativaPartifipacao.getText());
+            // 6. justificativa_entrega (usando o <TextArea> genérico)
+            stmt.setString(6, taJustificativa.getText());
+            // 7. entrega (usando o helper dos checkboxes)
+            stmt.setString(7, getEntregaSelecionada());
 
-            // 3. trimestre (!! ATENÇÃO AQUI !!)
-            // O FXML não tem um campo para trimestre, mas o banco exige.
-            // Estamos "chumbando" (hardcoding) o valor 1.
-            // O ideal é adicionar um ChoiceBox<Integer> para trimestre.
-            stmt.setInt(3, 1);
-            System.out.println("Trimestre: 1 (Valor fixo! Adicionar campo no FXML)");
+            // IDs de Foreign Key
+            // 8. id_materia
+            stmt.setInt(8, materiaSel.getId());
+            // 9. id_aluno
+            stmt.setInt(9, alunoSel.getId());
 
-            // 4. consideracoes
-            String entregas = "Entregas: " + getTipoEntregaSelecionada() + ". Justificativa: " + taJustificativa.getText();
-            String participacao = "Participação: " + chNivelParticipacao.getValue() + ". Justificativa: " + tfJustificativaPartifipacao.getText();
-            String consideracoes = entregas + " | " + participacao;
-            stmt.setString(4, consideracoes);
+            // 10. id_usuario (!!! ATENÇÃO !!!)
+            int idUsuarioLogado = SessaoUsuario.getIdUsuario();
+            stmt.setInt(10, idUsuarioLogado);
 
-            // 5. simulado
-            stmt.setInt(5, Integer.parseInt(tfSimulado.getText()));
-            // 6. atitude_academica
-            stmt.setInt(6, Integer.parseInt(tfAtitudeAcademica.getText()));
-
-            // 7. id_disciplina
-            stmt.setInt(7, discSel.getId());
-            // 8. id_aluno
-            stmt.setInt(8, alunoSel.getId());
+            // 11. id_tipo_participacao
+            stmt.setInt(11, participacaoSel.getId());
 
             stmt.executeUpdate();
 
@@ -190,7 +217,7 @@ public class RendimentoController implements Initializable {
                     "Rendimento salvo com sucesso!");
 
         } catch (NumberFormatException e) {
-            exibirAlertaErro("Erro de Formato", "Todos os campos de nota (Avaliação 1, 2, Simulado, Atitude) devem ser números.");
+            exibirAlertaErro("Erro de Formato", "Todos os campos de nota (Avaliação 1, 2, Simulado, Atitude) devem ser números (use . (ponto) para decimais, ex: 8.5).");
             e.printStackTrace();
         } catch (SQLException e) {
             exibirAlertaErro("Erro de Banco de Dados", "Erro: " + e.getMessage());
@@ -201,11 +228,11 @@ public class RendimentoController implements Initializable {
     /**
      * Helper para juntar os textos dos CheckBoxes de entrega.
      */
-    private String getTipoEntregaSelecionada() {
+    private String getEntregaSelecionada() {
         return listaEntregas.stream()
                 .filter(CheckBox::isSelected)
                 .map(CheckBox::getText)
-                .collect(Collectors.joining(", ")); // Ex: "Totalmente, Parcialmente"
+                .collect(Collectors.joining(", ")); // Ex: "Totalmente Entregues, Parcialmente Entregues"
     }
 
     private void exibirAlertaErro(String cabecalho, String conteudo) {
