@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 
 import database.ConexaoDB;
 import util.AlunoItem;
-import util.CoordenadorItem;
+import util.UsuarioItem;
 
 public class PAIController implements Initializable {
 
@@ -32,29 +32,29 @@ public class PAIController implements Initializable {
     @FXML private Button btLimpar;
     @FXML private Button btSalvar;
     @FXML private Button btVoltar;
-    @FXML private DatePicker dpRevisaoPlano; // [cite: 116]
-    @FXML private TextArea taDescricaoPlano; // [cite: 117]
-    @FXML private TextField tfMeta; // [cite: 119]
-    @FXML private TextField tfRA; // [cite: 117]
-    @FXML private TextField tfRecursos; // [cite: 121]
-    @FXML private TextField tfSerieTurma; // [cite: 122]
-    @FXML private TextField tfTituloPlano; // [cite: 123]
-    @FXML private ChoiceBox<AlunoItem> chNome; // [cite: 122]
-    @FXML private ChoiceBox<CoordenadorItem> chResponsavelPlano; // [cite: 123]
+    @FXML private DatePicker dpRevisaoPlano;
+    @FXML private TextArea taDescricaoPlano;
+    @FXML private TextField tfMeta;
+    @FXML private TextField tfRA;
+    @FXML private TextField tfRecursos;
+    @FXML private TextField tfSerieTurma;
+    @FXML private TextField tfTituloPlano;
+    @FXML private ChoiceBox<AlunoItem> chNome;
+    @FXML private ChoiceBox<UsuarioItem> chResponsavelPlano;
 
     // Listas para guardar os dados do banco
     private ObservableList<AlunoItem> listaAlunos = FXCollections.observableArrayList();
-    private ObservableList<CoordenadorItem> listaCoordenadores = FXCollections.observableArrayList();
+    private ObservableList<UsuarioItem> listaUsuarios = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // 1. Vincular as listas aos ChoiceBoxes
         chNome.setItems(listaAlunos);
-        chResponsavelPlano.setItems(listaCoordenadores);
+        chResponsavelPlano.setItems(listaUsuarios);
 
         // 2. Carregar os dados
         carregarAlunos();
-        carregarCoordenadores();
+        carregarUsuarios();
 
         // 3. Fazer os campos RA e Turma atualizarem sozinhos
         chNome.getSelectionModel().selectedItemProperty().addListener(
@@ -63,7 +63,8 @@ public class PAIController implements Initializable {
     }
 
     private void carregarAlunos() {
-        String sql = "SELECT id_aluno, nome, serie_turma, ra FROM aluno ORDER BY nome";
+        String sql = "SELECT id_aluno, nome FROM aluno ORDER BY nome";
+
         try (Connection conn = ConexaoDB.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
@@ -75,21 +76,29 @@ public class PAIController implements Initializable {
         } catch (SQLException e) {
             System.err.println("Erro ao carregar alunos!");
             e.printStackTrace();
+            // Adicionamos um alerta de erro para o usuário final também
+            exibirAlertaErro("Erro de Banco", "Falha Crítica ao Carregar Alunos", "Não foi possível carregar a lista de alunos. " + e.getMessage());
         }
     }
 
-    private void carregarCoordenadores() {
-        String sql = "SELECT id_coordenador, nome FROM coordenador ORDER BY nome";
+    /**
+     * Carrega os USUÁRIOS (ex: Coordenadores) do banco
+     */
+    private void carregarUsuarios() {
+        String sql = "SELECT id_usuario, nome FROM usuario ORDER BY nome";
         try (Connection conn = ConexaoDB.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
-            listaCoordenadores.clear();
+            listaUsuarios.clear();
             while (rs.next()) {
-                listaCoordenadores.add(new CoordenadorItem(rs.getInt("id_coordenador"), rs.getString("nome")));
+                listaUsuarios.add(new UsuarioItem(
+                        rs.getInt("id_usuario"),
+                        rs.getString("nome")
+                ));
             }
         } catch (SQLException e) {
-            System.err.println("Erro ao carregar coordenadores!");
+            System.err.println("Erro ao carregar usuários!");
             e.printStackTrace();
         }
     }
@@ -102,7 +111,10 @@ public class PAIController implements Initializable {
             return;
         }
 
-        String sql = "SELECT ra, serie_turma FROM aluno WHERE id_aluno = ?";
+        String sql = "SELECT a.ra, s.nome AS nome_serie FROM aluno a " +
+                "JOIN serie_turma s ON a.id_serie_turma = s.id_serie_turma " +
+                "WHERE a.id_aluno = ?";
+
         try (Connection conn = ConexaoDB.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -110,8 +122,8 @@ public class PAIController implements Initializable {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                tfRA.setText(String.valueOf(rs.getInt("ra"))); // [cite: 117]
-                tfSerieTurma.setText(rs.getString("serie_turma")); // [cite: 122]
+                tfRA.setText(rs.getString("ra"));
+                tfSerieTurma.setText(rs.getString("nome_serie"));
             }
 
         } catch (SQLException e) {
@@ -122,100 +134,60 @@ public class PAIController implements Initializable {
 
     @FXML
     void onClickSalvar(ActionEvent event) {
-        // SQL 1: Inserir o PAI e pegar o ID de volta
-        String sqlInsertPAI = "INSERT INTO PAI (titulo, descricao, meta, recurso_necessario, prazo_revisao, data, status, id_coordenador) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_PAI";
 
-        // SQL 2: Atualizar o Aluno com o ID do novo PAI
-        String sqlUpdateAluno = "UPDATE aluno SET idPAI = ? WHERE id_aluno = ?";
+        String sqlInsertPAI = "INSERT INTO pai (titulo, descricao, meta, recurso_necessario, prazo_revisao, status, id_aluno, id_usuario) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         // Pegar os IDs dos itens selecionados nos ChoiceBoxes
         AlunoItem alunoSel = chNome.getValue();
-        CoordenadorItem coordSel = chResponsavelPlano.getValue();
+        UsuarioItem usuarioSel = chResponsavelPlano.getValue();
 
         // Validação
-        if (alunoSel == null || coordSel == null || tfTituloPlano.getText().isEmpty()) {
-            exibirAlertaErro("Campos obrigatórios", "Aluno, Responsável e Título são obrigatórios.");
+        if (alunoSel == null || usuarioSel == null || tfTituloPlano.getText().isEmpty() || dpRevisaoPlano.getValue() == null) {
+            exibirAlertaErro("Erro de Validação", "Campos obrigatórios", "Aluno, Responsável, Título e Prazo de Revisão são obrigatórios.");
             return;
         }
 
-        Long novoPaiId = null; // Para guardar o ID do PAI
+        try (Connection conn = ConexaoDB.getConexao();
+             PreparedStatement stmtInsertPAI = conn.prepareStatement(sqlInsertPAI)) {
 
-        // Inicia a Transação
-        try (Connection conn = ConexaoDB.getConexao()) {
+            // --- 1. Inserir o PAI ---
+            System.out.println("---  Inserindo novo PAI ---");
+            System.out.println("ID Aluno: " + alunoSel.getId());
+            System.out.println("ID Usuário (Responsável): " + usuarioSel.getId());
 
-            conn.setAutoCommit(false); // <<< INICIA A TRANSAÇÃO
+            stmtInsertPAI.setString(1, tfTituloPlano.getText());
+            stmtInsertPAI.setString(2, taDescricaoPlano.getText());
+            // TODO: Você tem 3 campos de meta no FXML (tfMeta, tfMeta2, tfMeta3)
+            // mas o banco só tem 1 coluna.
+            // Estamos salvando apenas a Meta 1.
+            stmtInsertPAI.setString(3, tfMeta.getText());
+            stmtInsertPAI.setString(4, tfRecursos.getText());
+            stmtInsertPAI.setDate(5, Date.valueOf(dpRevisaoPlano.getValue()));
+            stmtInsertPAI.setString(6, "Em Andamento"); // Status inicial
+            stmtInsertPAI.setInt(7, alunoSel.getId()); // ID do Aluno
+            stmtInsertPAI.setInt(8, usuarioSel.getId()); // ID do Usuário Responsável (do ChoiceBox)
 
-            // Bloco try para os statements
-            try (PreparedStatement stmtInsertPAI = conn.prepareStatement(sqlInsertPAI);
-                 PreparedStatement stmtUpdateAluno = conn.prepareStatement(sqlUpdateAluno)) {
+            stmtInsertPAI.executeUpdate();
 
-                // --- ETAPA 1: Inserir o PAI ---
+            System.out.println(" PAI salvo e associado ao aluno com sucesso!");
 
-                System.out.println("---  1. Inserindo novo PAI ---");
-                System.out.println("Título: " + tfTituloPlano.getText());
-                System.out.println("ID Coordenador: " + coordSel.getId());
-                System.out.println("Data Revisão: " + Date.valueOf(dpRevisaoPlano.getValue()));
-
-                stmtInsertPAI.setString(1, tfTituloPlano.getText());
-                stmtInsertPAI.setString(2, taDescricaoPlano.getText());
-                stmtInsertPAI.setString(3, tfMeta.getText());
-                stmtInsertPAI.setString(4, tfRecursos.getText());
-                stmtInsertPAI.setDate(5, Date.valueOf(dpRevisaoPlano.getValue()));
-                stmtInsertPAI.setDate(6, Date.valueOf(LocalDate.now())); // Data de hoje
-                stmtInsertPAI.setString(7, "Em Andamento"); // Status inicial
-                stmtInsertPAI.setInt(8, coordSel.getId()); // ID do Coordenador
-
-                // Executa e pega o ID
-                ResultSet rs = stmtInsertPAI.executeQuery();
-                if (rs.next()) {
-                    novoPaiId = rs.getLong(1);
-                    System.out.println(" PAI salvo com ID: " + novoPaiId);
-                } else {
-                    throw new SQLException("Falha ao salvar PAI, ID não retornado.");
-                }
-
-                // --- ETAPA 2: Atualizar o Aluno ---
-                System.out.println("---  2. Atualizando Aluno ---");
-                System.out.println("ID Aluno: " + alunoSel.getId());
-                System.out.println("Associando com idPAI: " + novoPaiId);
-
-                stmtUpdateAluno.setLong(1, novoPaiId);
-                stmtUpdateAluno.setInt(2, alunoSel.getId());
-
-                int linhasAfetadas = stmtUpdateAluno.executeUpdate();
-                if (linhasAfetadas == 0) {
-                    throw new SQLException("Falha ao associar PAI ao Aluno (ID Aluno não encontrado: " + alunoSel.getId() + ")");
-                }
-                System.out.println(" Aluno atualizado com sucesso!");
-
-                // Se deu tudo certo, COMITA a transação
-                conn.commit();
-                System.out.println(" Transação concluída! PAI e Aluno associados.");
-
-                // Sucesso
-                NavegadorUtil.exibirSucessoEVOLTAR(event, "Salvo com sucesso!",
-                        "PAI salvo e associado ao aluno com sucesso!");
-
-            } catch (Exception e) {
-                // Se qualquer etapa falhar, desfaz TUDO
-                System.err.println("Erro durante a transação, executando rollback...");
-                conn.rollback(); // Desfaz as operações
-                throw e; // Joga o erro para o catch externo
-            }
+            // Sucesso
+            NavegadorUtil.exibirSucessoEVOLTAR(event, "Salvo com sucesso!",
+                    "PAI salvo e associado ao aluno com sucesso!");
 
         } catch (SQLException e) {
-            exibirAlertaErro("Erro de Banco de Dados", "Erro: " + e.getMessage());
+            exibirAlertaErro("Erro de Banco de Dados", "Não foi possível salvar o PAI.", "Erro: " + e.getMessage());
             e.printStackTrace();
         } catch (Exception e) {
-            exibirAlertaErro("Erro", "Verifique se todas as datas foram preenchidas.");
+            exibirAlertaErro("Erro Inesperado", "Ocorreu um erro.", "Erro: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    private void exibirAlertaErro(String cabecalho, String conteudo) {
+    private void exibirAlertaErro(String titulo, String cabecalho, String conteudo) {
         Alert alertErro = new Alert(Alert.AlertType.ERROR);
-        alertErro.setTitle("Erro");
+        alertErro.setTitle(titulo); //
         alertErro.setHeaderText(cabecalho);
         alertErro.setContentText(conteudo);
         alertErro.showAndWait();

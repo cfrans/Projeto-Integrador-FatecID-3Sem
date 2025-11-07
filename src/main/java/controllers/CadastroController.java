@@ -1,8 +1,7 @@
 package controllers;
 
-import java.sql.ResultSet;
-
-import javafx.collections.FXCollections; // Import para popular ChoiceBox
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,22 +22,24 @@ import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 
 import java.io.IOException;
-import java.net.URL; // Para o Initializable
-import java.util.ResourceBundle; // Para o Initializable
-import java.util.stream.Collectors; // Import para juntar os tipos
-import java.util.List; // Import para a lista de checkboxes
-import java.util.Arrays; // Import para a lista de checkboxes
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Arrays;
 
-//Imports do banco
+// Imports do banco
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
-
 import database.ConexaoDB;
 
-public class CadastroController implements Initializable {
+import util.SerieTurmaItem;
+import util.TipoResponsavelItem;
 
+public class CadastroController implements Initializable {
 
     @FXML private Button btLimpar;
     @FXML private Button btSalvar;
@@ -49,20 +50,24 @@ public class CadastroController implements Initializable {
     @FXML private CheckBox cbTipoNecessidade4;
     @FXML private CheckBox cbTipoNecessidade5;
     @FXML private Label lbParentesco;
-    @FXML private ChoiceBox<String> chParentesco; // [cite: 32]
-    @FXML private ChoiceBox<String> chSerieTurma; // [cite: 28] (Mudei de <?> para <String>)
     @FXML private DatePicker dpDataLaudo;
     @FXML private DatePicker dpDataNascimento;
-    @FXML private TextArea taObservacoes; // [cite: 30]
-    @FXML private TextField tdNomeResponsavel; // [cite: 31]
-    @FXML private TextField tfEmail; // [cite: 33]
-    @FXML private TextField tfNome; // [cite: 27]
-    @FXML private TextField tfNumeroLaudo; // [cite: 31]
-    @FXML private TextField tfProfissional; // [cite: 34]
-    @FXML private TextField tfTelefone; // [cite: 33]
-    @FXML private TextField tfRA; // [cite: 35]
+    @FXML private TextArea taObservacoes;
+    @FXML private TextField tdNomeResponsavel;
+    @FXML private TextField tfEmail;
+    @FXML private TextField tfNome;
+    @FXML private TextField tfNumeroLaudo;
+    @FXML private TextField tfProfissional;
+    @FXML private TextField tfTelefone;
+    @FXML private TextField tfRA;
     @FXML private Font x1;
     @FXML private Color x2;
+    @FXML private ChoiceBox<TipoResponsavelItem> chParentesco;
+    @FXML private ChoiceBox<SerieTurmaItem> chSerieTurma;
+
+    // Listas para guardar os dados do banco
+    private ObservableList<TipoResponsavelItem> listaParentesco = FXCollections.observableArrayList();
+    private ObservableList<SerieTurmaItem> listaSerieTurma = FXCollections.observableArrayList();
 
     // Lista de Checkboxes para o helper
     private List<CheckBox> listaNecessidades;
@@ -72,20 +77,62 @@ public class CadastroController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Popula o ChoiceBox de Parentesco [cite: 32]
-        chParentesco.setItems(FXCollections.observableArrayList(
-                "Mãe", "Pai", "Avó", "Avô", "Tio(a)", "Irmão/Irmã", "Outro"
-        ));
+        // 1. Vincula as listas (que serão carregadas do banco) aos ChoiceBoxes
+        chParentesco.setItems(listaParentesco);
+        chSerieTurma.setItems(listaSerieTurma);
 
-        // Popula o ChoiceBox de Série/Turma [cite: 28]
-        chSerieTurma.setItems(FXCollections.observableArrayList(
-                "1º Ano A", "1º Ano B", "2º Ano A", "3º Ano A", "4º Ano A", "5º Ano A",
-                "6º Ano A", "7º Ano A", "8º Ano A", "9º Ano A",
-                "1º Ens. Médio", "2º Ens. Médio", "3º Ens. Médio"
-        ));
+        // 2. Chama os métodos para carregar os dados do banco
+        carregarParentescos();
+        carregarSeriesTurmas();
 
-        // Agrupa os checkboxes para facilitar a leitura
+        // 3. Agrupa os checkboxes para facilitar a leitura
         listaNecessidades = Arrays.asList(cbTipoNecessidade1, cbTipoNecessidade2, cbTipoNecessidade3, cbTipoNecessidade4, cbTipoNecessidade5);
+    }
+
+    /**
+     * Carrega os tipos de parentesco do banco
+     */
+    private void carregarParentescos() {
+        String sql = "SELECT id_tipo_responsavel, nome FROM tipo_responsavel ORDER BY nome";
+        try (Connection conn = ConexaoDB.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            listaParentesco.clear();
+            while (rs.next()) {
+                listaParentesco.add(new TipoResponsavelItem(
+                        rs.getInt("id_tipo_responsavel"),
+                        rs.getString("nome")
+                ));
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao carregar tipos de parentesco!");
+            e.printStackTrace();
+            exibirAlertaErro("Erro de Banco", "Falha ao carregar lista de parentescos.", e.getMessage());
+        }
+    }
+
+    /**
+     * Carrega as séries/turmas do banco
+     */
+    private void carregarSeriesTurmas() {
+        String sql = "SELECT id_serie_turma, nome FROM serie_turma ORDER BY nome";
+        try (Connection conn = ConexaoDB.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            listaSerieTurma.clear();
+            while (rs.next()) {
+                listaSerieTurma.add(new SerieTurmaItem(
+                        rs.getInt("id_serie_turma"),
+                        rs.getString("nome")
+                ));
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao carregar séries e turmas!");
+            e.printStackTrace();
+            exibirAlertaErro("Erro de Banco", "Falha ao carregar lista de séries e turmas.", e.getMessage());
+        }
     }
 
 
@@ -95,19 +142,21 @@ public class CadastroController implements Initializable {
 
         // IDs para recuperar do banco
         Long idResponsavel = null;
-        Long idProfissional = null;
         Long idAluno = null;
 
-        // SQLs para cada tabela
-        String sqlResponsavel = "INSERT INTO responsavel (nome, parentesco, email, telefone) VALUES (?, ?, ?, ?) RETURNING id_responsavel";
+        // Pegar os IDs dos itens selecionados
+        TipoResponsavelItem parentescoSel = chParentesco.getValue();
+        SerieTurmaItem serieSel = chSerieTurma.getValue();
 
-        // Busca o ID do profissional que já foi cadastrado (via simulação)
-        String sqlSelectProfissional = "SELECT id_profissional_especializado FROM profissional_especializado WHERE nome = ?";
+        // Validação de tela
+        if (parentescoSel == null || serieSel == null || tfNome.getText().isEmpty() || tdNomeResponsavel.getText().isEmpty()) {
+            exibirAlertaErro("Campos Obrigatórios", "Nome, Responsável, Parentesco e Série/Turma são obrigatórios.", "");
+            return;
+        }
 
-        String sqlAluno = "INSERT INTO aluno (nome, data_nascimento, serie_turma, RA, id_responsavel, id_professor, idPAI, idcoordenador) VALUES (?, ?, ?, ?, ?, NULL, NULL, NULL) RETURNING id_aluno";
-
-        String sqlLaudo = "INSERT INTO laudo (numero, data, descricao, tipo, id_aluno, id_profissional_especializado) VALUES (?, ?, ?, ?, ?, ?)";
-
+        String sqlResponsavel = "INSERT INTO responsavel (nome, id_tipo_responsavel, email, telefone) VALUES (?, ?, ?, ?) RETURNING id_responsavel";
+        String sqlAluno = "INSERT INTO aluno (nome, data_nascimento, id_serie_turma, RA, id_responsavel) VALUES (?, ?, ?, ?, ?) RETURNING id_aluno";
+        String sqlLaudo = "INSERT INTO laudo (numero, data, descricao, tipo, id_aluno) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = ConexaoDB.getConexao()) {
 
@@ -115,15 +164,14 @@ public class CadastroController implements Initializable {
             conn.setAutoCommit(false);
 
             try (PreparedStatement stmtResp = conn.prepareStatement(sqlResponsavel);
-                 PreparedStatement stmtSelectProf = conn.prepareStatement(sqlSelectProfissional);
                  PreparedStatement stmtAluno = conn.prepareStatement(sqlAluno);
                  PreparedStatement stmtLaudo = conn.prepareStatement(sqlLaudo)) {
 
                 // --- ETAPA 1: Salvar Responsável ---
-                stmtResp.setString(1, tdNomeResponsavel.getText()); // [cite: 31]
-                stmtResp.setString(2, chParentesco.getValue()); // [cite: 32]
-                stmtResp.setString(3, tfEmail.getText()); // [cite: 33]
-                stmtResp.setString(4, tfTelefone.getText()); // [cite: 33]
+                stmtResp.setString(1, tdNomeResponsavel.getText());
+                stmtResp.setInt(2, parentescoSel.getId()); // ATUALIZADO: Salva o ID
+                stmtResp.setString(3, tfEmail.getText());
+                stmtResp.setString(4, tfTelefone.getText());
 
                 ResultSet rsResp = stmtResp.executeQuery();
                 if (rsResp.next()) {
@@ -133,25 +181,11 @@ public class CadastroController implements Initializable {
                     throw new SQLException("Falha ao salvar responsável, ID não retornado.");
                 }
 
-                // --- ETAPA 2: Buscar Profissional ---
-                // (Assumindo que o nome digitado em tfProfissional [cite: 34] existe no banco)
-                stmtSelectProf.setString(1, tfProfissional.getText());
-                ResultSet rsProf = stmtSelectProf.executeQuery();
-                if (rsProf.next()) {
-                    idProfissional = rsProf.getLong(1);
-                    System.out.println("Profissional encontrado com ID: " + idProfissional);
-                } else {
-                    // Se não encontrar, o nome foi digitado errado ou não existe
-                    throw new SQLException("Profissional especializado '" + tfProfissional.getText() + "' não encontrado no banco. Cadastre-o primeiro.");
-                }
-                // TODO: VERIFICAR SE NAO CONSEGUIMOS CADASTRAR AUTOMATICAMENTE CASO NAO EXISTA (acima)
-                // TODO: OU ENTAO DEIXAR O PROFISSIONAL COMO DROPDOWN E CRIAR UM CRUD PRA ELES
-
-                // --- ETAPA 3: Salvar Aluno ---
-                stmtAluno.setString(1, tfNome.getText()); // [cite: 27]
-                stmtAluno.setDate(2, Date.valueOf(dpDataNascimento.getValue()));
-                stmtAluno.setString(3, chSerieTurma.getValue()); // [cite: 28]
-                stmtAluno.setInt(4, Integer.parseInt(tfRA.getText())); // [cite: 35]
+                // --- ETAPA 2: Salvar Aluno ---
+                stmtAluno.setString(1, tfNome.getText());
+                stmtAluno.setDate(2, (dpDataNascimento.getValue() != null) ? Date.valueOf(dpDataNascimento.getValue()) : null);
+                stmtAluno.setInt(3, serieSel.getId()); // Salva o ID
+                stmtAluno.setString(4, tfRA.getText()); // Salva como String
                 stmtAluno.setLong(5, idResponsavel); // Usa o ID do Responsável
 
                 ResultSet rsAluno = stmtAluno.executeQuery();
@@ -162,13 +196,12 @@ public class CadastroController implements Initializable {
                     throw new SQLException("Falha ao salvar aluno, ID não retornado.");
                 }
 
-                // --- ETAPA 4: Salvar Laudo ---
-                stmtLaudo.setInt(1, Integer.parseInt(tfNumeroLaudo.getText())); // [cite: 31]
+                // --- ETAPA 3: Salvar Laudo ---
+                stmtLaudo.setString(1, tfNumeroLaudo.getText()); // Salva como String
                 stmtLaudo.setDate(2, (dpDataLaudo.getValue() != null) ? Date.valueOf(dpDataLaudo.getValue()) : null);
-                stmtLaudo.setString(3, taObservacoes.getText()); // [cite: 30]
-                stmtLaudo.setString(4, getTipoNecessidadeSelecionada()); // Helper para pegar os checkboxes [cite: 29, 30]
+                stmtLaudo.setString(3, taObservacoes.getText());
+                stmtLaudo.setString(4, getTipoNecessidadeSelecionada());
                 stmtLaudo.setLong(5, idAluno); // Usa o ID do Aluno
-                stmtLaudo.setLong(6, idProfissional); // Usa o ID do Profissional
 
                 stmtLaudo.executeUpdate();
                 System.out.println("Laudo salvo com sucesso.");
@@ -194,19 +227,12 @@ public class CadastroController implements Initializable {
             System.err.println("Erro de SQL ao salvar no banco de dados:");
             e.printStackTrace();
             exibirAlertaErro("Erro de Banco de Dados", "Não foi possível salvar o registro.", "Erro: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.err.println("Erro de formato de número (RA ou Nro Laudo):");
-            e.printStackTrace();
-            exibirAlertaErro("Erro de Formato", "RA e Número do Laudo devem ser números.", "Erro: " + e.getMessage());
         } catch (Exception e) {
             System.err.println("Erro inesperado:");
             e.printStackTrace();
-            exibirAlertaErro("Erro Inesperado", "Ocorreu um erro.", "Erro: " + e.getMessage());
+            exibirAlertaErro("Erro Inesperado", "Ocorreu um erro.", "Verifique se todos os campos obrigatórios e datas foram preenchidos. Erro: " + e.getMessage());
         }
     }
-
-
-    // --- MÉTODOS HELPER (AJUDANTES) ---
 
     /**
      * Helper para exibir um Alerta de Erro padronizado.
@@ -220,7 +246,7 @@ public class CadastroController implements Initializable {
     }
 
     /**
-     * Helper para juntar os textos dos CheckBoxes [cite: 29, 30] em uma única String.
+     * Helper para juntar os textos dos CheckBoxes em uma única String.
      */
     private String getTipoNecessidadeSelecionada() {
         return listaNecessidades.stream()
