@@ -99,7 +99,6 @@
                   <Label layoutX="57.0" layoutY="201.0" text="Registro de Nova Intervenção" />
                   <DatePicker fx:id="dpDataIntervencao" layoutX="57.0" layoutY="286.0" prefHeight="25.0" prefWidth="236.0" />
                   <Label layoutX="57.0" layoutY="269.0" text="Data da Intervenção" />
-                  <ChoiceBox fx:id="chResponsavel" layoutX="319.0" layoutY="286.0" prefHeight="25.0" prefWidth="516.0" />
                   <Label layoutX="320.0" layoutY="269.0" text="Responsável pela Intervenção" />
                   <TextArea fx:id="taObservacoes" layoutX="57.0" layoutY="338.0" prefHeight="96.0" prefWidth="489.0" />
                   <Label layoutX="57.0" layoutY="320.0" text="Observações" />
@@ -117,6 +116,7 @@
                   <TextField fx:id="tfSerieTurma" layoutX="467.0" layoutY="157.0" prefHeight="25.0" prefWidth="150.0" />
                   <TextField fx:id="tfTituloIntervencao" layoutX="57.0" layoutY="238.0" prefHeight="25.0" prefWidth="778.0" />
                   <Label layoutX="57.0" layoutY="221.0" text="Título Intervenção" />
+                  <TextField fx:id="tfResponsavel" layoutX="320.0" layoutY="286.0" prefHeight="25.0" prefWidth="515.0" />
                </children>
         </AnchorPane>
       </items>
