@@ -26,6 +26,7 @@ public class LoginController {
     @FXML private PasswordField pfSenha;
     @FXML private TextField tfEmail;
 
+
     @FXML
     void onClickEntrar(ActionEvent event) {
 
