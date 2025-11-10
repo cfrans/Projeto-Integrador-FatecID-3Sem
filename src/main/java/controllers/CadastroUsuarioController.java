@@ -155,4 +155,5 @@ public class CadastroUsuarioController implements Initializable {
         // Chama o metodo estatico da NavegadorUtil
         NavegadorUtil.voltarParaMenu(event);
     }
+
 }

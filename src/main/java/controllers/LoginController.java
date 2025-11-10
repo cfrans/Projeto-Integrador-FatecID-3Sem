@@ -40,7 +40,14 @@ public class LoginController {
         }
 
         // 2. SQL para buscar o usuário pelo email
-        String sql = "SELECT id_usuario, nome, senha_hash FROM usuario WHERE email = ?";
+        //String sql = "SELECT id_usuario, nome, senha_hash FROM usuario WHERE email = ?";
+        String sql = """
+          SELECT u.id_usuario, u.nome, u.senha_hash, f.nome AS funcao
+          FROM usuario u
+          INNER JOIN funcao f ON u.id_funcao = f.id_funcao
+          WHERE u.email = ?
+        """;
+
 
         try (Connection conn = ConexaoDB.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -60,13 +67,15 @@ public class LoginController {
 
                     int id = rs.getInt("id_usuario");
                     String nome = rs.getString("nome");
+                    String funcao = rs.getString("funcao");
 
                     // 5. Salva o usuário na Sessão Global
-                    SessaoUsuario.setUsuarioLogado(id, nome);
+                    SessaoUsuario.setUsuarioLogado(id, nome, funcao);
                     System.out.println("LOGIN SUCESSO! ID: " + id + ", Nome: " + nome);
 
                     // 6. Muda para a tela de Menu
                     mudarTela(event, "/view/Menu.fxml");
+
 
                 } else {
                     // Senha incorreta

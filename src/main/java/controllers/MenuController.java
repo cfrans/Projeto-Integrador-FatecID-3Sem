@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import util.ControleAcesso;
 
 import java.io.IOException;
 
@@ -46,8 +47,14 @@ public class MenuController {
 
     @FXML
     void abrirCadastrarUsuario() throws IOException {
+        // Verifica a permissão antes de tentar abrir a tela
+        if (!ControleAcesso.verificarPermissao("T.I.")) return;
+
+        // Chama o método mudarTela com apenas o caminho FXML
         mudarTela("/view/CadastroUsuario.fxml");
     }
+
+    
 
     @FXML
     void abrirNovoCadastro() throws IOException {
@@ -97,6 +104,10 @@ public class MenuController {
         stage.setScene(new Scene(root));
         stage.show();
     }
+
+
+    
+
 }
 
 
