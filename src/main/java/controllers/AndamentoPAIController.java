@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import util.ControleAcesso;
 
 import java.io.IOException;
 
@@ -49,6 +50,7 @@ public class AndamentoPAIController {
 
     @FXML
     void onClickCriarFinalizacao(ActionEvent event) throws IOException {
+        if (!ControleAcesso.verificarPermissao("T.I.","Professor","Profissional Especializado")) return;
         Parent root = FXMLLoader.load(getClass().getResource("/view/FinalizacaoPAI.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

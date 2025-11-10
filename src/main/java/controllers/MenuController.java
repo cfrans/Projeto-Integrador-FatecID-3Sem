@@ -48,7 +48,7 @@ public class MenuController {
     @FXML
     void abrirCadastrarUsuario() throws IOException {
         // Verifica a permissão antes de tentar abrir a tela
-        if (!ControleAcesso.verificarPermissao("T.I.")) return;
+        if (!ControleAcesso.verificarPermissao("T.I.", "Coordenador")) return;
 
         // Chama o método mudarTela com apenas o caminho FXML
         mudarTela("/view/CadastroUsuario.fxml");
@@ -58,31 +58,37 @@ public class MenuController {
 
     @FXML
     void abrirNovoCadastro() throws IOException {
+        if (!ControleAcesso.verificarPermissao("T.I.","Coordenador")) return;
         mudarTela("/view/Cadastro.fxml");
     }
 
     @FXML
     void abrirPlano() throws IOException {
+        if (!ControleAcesso.verificarPermissao("T.I.","Professor","Profissional Especializado")) return;
         mudarTela("/view/PAI.fxml");
     }
 
     @FXML
     void abrirHistorico() throws IOException {
+        if (!ControleAcesso.verificarPermissao("T.I.","Professor","Coordenador","Profissional Especializado")) return;
         mudarTela("/view/Intervencoes.fxml");
     }
 
     @FXML
     void abrirRendimento() throws IOException {
+        if (!ControleAcesso.verificarPermissao("T.I.","Professor")) return;
         mudarTela("/view/Rendimento.fxml");
     }
 
     @FXML
     void abrirAndamento() throws IOException {
+        if (!ControleAcesso.verificarPermissao("T.I.","Professor","Profissional Especializado")) return;
         mudarTela("/view/AndamentoPAI.fxml");
     }
 
     @FXML
     void abrirConsultaRendimento() throws IOException {
+        if (!ControleAcesso.verificarPermissao("T.I.","Professor","Profissional Especializado", "Coordenador")) return;
         mudarTela("/view/ConsultaRendimento.fxml");
     }
 
