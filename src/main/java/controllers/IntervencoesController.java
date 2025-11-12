@@ -43,7 +43,7 @@ public class IntervencoesController implements Initializable {
     @FXML private TextField tfSerieTurma;
     @FXML private TextField tfTituloIntervencao;
     @FXML private ChoiceBox<AlunoItem> chNome;
-    @FXML private ChoiceBox<UsuarioItem> chResponsavel;
+    @FXML private TextField tfResponsavelIntervencao;
 
     private ObservableList<AlunoItem> listaAlunos = FXCollections.observableArrayList();
     private ObservableList<UsuarioItem> listaUsuarios = FXCollections.observableArrayList();
@@ -58,7 +58,7 @@ public class IntervencoesController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         // 1. Vincular as listas aos ChoiceBoxes
         chNome.setItems(listaAlunos);
-        chResponsavel.setItems(listaUsuarios); // Agora isso funciona
+        //chResponsavel.setItems(listaUsuarios); // Agora isso funciona
 
         // 2. Carregar os dados do banco
         carregarAlunos();
@@ -155,10 +155,10 @@ public class IntervencoesController implements Initializable {
 
         // Pegar os IDs dos itens selecionados
         AlunoItem alunoSel = chNome.getValue();
-        UsuarioItem usuarioSel = chResponsavel.getValue();
+        //UsuarioItem usuarioSel = tfResponsavel.getValue();
 
         // Validação
-        if (alunoSel == null || usuarioSel == null || tfTituloIntervencao.getText().isEmpty() || dpDataIntervencao.getValue() == null) {
+        if (alunoSel == null || tfTituloIntervencao.getText().isEmpty() || dpDataIntervencao.getValue() == null) {
             exibirAlertaErro("Campos obrigatórios", "Aluno, Responsável, Título e Data são obrigatórios.");
             return;
         }
@@ -177,7 +177,7 @@ public class IntervencoesController implements Initializable {
             // 4. id_aluno
             stmt.setInt(4, alunoSel.getId());
             // 5. id_usuario (Responsável pela intervenção)
-            stmt.setInt(5, usuarioSel.getId());
+           // stmt.setInt(5, usuarioSel.getId());
 
             stmt.executeUpdate();
 
@@ -239,14 +239,14 @@ public class IntervencoesController implements Initializable {
 
         //Limpando ChoiceBoxes (Dropdowns)
         chNome.getSelectionModel().clearSelection();
-        chResponsavel.getSelectionModel().clearSelection(); // ATUALIZADO
+        //chResponsavel.getSelectionModel().clearSelection(); // ATUALIZADO
 
         //Limpando TextFields
         tfRA.clear();
         tfSerieTurma.clear();
         tfOutroTipoIntervencao.clear();
         tfTituloIntervencao.clear(); // ADICIONADO
-        // tfResponsavel.clear(); // REMOVIDO (agora é ChoiceBox)
+        tfResponsavelIntervencao.clear();
 
         //Limpando o DatePicker
         dpDataIntervencao.setValue(null);

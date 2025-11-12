@@ -10,6 +10,8 @@ CREATE TABLE PAI (
     titulo VARCHAR(255) NOT NULL,
     descricao VARCHAR(255) NOT NULL,
     meta VARCHAR(255) NOT NULL,
+    meta2 VARCHAR(255) NOT NULL,
+    meta3 VARCHAR(255) NOT NULL,
     recurso_necessario VARCHAR(255) NOT NULL,
     prazo_revisao DATE NOT NULL,
     data DATE NOT NULL,
