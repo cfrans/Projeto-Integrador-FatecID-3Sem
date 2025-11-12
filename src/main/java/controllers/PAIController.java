@@ -162,10 +162,12 @@ public class PAIController implements Initializable {
             // mas o banco só tem 1 coluna.
             // Estamos salvando apenas a Meta 1.
             stmtInsertPAI.setString(3, tfMeta.getText());
-            stmtInsertPAI.setString(4, tfRecursos.getText());
-            stmtInsertPAI.setDate(5, Date.valueOf(dpRevisaoPlano.getValue()));
-            stmtInsertPAI.setString(6, "Em Andamento"); // Status inicial
-            stmtInsertPAI.setInt(7, alunoSel.getId()); // ID do Aluno
+            stmtInsertPAI.setString(4, tfMeta2.getText());
+            stmtInsertPAI.setString(5, tfMeta3.getText());
+            stmtInsertPAI.setString(6, tfRecursos.getText());
+            stmtInsertPAI.setDate(7, Date.valueOf(dpRevisaoPlano.getValue()));
+            stmtInsertPAI.setString(8, "Em Andamento"); // Status inicial
+            stmtInsertPAI.setInt(9, alunoSel.getId()); // ID do Aluno
             //stmtInsertPAI.setInt(8, usuarioSel.getId()); // ID do Usuário Responsável (do ChoiceBox)
 
             stmtInsertPAI.executeUpdate();
