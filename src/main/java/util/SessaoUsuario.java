@@ -5,6 +5,7 @@ public class SessaoUsuario {
     private static int idUsuario;
     private static String nomeUsuario;
     private static String funcaoUsuario;
+    private static int idPaiSelecionado;
 
     /**
      * Define o usuário que acabou de logar.
@@ -39,6 +40,15 @@ public class SessaoUsuario {
         idUsuario = 0;
         nomeUsuario = null;
         funcaoUsuario = null;
+        idPaiSelecionado = 0;
+    }
+
+    public static void setIdPaiSelecionado(int id) {
+        idPaiSelecionado = id;
+    }
+
+    public static int getIdPaiSelecionado() {
+        return idPaiSelecionado;
     }
 }
 
