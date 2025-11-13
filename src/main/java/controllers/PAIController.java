@@ -12,7 +12,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import java.time.LocalDate;
-
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.Date;
@@ -20,10 +19,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
 import database.ConexaoDB;
 import util.AlunoItem;
-import util.UsuarioItem;
+import util.SessaoUsuario;
 
 public class PAIController implements Initializable {
 
@@ -42,24 +40,31 @@ public class PAIController implements Initializable {
     @FXML private ChoiceBox<AlunoItem> chNome;
     @FXML private TextField tfResponsavelPlano;
 
-    // Listas para guardar os dados do banco
+    // Lista para guardar os dados do banco
     private ObservableList<AlunoItem> listaAlunos = FXCollections.observableArrayList();
-    private ObservableList<UsuarioItem> listaUsuarios = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // 1. Vincular as listas aos ChoiceBoxes
+        // 1. Vincular lista de Alunos
         chNome.setItems(listaAlunos);
 
-
-        // 2. Carregar os dados
+        // 2. Carregar Alunos
         carregarAlunos();
-
 
         // 3. Fazer os campos RA e Turma atualizarem sozinhos
         chNome.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldVal, newVal) -> preencherDadosAluno(newVal)
         );
+
+        // 4. Preenche o responsável com o usuário logado e desabilita o campo
+        if (SessaoUsuario.getNomeUsuario() != null) {
+            tfResponsavelPlano.setText(SessaoUsuario.getNomeUsuario());
+            tfResponsavelPlano.setDisable(true); // Deixa o campo cinza/não editável
+        } else {
+            // Caso ninguém esteja logado (segurança)
+            tfResponsavelPlano.setText("Nenhum usuário logado");
+            tfResponsavelPlano.setDisable(true);
+        }
     }
 
     private void carregarAlunos() {
@@ -76,34 +81,11 @@ public class PAIController implements Initializable {
         } catch (SQLException e) {
             System.err.println("Erro ao carregar alunos!");
             e.printStackTrace();
-            // Adicionamos um alerta de erro para o usuário final também
             exibirAlertaErro("Erro de Banco", "Falha Crítica ao Carregar Alunos", "Não foi possível carregar a lista de alunos. " + e.getMessage());
         }
     }
 
-    /**
-     * Carrega os USUÁRIOS (ex: Coordenadores) do banco
-     */
-   /* private void carregarUsuarios() {
-        String sql = "SELECT id_usuario, nome FROM usuario ORDER BY nome";
-        try (Connection conn = ConexaoDB.getConexao();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
 
-            listaUsuarios.clear();
-            while (rs.next()) {
-                listaUsuarios.add(new UsuarioItem(
-                        rs.getInt("id_usuario"),
-                        rs.getString("nome")
-                ));
-            }
-        } catch (SQLException e) {
-            System.err.println("Erro ao carregar usuários!");
-            e.printStackTrace();
-        }
-    }*/
-
-    // Metodo que é chamado quando um aluno é selecionado no dropdown
     private void preencherDadosAluno(AlunoItem aluno) {
         if (aluno == null) {
             tfRA.clear();
@@ -135,46 +117,59 @@ public class PAIController implements Initializable {
     @FXML
     void onClickSalvar(ActionEvent event) {
 
-        String sqlInsertPAI = "INSERT INTO pai (titulo, descricao, meta, recurso_necessario, prazo_revisao, status, id_aluno, id_usuario) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sqlInsertPAI = "INSERT INTO pai (titulo, descricao, meta, meta2, meta3, recurso_necessario, prazo_revisao, status, id_aluno, id_usuario) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        // Pegar os IDs dos itens selecionados nos ChoiceBoxes
+        // Pegar os IDs dos itens selecionados
         AlunoItem alunoSel = chNome.getValue();
-        //UsuarioItem usuarioSel = tfResponsavelPlano.getValue();
+        // Pega o ID do usuário logado na SESSÃO
+        int idUsuarioLogado = SessaoUsuario.getIdUsuario();
 
-        // Validação if (alunoSel == null || usuarioSel == null || tfTituloPlano.getText().isEmpty() || dpRevisaoPlano.getValue() == null) {
+        // Validação
         if (alunoSel == null || tfTituloPlano.getText().isEmpty() || dpRevisaoPlano.getValue() == null) {
-            exibirAlertaErro("Erro de Validação", "Campos obrigatórios", "Aluno, Responsável, Título e Prazo de Revisão são obrigatórios.");
+            exibirAlertaErro("Erro de Validação", "Campos obrigatórios", "Aluno, Título e Prazo de Revisão são obrigatórios.");
+            return;
+        }
+
+        if (idUsuarioLogado == 0) {
+            exibirAlertaErro("Erro de Sessão", "Usuário não logado", "Não foi possível identificar o usuário logado. Faça login novamente.");
             return;
         }
 
         try (Connection conn = ConexaoDB.getConexao();
              PreparedStatement stmtInsertPAI = conn.prepareStatement(sqlInsertPAI)) {
 
-            // --- 1. Inserir o PAI ---
             System.out.println("---  Inserindo novo PAI ---");
             System.out.println("ID Aluno: " + alunoSel.getId());
-           // System.out.println("ID Usuário (Responsável): " + usuarioSel.getId());
+            System.out.println("ID Usuário (Responsável): " + idUsuarioLogado);
 
+            // Ordem dos parâmetros
+
+            // 1. titulo
             stmtInsertPAI.setString(1, tfTituloPlano.getText());
+            // 2. descricao
             stmtInsertPAI.setString(2, taDescricaoPlano.getText());
-            // TODO: Você tem 3 campos de meta no FXML (tfMeta, tfMeta2, tfMeta3)
-            // mas o banco só tem 1 coluna.
-            // Estamos salvando apenas a Meta 1.
+            // 3. meta
             stmtInsertPAI.setString(3, tfMeta.getText());
+            // 4. meta2 (NOVO)
             stmtInsertPAI.setString(4, tfMeta2.getText());
+            // 5. meta3 (NOVO)
             stmtInsertPAI.setString(5, tfMeta3.getText());
+            // 6. recurso_necessario
             stmtInsertPAI.setString(6, tfRecursos.getText());
+            // 7. prazo_revisao
             stmtInsertPAI.setDate(7, Date.valueOf(dpRevisaoPlano.getValue()));
+            // 8. status
             stmtInsertPAI.setString(8, "Em Andamento"); // Status inicial
-            stmtInsertPAI.setInt(9, alunoSel.getId()); // ID do Aluno
-            //stmtInsertPAI.setInt(8, usuarioSel.getId()); // ID do Usuário Responsável (do ChoiceBox)
+            // 9. id_aluno
+            stmtInsertPAI.setInt(9, alunoSel.getId());
+            // 10. id_usuario (da SESSÃO)
+            stmtInsertPAI.setInt(10, idUsuarioLogado);
 
             stmtInsertPAI.executeUpdate();
 
             System.out.println(" PAI salvo e associado ao aluno com sucesso!");
 
-            // Sucesso
             NavegadorUtil.exibirSucessoEVOLTAR(event, "Salvo com sucesso!",
                     "PAI salvo e associado ao aluno com sucesso!");
 
@@ -189,7 +184,7 @@ public class PAIController implements Initializable {
 
     private void exibirAlertaErro(String titulo, String cabecalho, String conteudo) {
         Alert alertErro = new Alert(Alert.AlertType.ERROR);
-        alertErro.setTitle(titulo); //
+        alertErro.setTitle(titulo);
         alertErro.setHeaderText(cabecalho);
         alertErro.setContentText(conteudo);
         alertErro.showAndWait();
@@ -208,11 +203,10 @@ public class PAIController implements Initializable {
         tfRecursos.clear();
         tfSerieTurma.clear();
         tfTituloPlano.clear();
-        tfResponsavelPlano.clear();
+        // O tfResponsavelPlano não é limpo, pois ele é estático (usuário logado)
 
         //Limpando ChoiceBoxes (Dropdowns)
         chNome.getSelectionModel().clearSelection();
-
 
         //Limpando o DatePicker
         dpRevisaoPlano.setValue(null);
@@ -226,7 +220,6 @@ public class PAIController implements Initializable {
 
     @FXML void onClickVoltar(ActionEvent event) {
         System.out.println("Clicado em voltar.\nChamando o método estático de voltar ao menu");
-        // Chama o metodo estatico da NavegadorUtil
         NavegadorUtil.voltarParaMenu(event);
     }
 }
