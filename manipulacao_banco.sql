@@ -10,8 +10,6 @@ CREATE TABLE PAI (
     titulo VARCHAR(255) NOT NULL,
     descricao VARCHAR(255) NOT NULL,
     meta VARCHAR(255) NOT NULL,
-    meta2 VARCHAR(255) NOT NULL,
-    meta3 VARCHAR(255) NOT NULL,
     recurso_necessario VARCHAR(255) NOT NULL,
     prazo_revisao DATE NOT NULL,
     data DATE NOT NULL,
@@ -213,6 +211,8 @@ CREATE TABLE pai (
     titulo VARCHAR(100) NOT NULL,
     descricao TEXT,
     meta VARCHAR(100) NOT NULL,
+    meta2 VARCHAR(255) NOT NULL,
+    meta3 VARCHAR(255) NOT NULL,
     recurso_necessario VARCHAR(100) NOT NULL,
     prazo_revisao DATE NOT NULL,
     status VARCHAR(50),
@@ -377,9 +377,9 @@ INSERT INTO aluno (nome, ra, data_nascimento, id_responsavel, id_serie_turma) VA
 ---
 
 -- Inserir PAIs (depende de 'aluno' e 'usuario')
-INSERT INTO pai (titulo, descricao, meta, recurso_necessario, prazo_revisao, status, id_aluno, id_usuario) VALUES
-('PAI de Leitura 2025', 'Foco em alfabetização e interpretação de texto.', 'Ler 1 livro por mês', 'Livros da biblioteca', '2025-12-31', 'Em Andamento', 2, 1), -- PAI da Beatriz(2), criado pela Ana(1)
-('PAI de Matemática', 'Foco em operações de multiplicação.', 'Dominar tabuada do 7', 'Jogos educativos', '2025-06-30', 'Em Andamento', 1, 2); -- PAI do Caio(1), criado pelo Bruno(2)
+INSERT INTO pai (titulo, descricao, meta, meta2, meta3, recurso_necessario, prazo_revisao, status, id_aluno, id_usuario) VALUES
+('PAI de Leitura 2025', 'Foco em alfabetização e interpretação de texto.', 'Ler 1 livro por mês', 'Ler 2 livros por mês', 'Ler 3 livros por mês', 'Livros da biblioteca', '2025-12-31', 'Em Andamento', 2, 1), -- PAI da Beatriz(2), criado pela Ana(1)
+('PAI de Matemática', 'Foco em operações de multiplicação.', 'Dominar tabuada do 7', 'Dominar tabuada do 8', 'Dominar tabuada do 9', 'Jogos educativos', '2025-06-30', 'Em Andamento', 1, 2); -- PAI do Caio(1), criado pelo Bruno(2)
 
 -- Inserir Laudos (depende de 'aluno')
 INSERT INTO laudo (numero, data, descricao, tipo, id_aluno) VALUES
@@ -400,3 +400,12 @@ INSERT INTO rendimento (avaliacao1, avaliacao2, simulado, atitude_academica, ent
 
 INSERT INTO rendimento (avaliacao1, avaliacao2, simulado, atitude_academica, entrega, id_materia, id_aluno, id_usuario, id_tipo_participacao, justificativa_entrega) VALUES
 (5.0, 4.5, 3.0, 6.0, 'Parcialmente Entregue', 3, 1, 2, 4, 'Esqueceu metade dos trabalhos'); -- Rend. Caio(1) em Ciên.(3) pelo Bruno(2), part. Baixa(4)
+
+
+select * from pai;
+
+ALTER TABLE pai ADD COLUMN meta2 VARCHAR(255) NOT NULL DEFAULT '';
+ALTER TABLE pai ADD COLUMN meta3 VARCHAR(255) NOT NULL DEFAULT '';
+
+
+

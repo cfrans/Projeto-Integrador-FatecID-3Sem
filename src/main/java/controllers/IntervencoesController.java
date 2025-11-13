@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import database.ConexaoDB;
 import util.AlunoItem;
-import util.UsuarioItem;
+import util.SessaoUsuario;
 
 public class IntervencoesController implements Initializable {
 
@@ -46,7 +46,6 @@ public class IntervencoesController implements Initializable {
     @FXML private TextField tfResponsavelIntervencao;
 
     private ObservableList<AlunoItem> listaAlunos = FXCollections.observableArrayList();
-    private ObservableList<UsuarioItem> listaUsuarios = FXCollections.observableArrayList();
 
     // Lista de Checkboxes para o helper
     private List<CheckBox> listaTiposIntervencao;
@@ -56,15 +55,13 @@ public class IntervencoesController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // 1. Vincular as listas aos ChoiceBoxes
+        // 1. Vincular a lista de Alunos
         chNome.setItems(listaAlunos);
-        //chResponsavel.setItems(listaUsuarios); // Agora isso funciona
 
-        // 2. Carregar os dados do banco
+        // 2. Carregar Alunos
         carregarAlunos();
-        carregarUsuarios();
 
-        // 3. Agrupar checkboxes para facilitar a limpeza e leitura
+        // 3. Agrupar checkboxes
         listaTiposIntervencao = Arrays.asList(
                 cbTipoIntervencao1, cbTipoIntervencao2, cbTipoIntervencao3,
                 cbTipoIntervencao4, cbTipoIntervencao5
@@ -74,6 +71,18 @@ public class IntervencoesController implements Initializable {
         chNome.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldVal, newVal) -> preencherDadosAluno(newVal)
         );
+
+        // 5. Preenche o responsável com o usuário logado e desabilita o campo
+        if (SessaoUsuario.getNomeUsuario() != null) {
+            tfResponsavelIntervencao.setText(SessaoUsuario.getNomeUsuario());
+            tfResponsavelIntervencao.setDisable(true); // Deixa o campo cinza/não editável
+        } else {
+            tfResponsavelIntervencao.setText("Nenhum usuário logado");
+            tfResponsavelIntervencao.setDisable(true);
+        }
+
+        // 6 "Liga" a propriedade 'disable' do campo de texto ao OPOSTO da caixa de seleção
+        tfOutroTipoIntervencao.disableProperty().bind(cbTipoIntervencao5.selectedProperty().not());
     }
 
     /**
@@ -91,28 +100,6 @@ public class IntervencoesController implements Initializable {
             }
         } catch (SQLException e) {
             System.err.println("Erro ao carregar alunos!");
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Carrega os usuários (Professores, Coordenadores) do banco
-     */
-    private void carregarUsuarios() {
-        String sql = "SELECT id_usuario, nome FROM usuario ORDER BY nome";
-        try (Connection conn = ConexaoDB.getConexao();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-
-            listaUsuarios.clear();
-            while (rs.next()) {
-                listaUsuarios.add(new UsuarioItem(
-                        rs.getInt("id_usuario"),
-                        rs.getString("nome")
-                ));
-            }
-        } catch (SQLException e) {
-            System.err.println("Erro ao carregar usuários!");
             e.printStackTrace();
         }
     }
@@ -155,11 +142,17 @@ public class IntervencoesController implements Initializable {
 
         // Pegar os IDs dos itens selecionados
         AlunoItem alunoSel = chNome.getValue();
-        //UsuarioItem usuarioSel = tfResponsavel.getValue();
+        // Pega o ID do usuário logado na SESSÃO
+        int idUsuarioLogado = SessaoUsuario.getIdUsuario();
 
         // Validação
         if (alunoSel == null || tfTituloIntervencao.getText().isEmpty() || dpDataIntervencao.getValue() == null) {
-            exibirAlertaErro("Campos obrigatórios", "Aluno, Responsável, Título e Data são obrigatórios.");
+            exibirAlertaErro("Campos obrigatórios", "Aluno, Título e Data são obrigatórios.");
+            return;
+        }
+
+        if (idUsuarioLogado == 0) {
+            exibirAlertaErro("Usuário não logado", "Não foi possível identificar o usuário logado. Faça login novamente.");
             return;
         }
 
@@ -168,7 +161,7 @@ public class IntervencoesController implements Initializable {
 
             System.out.println("--- Salvando Intervenção ---");
 
-            // 1. observacao (Combina os campos de "Tipo" com a observação)
+            // 1. observacao
             stmt.setString(1, getObservacoesCompletas());
             // 2. titulo
             stmt.setString(2, tfTituloIntervencao.getText());
@@ -176,14 +169,13 @@ public class IntervencoesController implements Initializable {
             stmt.setDate(3, Date.valueOf(dpDataIntervencao.getValue()));
             // 4. id_aluno
             stmt.setInt(4, alunoSel.getId());
-            // 5. id_usuario (Responsável pela intervenção)
-           // stmt.setInt(5, usuarioSel.getId());
+            // 5. id_usuario (da SESSÃO)
+            stmt.setInt(5, idUsuarioLogado);
 
             stmt.executeUpdate();
 
             System.out.println("Intervenção salva com sucesso!");
 
-            // Chama o metodo estatico da NavegadorUtil
             NavegadorUtil.exibirSucessoEVOLTAR(event, "Salvo com sucesso!",
                     "Intervenção salva com sucesso!");
 
@@ -239,14 +231,13 @@ public class IntervencoesController implements Initializable {
 
         //Limpando ChoiceBoxes (Dropdowns)
         chNome.getSelectionModel().clearSelection();
-        //chResponsavel.getSelectionModel().clearSelection(); // ATUALIZADO
 
         //Limpando TextFields
         tfRA.clear();
         tfSerieTurma.clear();
         tfOutroTipoIntervencao.clear();
-        tfTituloIntervencao.clear(); // ADICIONADO
-        tfResponsavelIntervencao.clear();
+        tfTituloIntervencao.clear();
+        // Não limpa o tfResponsavelIntervencao
 
         //Limpando o DatePicker
         dpDataIntervencao.setValue(null);
@@ -266,7 +257,6 @@ public class IntervencoesController implements Initializable {
     @FXML
     void onClickVoltar(ActionEvent event) {
         System.out.println("Clicado em voltar.\nChamando o método estático de voltar ao menu");
-        // Chama o metodo estatico da NavegadorUtil
         NavegadorUtil.voltarParaMenu(event);
     }
 
