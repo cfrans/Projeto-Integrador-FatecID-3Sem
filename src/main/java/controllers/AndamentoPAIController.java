@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import util.ControladorNavegavel;
 import util.ControleAcesso;
 import java.io.IOException;
 import java.net.URL;
@@ -25,9 +26,18 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import database.ConexaoDB;
-import util.SessaoUsuario; // Usado para guardar dados entre telas
+import util.SessaoUsuario;
 
-public class AndamentoPAIController implements Initializable {
+public class AndamentoPAIController implements Initializable, ControladorNavegavel {
+
+    // Variável para guardar o controlador principal
+    private MenuController menuController;
+
+    // Método obrigatório da interface
+    @Override
+    public void setMenuController(MenuController menuController) {
+        this.menuController = menuController;
+    }
 
     @FXML private Button btAbrirDescricao;
     @FXML private Button btCriarFinalizacao;
@@ -39,28 +49,18 @@ public class AndamentoPAIController implements Initializable {
     @FXML private TableColumn<PAIAndamento, String> colStatus;
     @FXML private TableColumn<PAIAndamento, String> colTitulo;
 
-    // Lista para popular a tabela
     private ObservableList<PAIAndamento> listaPAIs = FXCollections.observableArrayList();
 
-    /**
-     * Roda quando a tela é carregada
-     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // 1. Configura as colunas da tabela para ler os dados da classe PAIAndamento
         colTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
         colAluno.setCellValueFactory(new PropertyValueFactory<>("nomeAluno"));
         colResponsavel.setCellValueFactory(new PropertyValueFactory<>("nomeResponsavel"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colRevisao.setCellValueFactory(new PropertyValueFactory<>("prazoRevisao"));
-
-        // 2. Vincula a lista de dados à tabela
         tabelaPAIs.setItems(listaPAIs);
-
-        // 3. Carrega os dados do banco
         carregarPAIs();
 
-        // 4. Adiciona um "listener" para habilitar/desabilitar botões
         tabelaPAIs.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldSelection, newSelection) -> {
                     if (newSelection != null) {
@@ -74,19 +74,14 @@ public class AndamentoPAIController implements Initializable {
         );
     }
 
-    /**
-     * Busca os PAIs no banco e popula a tabela
-     */
     private void carregarPAIs() {
         listaPAIs.clear();
-
-        // SQL com JOIN para buscar nomes do Aluno e do Usuário (Responsável)
         String sql = "SELECT p.id_pai, p.titulo, p.status, p.prazo_revisao, " +
                 "a.nome AS nome_aluno, u.nome AS nome_responsavel " +
                 "FROM pai p " +
                 "JOIN aluno a ON p.id_aluno = a.id_aluno " +
                 "JOIN usuario u ON p.id_usuario = u.id_usuario " +
-                "WHERE p.status = 'Em Andamento' " + // Filtra por PAIs "Em Andamento"
+                "WHERE p.status = 'Em Andamento' " +
                 "ORDER BY p.prazo_revisao";
 
         try (Connection conn = ConexaoDB.getConexao();
@@ -103,9 +98,7 @@ public class AndamentoPAIController implements Initializable {
                         rs.getDate("prazo_revisao").toLocalDate()
                 ));
             }
-
         } catch (SQLException e) {
-            System.err.println("Erro ao carregar PAIs em andamento:");
             e.printStackTrace();
         }
     }
@@ -113,63 +106,45 @@ public class AndamentoPAIController implements Initializable {
 
     @FXML
     void onClickAbrirDescricao(ActionEvent event) throws IOException {
-        // Pega o PAI selecionado na tabela
         PAIAndamento paiSelecionado = tabelaPAIs.getSelectionModel().getSelectedItem();
-        if (paiSelecionado == null) return; // Segurança
+        if (paiSelecionado == null) return;
 
-        // Guarda o ID do PAI selecionado na "Sessão" para a próxima tela saber
         SessaoUsuario.setIdPaiSelecionado(paiSelecionado.getIdPai());
 
-        // Carrega a tela PAI.fxml (que deve ser atualizada para carregar dados)
-        // TODO: A tela PAI.fxml é de *criação*. O ideal seria ter uma tela
-        // PAI_Detalhes.fxml (mas por enquanto, reutilizamos a PAI.fxml)
-        Parent root = FXMLLoader.load(getClass().getResource("/view/PAI.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        if (menuController != null) {
+            menuController.navegarPara("/view/PAI.fxml");
+        } else {
+            System.err.println("Erro: MenuController não foi injetado!");
+        }
     }
-
 
     @FXML
     void onClickCriarFinalizacao(ActionEvent event) throws IOException {
-        // Pega o PAI selecionado na tabela
         PAIAndamento paiSelecionado = tabelaPAIs.getSelectionModel().getSelectedItem();
-        if (paiSelecionado == null) return; // Segurança
-
-        // Verifica permissão
+        if (paiSelecionado == null) return;
         if (!ControleAcesso.verificarPermissao("T.I.","Professor","Profissional Especializado")) return;
 
-        // Guarda o ID do PAI selecionado na "Sessão" para a próxima tela saber
         SessaoUsuario.setIdPaiSelecionado(paiSelecionado.getIdPai());
 
-        // Abre a tela de finalização
-        Parent root = FXMLLoader.load(getClass().getResource("/view/FinalizacaoPAI.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        if (menuController != null) {
+            menuController.navegarPara("/view/FinalizacaoPAI.fxml");
+        } else {
+            System.err.println("Erro: MenuController não foi injetado!");
+        }
     }
 
 
     @FXML
     void onClickVoltar(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Menu.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (menuController != null) {
+            menuController.navegarPara("/view/Home.fxml");
+        } else {
+            System.err.println("Erro: MenuController não foi injetado!");
         }
     }
 
 
-    // --- CLASSE INTERNA (HELPER)
-    // Classe simples para representar os dados de uma linha da tabela
-
+    // --- CLASSE INTERNA (HELPER) ---
     public static class PAIAndamento {
         private int idPai;
         private String titulo;

@@ -1,150 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
-  All rights reserved. Use is subject to license terms.
-
-  This file is available and licensed under the following license:
-
-  Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions
-  are met:
-
-  - Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
-  - Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the distribution.
-  - Neither the name of Oracle Corporation nor the names of its
-    contributors may be used to endorse or promote products derived
-    from this software without specific prior written permission.
-
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
--->
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RendimentoController">
+<AnchorPane
+        xmlns="http://javafx.com/javafx/24.0.1"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="controllers.RendimentoController"
+        prefHeight="551.0" prefWidth="898.0">
 
-  <children>
-    <MenuBar VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="Menu">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Novo Cadastro" />
-            <MenuItem mnemonicParsing="false" text="Plano de Acompanhamento Individual (PAI)" />
-                  <MenuItem mnemonicParsing="false" text="Acompanhamento PAI" />
-                  <MenuItem mnemonicParsing="false" text="Historico de Intervenções" />
-                  <MenuItem mnemonicParsing="false" text="Cadastro de Rendimento" />
-            <MenuItem mnemonicParsing="false" text="Acompanhamento Escolar" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Sair" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Editar">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Perfil" />
-            <MenuItem mnemonicParsing="false" text="Dados do Aluno/Responsável" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Sobre">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Projeto" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
-    <SplitPane focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-      <items>
-        <AnchorPane>
-               <children>
-
-                  <Label layoutX="288.0" layoutY="75.0" text="Cadastro de Rendimento Trimestral do Aluno" textFill="#3d5390">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-                   <Label layoutX="64.0" layoutY="129.0" text="Nome" />
-                   <Label layoutX="468.0" layoutY="129.0" text="Série/Turma" />
-                   <Label layoutX="646.0" layoutY="129.0" text="RA" />
-                   <Label layoutX="64.0" layoutY="188.0" text="Avaliações do Trimestre" />
-                   <Label layoutX="351.0" layoutY="214.0" text="Avaliação 1" />
-                   <Label layoutX="476.0" layoutY="214.0" text="Avaliação 2" />
-                   <Label layoutX="603.0" layoutY="214.0" text="Atitude Acadêmica" />
-                   <Label layoutX="730.0" layoutY="214.0" text="Simulado" />
-                   <Label layoutX="64.0" layoutY="273.0" text="Entrega de Trabalhos" />
-                   <Label layoutX="62.0" layoutY="325.0" text="Justificativa" />
-                   <Label layoutX="64.0" layoutY="214.0" text="Matéria" />
-                   <Label layoutX="62.0" layoutY="409.0" text="Participação" />
-                   <Label layoutX="348.0" layoutY="410.0" text="Justificativa" />
-
-
-                   <ChoiceBox fx:id="chNome" layoutX="64.0" layoutY="146.0" prefHeight="25.0" prefWidth="379.0" />
-                   <TextField fx:id="tfSerieTurma" layoutX="468.0" layoutY="146.0" prefHeight="25.0" prefWidth="150.0" />
-                   <TextField fx:id="tfRA" layoutX="646.0" layoutY="146.0" prefHeight="25.0" prefWidth="190.0" />
-
-                   <Separator layoutX="64.0" layoutY="184.0" prefHeight="0.0" prefWidth="770.0" />
-
-                   <ChoiceBox fx:id="chNome1" layoutX="65.0" layoutY="231.0" prefHeight="25.0" prefWidth="263.0" />
-                   <TextField fx:id="tfAvaliacao1" layoutX="351.0" layoutY="231.0" prefHeight="25.0" prefWidth="103.0" />
-                   <TextField fx:id="tfAvaliacao2" layoutX="476.0" layoutY="231.0" prefWidth="103.0" />
-                   <TextField fx:id="tfAtitudeAcademica" layoutX="603.0" layoutY="231.0" prefWidth="103.0" />
-                   <TextField fx:id="tfSimulado" layoutX="730.0" layoutY="231.0" prefWidth="103.0" />
-
-                   <Separator layoutX="64.0" layoutY="269.0" prefHeight="0.0" prefWidth="770.0" />
-
-                   <CheckBox fx:id="cbTipoEntrega1" layoutX="64.0" layoutY="300.0" mnemonicParsing="false" text="Totalmente Entregues" />
-                   <CheckBox fx:id="cbTipoEntrega2" layoutX="212.0" layoutY="301.0" mnemonicParsing="false" text="Parcialmente Entregues" />
-                   <CheckBox fx:id="cbTipoEntrega3" layoutX="370.0" layoutY="302.0" mnemonicParsing="false" text="Nenhum Entregue" />
-                   <TextArea fx:id="taJustificativa" layoutX="62.0" layoutY="342.0" prefHeight="52.0" prefWidth="770.0" />
-
-                   <Separator layoutX="62.0" layoutY="405.0" prefHeight="0.0" prefWidth="770.0" />
-
-                   <ChoiceBox fx:id="chNivelParticipacao" layoutX="63.0" layoutY="427.0" prefHeight="25.0" prefWidth="263.0" />
-                   <TextField fx:id="tfJustificativaPartifipacao" layoutX="348.0" layoutY="427.0" prefHeight="25.0" prefWidth="484.0" />
-
-                   <Button fx:id="btSalvar" layoutX="452.0" layoutY="466.0" mnemonicParsing="false" onAction="#onClickSalvar" prefHeight="27.0" prefWidth="120.0" text="Salvar" />
-                   <Button fx:id="btLimpar" layoutX="582.0" layoutY="466.0" mnemonicParsing="false" onAction="#onClickLimpar" prefHeight="27.0" prefWidth="120.0" text="Limpar" />
-                   <Button fx:id="btVoltar" layoutX="712.0" layoutY="466.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="120.0" text="Voltar" />
-
-
-               </children></AnchorPane>
-      </items>
-    </SplitPane>
-    <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
-      <children>
-        <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-      </children>
-      <padding>
-        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-      </padding>
-    </HBox>
-  </children>
-</VBox>
+    <children>
+        <Label layoutX="288.0" layoutY="75.0" text="Cadastro de Rendimento Trimestral do Aluno" textFill="#3d5390">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </Label>
+        <Label layoutX="64.0" layoutY="129.0" text="Nome" />
+        <Label layoutX="468.0" layoutY="129.0" text="Série/Turma" />
+        <Label layoutX="646.0" layoutY="129.0" text="RA" />
+        <Label layoutX="64.0" layoutY="188.0" text="Avaliações do
+ Trimestre" />
+        <Label layoutX="351.0" layoutY="214.0" text="Avaliação 1" />
+        <Label layoutX="476.0" layoutY="214.0" text="Avaliação 2" />
+        <Label layoutX="603.0" layoutY="214.0" text="Atitude Acadêmica" />
+        <Label layoutX="730.0" layoutY="214.0" text="Simulado" />
+        <Label layoutX="64.0" layoutY="273.0" text="Entrega de Trabalhos" />
+        <Label layoutX="62.0" layoutY="325.0" text="Justificativa" />
+        <Label layoutX="64.0" layoutY="214.0" text="Matéria" />
+        <Label layoutX="62.0" layoutY="409.0" text="Participação" />
+        <Label layoutX="348.0" layoutY="410.0" text="Justificativa" />
+        <ChoiceBox fx:id="chNome" layoutX="64.0" layoutY="146.0" prefHeight="25.0" prefWidth="379.0" />
+        <TextField fx:id="tfSerieTurma" layoutX="468.0" layoutY="146.0" prefHeight="25.0" prefWidth="150.0" />
+        <TextField fx:id="tfRA" layoutX="646.0" layoutY="146.0" prefHeight="25.0" prefWidth="190.0" />
+        <Separator layoutX="64.0" layoutY="184.0" prefHeight="0.0" prefWidth="770.0" />
+        <ChoiceBox fx:id="chNome1" layoutX="65.0" layoutY="231.0" prefHeight="25.0" prefWidth="263.0" />
+        <TextField fx:id="tfAvaliacao1" layoutX="351.0" layoutY="231.0" prefHeight="25.0" prefWidth="103.0" />
+        <TextField fx:id="tfAvaliacao2" layoutX="476.0" layoutY="231.0" prefWidth="103.0" />
+        <TextField fx:id="tfAtitudeAcademica" layoutX="603.0" layoutY="231.0" prefWidth="103.0" />
+        <TextField fx:id="tfSimulado" layoutX="730.0" layoutY="231.0" prefWidth="103.0" />
+        <Separator layoutX="64.0" layoutY="269.0" prefHeight="0.0" prefWidth="770.0" />
+        <CheckBox fx:id="cbTipoEntrega1" layoutX="64.0" layoutY="300.0" mnemonicParsing="false" text="Totalmente Entregues" />
+        <CheckBox fx:id="cbTipoEntrega2" layoutX="212.0" layoutY="301.0" mnemonicParsing="false" text="Parcialmente Entregues" />
+        <CheckBox fx:id="cbTipoEntrega3" layoutX="370.0" layoutY="302.0" mnemonicParsing="false" text="Nenhum Entregue" />
+        <TextArea fx:id="taJustificativa" layoutX="62.0" layoutY="342.0" prefHeight="52.0" prefWidth="770.0" />
+        <Separator layoutX="62.0" layoutY="405.0" prefHeight="0.0" prefWidth="770.0" />
+        <ChoiceBox fx:id="chNivelParticipacao" layoutX="63.0" layoutY="427.0" prefHeight="25.0" prefWidth="263.0" />
+        <TextField fx:id="tfJustificativaPartifipacao" layoutX="348.0" layoutY="427.0" prefHeight="25.0" prefWidth="484.0" />
+        <Button fx:id="btSalvar" layoutX="452.0" layoutY="466.0" mnemonicParsing="false" onAction="#onClickSalvar" prefHeight="27.0" prefWidth="120.0" text="Salvar" />
+        <Button fx:id="btLimpar" layoutX="582.0" layoutY="466.0" mnemonicParsing="false" onAction="#onClickLimpar" prefHeight="27.0" prefWidth="120.0" text="Limpar" />
+        <Button fx:id="btVoltar" layoutX="712.0" layoutY="466.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="120.0" text="Voltar" />
+    </children>
+</AnchorPane>
