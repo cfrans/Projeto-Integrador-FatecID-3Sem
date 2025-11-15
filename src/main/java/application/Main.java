@@ -29,6 +29,7 @@ public class Main extends Application {
 
         primaryStage.setTitle("Sistema de Acompanhamento Escolar");
         primaryStage.setScene(new Scene(root));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

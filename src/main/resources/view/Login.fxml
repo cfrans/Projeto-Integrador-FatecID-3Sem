@@ -27,7 +27,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Hyperlink layoutX="393.0" layoutY="498.0" text="Esqueci minha senha" textFill="#6a94e8" />
+      <Hyperlink fx:id="linkEsqueciSenha" layoutX="393.0" layoutY="498.0" text="Esqueci minha senha" textFill="#6a94e8" onAction="#onEsqueciSenha" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="349.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="330.0" fitWidth="328.0" layoutX="289.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
          <image>
