@@ -35,7 +35,7 @@
         </MenuBar>
 
         <!-- Adicione fx:id para pegar a Stage -->
-        <AnchorPane fx:id="anchorRoot" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="551.0" prefWidth="898.0" VBox.vgrow="ALWAYS" />
+        <AnchorPane fx:id="anchorRoot" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" VBox.vgrow="ALWAYS" />
 
     </children>
 </VBox>
