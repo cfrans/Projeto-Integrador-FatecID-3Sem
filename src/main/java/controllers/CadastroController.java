@@ -136,6 +136,18 @@ public class CadastroController implements Initializable {
     }
 
 
+    /**
+     * Manipula o evento de clique no botão Salvar, realizando o cadastro
+     * completo de um aluno, seu responsável e o laudo associado
+     * O método executa validações dos campos obrigatórios e inicia uma transação
+     * no banco de dados
+     * Caso qualquer etapa falhe, a transação é revertida (rollback) para manter
+     * a integridade dos dados. Se todas as operações forem concluídas com sucesso,
+     * a transação é confirmada e o usuário recebe uma notificação de
+     * sucesso com redirecionamento
+     *
+     * @param event o evento disparado pelo clique no botão Salvar
+     */
     @FXML
     void onClickSalvar(ActionEvent event) {
         System.out.println("Salvar clicado. Iniciando transação...");
@@ -234,8 +246,12 @@ public class CadastroController implements Initializable {
         }
     }
 
+
     /**
      * Helper para exibir um Alerta de Erro padronizado.
+     * @param titulo
+     * @param cabecalho
+     * @param conteudo
      */
     private void exibirAlertaErro(String titulo, String cabecalho, String conteudo) {
         Alert alertErro = new Alert(Alert.AlertType.ERROR);
@@ -255,11 +271,11 @@ public class CadastroController implements Initializable {
                 .collect(Collectors.joining(", ")); // Ex: "TDAH, Dislexia"
     }
 
-    @FXML
-    void onClickAdicionar(ActionEvent event) {
-        System.out.println("Adicionar clicado");
-    }
 
+    /**
+     * Método que controla o funcionamento do botão Limpar, realizando um clear em todos os campos da tela
+     * @param event
+     */
     @FXML
     void onClickLimpar(ActionEvent event) {
         System.out.println("Limpando formulário de cadastro...");
@@ -279,17 +295,25 @@ public class CadastroController implements Initializable {
         tfNome.requestFocus();
     }
 
+    /**
+     * Controla o botão Voltar, redirecionando o usuário para o Menu após o event
+     * @param event
+     */
     @FXML
     void onClickVoltar(ActionEvent event) {
         System.out.println("Clicado em voltar.\nChamando o método estático de voltar ao menu.");
         NavegadorUtil.voltarParaMenu(event);
     }
 
-    @FXML
-    void onClickAdicionarResponsavel(ActionEvent event) {
-        System.out.println("Adicionar Responsável clicado");
-    }
-
+    /**
+     * Realiza a troca de tela
+     * Este método obtém a janela (Stage) a partir do evento acionado
+     * É utilizado para navegação interna entre telas da aplicação
+     *
+     * @param event        o evento que disparou a ação de mudança de tela
+     * @param caminhoFXML  caminho do arquivo FXML que será carregado
+     * @throws IOException caso o arquivo FXML não seja encontrado ou não possa ser carregado
+     */
     private void mudarTela(ActionEvent event, String caminhoFXML) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(caminhoFXML));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

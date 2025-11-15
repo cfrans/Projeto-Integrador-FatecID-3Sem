@@ -80,11 +80,22 @@ public class ConsultaRendimentoController {
     @FXML
     private TextField tfTipoFrequente;
 
+    /**
+     * Método que é utilizado para carregar o funcionamento do botão imprimir
+     * após a realização do event
+     * @param event
+     */
     @FXML
     void onClickImprimir(ActionEvent event) {
 
     }
 
+    /**
+     * Manipula o evento de clique no botão Voltar, retornando o usuário
+     * para a tela principal do menu
+     *
+     * @param event o evento gerado pelo clique no botão Voltar
+     */
     @FXML
     void onClickVoltar(ActionEvent event) {
         try {

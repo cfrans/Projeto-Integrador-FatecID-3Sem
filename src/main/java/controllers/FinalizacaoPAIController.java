@@ -45,11 +45,18 @@ public class FinalizacaoPAIController implements ControladorNavegavel {
     @FXML private TextField tfStatus;
     @FXML private TextField tfTituloPlano;
 
+
     @FXML void onClickImprimir(ActionEvent event) { }
     @FXML void onClickLimpar(ActionEvent event) { }
     @FXML void onClickSalvar(ActionEvent event) { }
     @FXML void onClickSalvarCriar(ActionEvent event) { }
 
+    /**
+     * Manipula o evento do botão Voltar, retornando o usuário para a tela
+     * de andamento dos PAIs
+     *
+     * @param event o evento gerado pelo clique no botão Voltar
+     */
     @FXML
     void onClickVoltar(ActionEvent event) {
         if (menuController != null) {

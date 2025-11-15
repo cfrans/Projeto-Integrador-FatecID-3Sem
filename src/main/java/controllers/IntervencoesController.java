@@ -51,7 +51,10 @@ public class IntervencoesController implements Initializable {
     private List<CheckBox> listaTiposIntervencao;
 
     /**
-     * Roda quando a tela é carregada
+     * Inicializa os componentes da interface após o carregamento do FXML
+     *
+     * @param location  localização do arquivo FXML utilizado.
+     * @param resources conjunto de recursos para internacionalização, caso existam.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -104,8 +107,10 @@ public class IntervencoesController implements Initializable {
         }
     }
 
+
     /**
      * Preenche RA e Turma ao selecionar o aluno
+     * @param aluno
      */
     private void preencherDadosAluno(AlunoItem aluno) {
         if (aluno == null) {
@@ -134,6 +139,14 @@ public class IntervencoesController implements Initializable {
     }
 
 
+    /**
+     * Manipula o evento do botão **Salvar**, registrando uma nova intervenção para o aluno selecionado
+     *
+     * Em caso de falha durante a operação com o banco de dados, uma mensagem de
+     * erro é apresentada ao usuário
+     *
+     * @param event o evento disparado pelo clique no botão Salvar
+     */
     @FXML
     void onClickSalvar(ActionEvent event) {
 
@@ -186,7 +199,7 @@ public class IntervencoesController implements Initializable {
     }
 
     /**
-     * Junta os tipos de intervenção e observações em uma string.
+     * Junta os tipos de intervenção e observações em uma string
      */
     private String getObservacoesCompletas() {
         // 1. Pega os tipos dos checkboxes
@@ -216,6 +229,8 @@ public class IntervencoesController implements Initializable {
 
     /**
      * Helper para Alertas de Erro
+     * @param cabecalho
+     * @param conteudo
      */
     private void exibirAlertaErro(String cabecalho, String conteudo) {
         Alert alertErro = new Alert(Alert.AlertType.ERROR);
@@ -225,24 +240,25 @@ public class IntervencoesController implements Initializable {
         alertErro.showAndWait();
     }
 
+    /**
+     *  Método utilizado para definição do funcionamento do botão Limpar,
+     *  fazendo com que todos os dados preenchidos em tela sejam apagados
+     * @param event
+     */
     @FXML
     void onClickLimpar(ActionEvent event) {
         System.out.println("Limpando formulário de Intervenções...");
 
-        //Limpando ChoiceBoxes (Dropdowns)
+
         chNome.getSelectionModel().clearSelection();
 
-        //Limpando TextFields
         tfRA.clear();
         tfSerieTurma.clear();
         tfOutroTipoIntervencao.clear();
         tfTituloIntervencao.clear();
-        // Não limpa o tfResponsavelIntervencao
 
-        //Limpando o DatePicker
         dpDataIntervencao.setValue(null);
 
-        //Limpando o TextArea
         taObservacoes.clear();
 
         //Limpando os CheckBoxes
@@ -254,6 +270,12 @@ public class IntervencoesController implements Initializable {
         chNome.requestFocus();
     }
 
+    /**
+     * Manipula o evento de clique no botão Voltar, retornando o usuário
+     * para a tela principal do menu
+     *
+     * @param event o evento gerado pelo clique no botão Voltar
+     */
     @FXML
     void onClickVoltar(ActionEvent event) {
         System.out.println("Clicado em voltar.\nChamando o método estático de voltar ao menu");

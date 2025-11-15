@@ -26,7 +26,12 @@ public class LoginController {
     @FXML private PasswordField pfSenha;
     @FXML private TextField tfEmail;
 
-
+    /**
+     * Manipula o evento do botão Entrar, realizando o processo de autenticação
+     * do usuário no sistema
+     *
+     * @param event o evento disparado pelo clique no botão Entrar.
+     */
     @FXML
     void onClickEntrar(ActionEvent event) {
 
@@ -100,8 +105,11 @@ public class LoginController {
         }
     }
 
+
     /**
      * Helper para Alertas de Erro
+     * @param titulo
+     * @param cabecalho
      */
     private void exibirAlertaErro(String titulo, String cabecalho) {
         Alert alertErro = new Alert(Alert.AlertType.ERROR);
@@ -112,6 +120,17 @@ public class LoginController {
     }
 
 
+    /**
+     * Altera a cena atual para outra interface FXML especificada
+     *
+     * Este método realiza a troca de tela a partir de um evento de ação
+     * Ele carrega o arquivo FXML informado,
+     * obtém a janela atual a partir do componente que disparou o evento e substitui a cena exibida pela nova interface
+     *
+     * @param event        o evento que disparou a mudança de tela, geralmente o clique de um botão.
+     * @param caminhoFXML  o caminho do arquivo FXML que será carregado para exibição.
+     * @throws IOException se ocorrer qualquer erro ao tentar carregar o arquivo FXML.
+     */
     private void mudarTela(ActionEvent event, String caminhoFXML) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(caminhoFXML));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
