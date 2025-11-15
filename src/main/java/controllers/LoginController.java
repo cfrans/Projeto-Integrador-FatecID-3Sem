@@ -137,4 +137,15 @@ public class LoginController {
         stage.setScene(new Scene(root));
         stage.show();
     }
+
+    @FXML
+    void onEsqueciSenha(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/view/RecuperarSenha.fxml"));
+        Stage stage = new Stage();
+        stage.setTitle("Redefinir Senha");
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.show();
+    }
+
 }
