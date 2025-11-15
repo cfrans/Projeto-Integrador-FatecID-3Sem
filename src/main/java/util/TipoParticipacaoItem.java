@@ -4,6 +4,11 @@ public class TipoParticipacaoItem {
     private int id;
     private String nome;
 
+    /**
+     * Construtor padrão.
+     * @param id
+     * @param nome
+     */
     public TipoParticipacaoItem(int id, String nome) {
         this.id = id;
         this.nome = nome;

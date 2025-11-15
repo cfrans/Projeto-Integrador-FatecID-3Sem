@@ -23,22 +23,39 @@ import util.TipoParticipacaoItem;
 
 public class RendimentoController implements Initializable {
 
+    /** Limpa os dados preenchidos da tela. */
     @FXML private Button btLimpar;
+    /** Salva os dados preenchidos na tela. */
     @FXML private Button btSalvar;
+    /** Volta para a tela anterior. */
     @FXML private Button btVoltar;
+    /** Checkbox com o valor 'Totalmente Entregue'. */
     @FXML private CheckBox cbTipoEntrega1;
+    /** Checkbox com o valor 'Parcialmente Entregue'. */
     @FXML private CheckBox cbTipoEntrega2;
+    /** Checkbox com o valor 'Nenhum Entregue'. */
     @FXML private CheckBox cbTipoEntrega3;
+    /** Área de texto para a área 'Justificativa'. */
     @FXML private TextArea taJustificativa;
+    /** Campo de texto para a área 'Atitude Acadêmica'. */
     @FXML private TextField tfAtitudeAcademica;
+    /** Campo de texto para a área 'Avaliação 1'. */
     @FXML private TextField tfAvaliacao1;
+    /** Campo de texto para a área 'Avaliação 2'. */
     @FXML private TextField tfAvaliacao2;
+    /** Campo de texto para a área 'Justificativa de Participação'. */
     @FXML private TextField tfJustificativaPartifipacao;
+    /** Campo de texto para a área 'RA'. */
     @FXML private TextField tfRA;
+    /** Campo de texto para a área 'Série'. */
     @FXML private TextField tfSerieTurma;
+    /** Campo de texto para a área 'Simulado'. */
     @FXML private TextField tfSimulado;
+    /** Dropdown para a seleção 'Aluno'. */
     @FXML private ChoiceBox<AlunoItem> chNome;
-    @FXML private ChoiceBox<DisciplinaItem> chNome1; // (Carrega 'materia' aqui)
+    /** Dropdown para a seleção 'Matéria'. */
+    @FXML private ChoiceBox<DisciplinaItem> chNome1;
+    /** Dropdown para a seleção 'Participação'. */
     @FXML private ChoiceBox<TipoParticipacaoItem> chNivelParticipacao;
 
     // Listas para guardar os dados do banco
@@ -49,6 +66,21 @@ public class RendimentoController implements Initializable {
     // Lista de Checkboxes para o helper
     private List<CheckBox> listaEntregas;
 
+    /**
+     * Construtor padrão da classe.
+     */
+    public RendimentoController() {
+        // Construtor
+    }
+
+    /**
+     * Método de inicialização do controller.
+     * Chamado automaticamente pelo FXML loader após a injeção dos campos.
+     * Configura os bindings, listeners e carrega os dados iniciais.
+     *
+     * @param location  A localização usada para resolver caminhos relativos (pode ser nulo).
+     * @param resources Os recursos usados para localizar o objeto (pode ser nulo).
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // 1. Vincular as listas aos ChoiceBoxes
@@ -70,6 +102,10 @@ public class RendimentoController implements Initializable {
         );
     }
 
+    /**
+     * Busca todos os alunos cadastrados da tabela 'aluno' para preenchimento na tela 'Rendimento'
+     * e os carrega na {@link #listaAlunos}.
+     */
     private void carregarAlunos() {
         String sql = "SELECT id_aluno, nome FROM aluno ORDER BY nome";
         try (Connection conn = ConexaoDB.getConexao();
@@ -87,7 +123,8 @@ public class RendimentoController implements Initializable {
     }
 
     /**
-     * Busca da tabela 'materia'
+     * Busca todas as matérias da tabela 'materia' para preenchimento na tela 'Rendimento'
+     * e as carrega na {@link #listaDisciplinas}.
      */
     private void carregarMaterias() {
         String sql = "SELECT id_materia, nome FROM materia ORDER BY nome";
@@ -106,7 +143,8 @@ public class RendimentoController implements Initializable {
     }
 
     /**
-     * Carrega os tipos de participação do banco
+     * Carrega os tipos de participação do banco de dados
+     * e os carrega na {@link #listaParticipacao}.
      */
     private void carregarTiposParticipacao() {
         String sql = "SELECT id_tipo_participacao, nome FROM tipo_participacao ORDER BY id_tipo_participacao";
@@ -128,7 +166,11 @@ public class RendimentoController implements Initializable {
     }
 
     /**
-     * Busca a série com JOIN
+     * Busca os dados (RA e Turma) do aluno e preenche os campos de texto
+     * {@link #tfRA} e {@link #tfSerieTurma} na tela.
+     * É chamado automaticamente quando o usuário seleciona um aluno no ChoiceBox.
+     *
+     * @param aluno O {@link AlunoItem} selecionado no ChoiceBox. Se nulo, limpa os campos.
      */
     private void preencherDadosAluno(AlunoItem aluno) {
         if (aluno == null) {
@@ -156,6 +198,13 @@ public class RendimentoController implements Initializable {
         }
     }
 
+    /**
+     * Ação do clique no botão 'Salvar'.
+     * Valida os dados de entrada e, se válidos, insere um novo registro na tabela 'rendimento'.
+     * Utiliza o ID do usuário logado a partir da {@link SessaoUsuario}.
+     *
+     * @param event O evento de ação que disparou o método (clique no botão).
+     */
     @FXML
     void onClickSalvar(ActionEvent event) {
 
@@ -226,7 +275,10 @@ public class RendimentoController implements Initializable {
     }
 
     /**
-     * Helper para juntar os textos dos CheckBoxes de entrega.
+     * Método auxiliar para juntar os textos dos CheckBoxes de entrega que estão selecionados.
+     *
+     * @return Uma String única com os textos dos CheckBoxes selecionados, separados por ", ".
+     * (Ex: "Totalmente Entregues, Parcialmente Entregues")
      */
     private String getEntregaSelecionada() {
         return listaEntregas.stream()
@@ -235,6 +287,12 @@ public class RendimentoController implements Initializable {
                 .collect(Collectors.joining(", ")); // Ex: "Totalmente Entregues, Parcialmente Entregues"
     }
 
+    /**
+     * Exibe um pop-up de Alerta do tipo ERRO padronizado.
+     *
+     * @param cabecalho O texto do cabeçalho do alerta.
+     * @param conteudo  O texto principal do alerta.
+     */
     private void exibirAlertaErro(String cabecalho, String conteudo) {
         Alert alertErro = new Alert(Alert.AlertType.ERROR);
         alertErro.setTitle("Erro");
@@ -243,6 +301,13 @@ public class RendimentoController implements Initializable {
         alertErro.showAndWait();
     }
 
+    /**
+     * Ação do clique no botão 'Limpar'.
+     * Reseta todos os campos do formulário para seus estados iniciais.
+     * Coloca o foco de volta no ChoiceBox de nome de aluno.
+     *
+     * @param event O evento de ação que disparou o método (clique no botão).
+     */
     @FXML
     void onClickLimpar(ActionEvent event) {
         System.out.println("Limpando formulário de Rendimento...");
@@ -261,6 +326,12 @@ public class RendimentoController implements Initializable {
         chNome.requestFocus();
     }
 
+    /**
+     * Ação do clique no botão 'Voltar'.
+     * Utiliza o {@link NavegadorUtil} para retornar à tela de menu principal.
+     *
+     * @param event O evento de ação que disparou o método (clique no botão).
+     */
     @FXML
     void onClickVoltar(ActionEvent event) {
         System.out.println("Clicado em voltar.\nChamando o método estático de voltar ao menu");

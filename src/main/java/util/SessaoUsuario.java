@@ -17,25 +17,36 @@ public class SessaoUsuario {
     public static void setUsuarioLogado(int id, String nome, String funcao) {
         idUsuario = id;
         nomeUsuario = nome;
-        funcaoUsuario = funcao; // ✅ agora a função é salva corretamente
+        funcaoUsuario = funcao;
     }
 
-    /** Pega o ID do usuário logado. */
+    /**
+     * Retorna o ID do usuário da sessão.
+     * @return Retorna o ID do usuário
+     */
     public static int getIdUsuario() {
         return idUsuario;
     }
 
-    /** Pega o Nome do usuário logado. */
+    /**
+     * Retorna o nome do usuário da sessão.
+     * @return Retorna o nome do usuário
+     */
     public static String getNomeUsuario() {
         return nomeUsuario;
     }
 
-    /** Pega a função do usuário logado. */
+    /**
+     * Retorna a função do usuário da sessão.
+     * @return Retorna a função do usuário
+     */
     public static String getFuncaoUsuario() {
         return funcaoUsuario;
     }
 
-    /** Limpa a sessão (logout). */
+    /**
+     * Limpa a sessão, fazendo logoff.
+     */
     public static void limparSessao() {
         idUsuario = 0;
         nomeUsuario = null;
