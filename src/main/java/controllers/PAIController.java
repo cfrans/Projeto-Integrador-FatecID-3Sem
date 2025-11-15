@@ -43,6 +43,12 @@ public class PAIController implements Initializable {
     // Lista para guardar os dados do banco
     private ObservableList<AlunoItem> listaAlunos = FXCollections.observableArrayList();
 
+    /**
+     * Inicializa o controlador após o carregamento do arquivo FXML
+     *
+     * @param location   localização do arquivo FXML (não usado diretamente)
+     * @param resources  recursos de internacionalização (não utilizado)
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // 1. Vincular lista de Alunos
@@ -67,6 +73,13 @@ public class PAIController implements Initializable {
         }
     }
 
+    /**
+     * Carrega a lista de alunos do banco de dados e popula a coleção
+     *
+     * Em caso de falha na conexão ou na execução da consulta, o método exibe
+     * um alerta de erro para o usuário, além de registrar o stack trace no console
+     *
+     */
     private void carregarAlunos() {
         String sql = "SELECT id_aluno, nome FROM aluno ORDER BY nome";
 
@@ -85,7 +98,14 @@ public class PAIController implements Initializable {
         }
     }
 
-
+    /**
+     * Preenche automaticamente os campos de RA e Série/Turma na interface com base no aluno selecionado
+     *
+     * Em caso de falha na consulta, o erro é registrado no console.
+     *
+     * @param aluno o objeto {@link AlunoItem} que representa o aluno
+     *              selecionado na interface; pode ser {@code null}
+     */
     private void preencherDadosAluno(AlunoItem aluno) {
         if (aluno == null) {
             tfRA.clear();
@@ -114,6 +134,14 @@ public class PAIController implements Initializable {
     }
 
 
+    /**
+     * Manipula o evento do botão **Salvar**, realizando a criação de um novo
+     * Plano de Atendimento Individual (PAI) no banco de dados
+     *
+     * Em caso de falha, mensagens de erro são exibidas com detalhes sobre o problema encontrado
+     *
+     * @param event o evento gerado pelo clique no botão **Salvar**
+     */
     @FXML
     void onClickSalvar(ActionEvent event) {
 
@@ -182,6 +210,13 @@ public class PAIController implements Initializable {
         }
     }
 
+    /**
+     * Exibe uma janela de alerta do tipo Erro ao usuário
+     *
+     * @param titulo     o título da janela de erro exibida ao usuário
+     * @param cabecalho  o texto apresentado na área de cabeçalho do alerta
+     * @param conteudo   a mensagem detalhada exibida no corpo do alerta
+     */
     private void exibirAlertaErro(String titulo, String cabecalho, String conteudo) {
         Alert alertErro = new Alert(Alert.AlertType.ERROR);
         alertErro.setTitle(titulo);
@@ -190,8 +225,11 @@ public class PAIController implements Initializable {
         alertErro.showAndWait();
     }
 
-    @FXML void onClickAdicionarMeta(ActionEvent event) {}
-
+    /**
+     * Manipula o evento de clique no botão Limpar, apagando todos os campos do formulário de criação de PAI
+     *
+     * @param event o evento de clique do botão associado ao método
+     */
     @FXML void onClickLimpar(ActionEvent event) {
         System.out.println("Limpando formulário PAI...");
 
@@ -218,6 +256,11 @@ public class PAIController implements Initializable {
         chNome.requestFocus();
     }
 
+    /**
+     * Manipula o evento de clique no botão Voltar, retornando o usuário para a tela principal do menu
+     *
+     * @param event o evento acionado pelo clique do botão
+     */
     @FXML void onClickVoltar(ActionEvent event) {
         System.out.println("Clicado em voltar.\nChamando o método estático de voltar ao menu");
         NavegadorUtil.voltarParaMenu(event);

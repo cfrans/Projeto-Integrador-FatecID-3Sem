@@ -46,7 +46,14 @@ public class CadastroUsuarioController implements Initializable {
     private ObservableList<FuncaoItem> listaFuncoes = FXCollections.observableArrayList();
 
     /**
-     * Roda quando a tela é carregada
+     * Inicializa os componentes da interface após o carregamento do FXML.
+
+     * Este método associa a lista de funções ao ChoiceBox responsável pela
+     * seleção de função e, em seguida, carrega as funções armazenadas no
+     * banco de dados para preenchê-lo
+     *
+     * @param location   localização do arquivo FXML.
+     * @param resources  recursos de internacionalização, caso existam.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -57,7 +64,11 @@ public class CadastroUsuarioController implements Initializable {
     }
 
     /**
-     * Carrega as funções da tabela 'funcao'
+     * Carrega do banco de dados todas as funções cadastradas na tabela {@code funcao}
+     * e preenche a lista utilizada pelo ChoiceBox na interface
+
+     * O método executa uma consulta ordenando as funções por nome, limpa a lista atual
+     * e adiciona cada função encontrada como um objeto {@code FuncaoItem}.
      */
     private void carregarFuncoes() {
         String sql = "SELECT id_funcao, nome FROM funcao ORDER BY nome";
@@ -79,7 +90,16 @@ public class CadastroUsuarioController implements Initializable {
         }
     }
 
-
+    /**
+     * Evento de clique no botão Cadastrar, realizando o processo
+     * de criação de um novo usuário no sistema
+     *
+     * Em caso de erro de integridade, uma mensagem adequada
+     * é exibida ao usuário. Caso o cadastro seja bem-sucedido, uma notificação
+     * é apresentada e a navegação retorna à tela anterior
+     *
+     * @param event o evento disparado pelo clique no botão de cadastro.
+     */
     @FXML
     void onClickCadastrar(ActionEvent event) {
 
@@ -139,8 +159,12 @@ public class CadastroUsuarioController implements Initializable {
         }
     }
 
+
     /**
      * Helper para Alertas de Erro
+     * @param titulo
+     * @param cabecalho
+     * @param conteudo
      */
     private void exibirAlertaErro(String titulo, String cabecalho, String conteudo) {
         Alert alertErro = new Alert(Alert.AlertType.ERROR);
@@ -150,6 +174,11 @@ public class CadastroUsuarioController implements Initializable {
         alertErro.showAndWait();
     }
 
+    /**
+     * Método que controla o funcionamento do botão voltar, levando o usuário após o event
+     * para o Menu
+     * @param event
+     */
     @FXML
     void onClickVoltar(ActionEvent event) {
         // Chama o metodo estatico da NavegadorUtil

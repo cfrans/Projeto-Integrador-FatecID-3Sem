@@ -19,7 +19,16 @@ public class NavegadorUtil {
 
     private NavegadorUtil() {}
 
-    // Metodo genérico para trocar de tela.
+    /**
+     * Altera a cena atual para outra cena especificada por um arquivo FXML.
+     *
+     * Este método é utilizado para navegar entre telas completas da aplicação
+     * (mudando a Scene inteira). Ele obtém a janela atual a partir do evento
+     * disparado e substitui sua cena pelo conteúdo carregado do arquivo FXML
+     *
+     * @param event        o evento de ação que disparou a navegação, usado para obter a janela (Stage) atual
+     * @param caminhoFXML  caminho relativo do arquivo FXML que deve ser carregado
+     */
     public static void mudarTela(ActionEvent event, String caminhoFXML) {
         try {
             Parent root = FXMLLoader.load(NavegadorUtil.class.getResource(caminhoFXML));
@@ -32,18 +41,33 @@ public class NavegadorUtil {
         }
     }
 
-    // Metodo específico e reutilizável para voltar ao Menu Principal.
+
+    /**
+     *  Metodo específico e reutilizável para voltar ao Menu Principal.
+     * @param event
+     */
     public static void voltarParaMenu(ActionEvent event) {
         mudarTela(event, "/view/Menu.fxml");
     }
 
-    // Metodo temporário que fecha a aplicação. Posteriormente fazer um popup de confirmaçao
-    // e talvez fazer uma opção de sair (deslogar) e outra de fechar a aplicação.
+
+    /**
+     * Metodo temporário que fecha a aplicação
+     */
     public static void fecharAplicacao() {
         exit(0);
     }
 
-    // Metodo que exibe uma mensagem de sucesso e volta ao Menu Principal.
+
+
+    /**
+     * Exibe um alerta de sucesso com título, mensagem e ícone personalizado,
+     * e após o usuário confirmar retorna automaticamente para a tela de Menu
+     *
+     * @param event     o evento de ação usado para identificar a janela atual e também para realizar a navegação após o alerta.
+     * @param titulo    o título da janela do alerta exibido ao usuário.
+     * @param mensagem  o texto principal exibido dentro do alerta.
+     */
     public static void exibirSucessoEVOLTAR(ActionEvent event, String titulo, String mensagem) {
 
         // Alerta de sucesso

@@ -39,55 +39,95 @@ public class MenuController implements Initializable {
     @FXML
     private MenuItem menuProjeto;
 
+    /**
+     * Inicializa o controlador logo após o carregamento do arquivo FXML
+     *
+     * Assim que a tela é exibida, ele define a página Home como a tela inicial
+     * da área de navegação
+     *
+     * @param location   localização usada para resolver caminhos relativos do FXML, geralmente não utilizada diretamente.
+     * @param resources  recursos de internacionalização associados ao FXML, também opcional neste contexto.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Carrega a tela "Home" como tela inicial
         navegarPara("/view/Home.fxml");
     }
 
+    /**
+     * Carrega a tela Cadastro Usuário
+     * @throws IOException
+     */
     @FXML
     void abrirCadastrarUsuario() throws IOException {
         if (!ControleAcesso.verificarPermissao("T.I.", "Coordenador")) return;
         mudarTela("/view/CadastroUsuario.fxml");
     }
 
+    /**
+     * Carrega a tela Cadastro (para cadastro de alunos)
+     * @throws IOException
+     */
     @FXML
     void abrirNovoCadastro() throws IOException {
         if (!ControleAcesso.verificarPermissao("T.I.","Coordenador")) return;
         mudarTela("/view/Cadastro.fxml");
     }
 
+    /**
+     * Carrega a tela PAI (utilizada para cadastro de planos de acompanhamento dos alunos cadastrados no sistema)
+     * @throws IOException
+     */
     @FXML
     void abrirPlano() throws IOException {
         if (!ControleAcesso.verificarPermissao("T.I.","Professor","Profissional Especializado")) return;
         mudarTela("/view/PAI.fxml");
     }
 
+    /**
+     * Carrega a tela Intervenções
+     * @throws IOException
+     */
     @FXML
     void abrirHistorico() throws IOException {
         if (!ControleAcesso.verificarPermissao("T.I.","Professor","Coordenador","Profissional Especializado")) return;
         mudarTela("/view/Intervencoes.fxml");
     }
 
+    /**
+     * Carrega a tela Rendimento
+     * @throws IOException
+     */
     @FXML
     void abrirRendimento() throws IOException {
         if (!ControleAcesso.verificarPermissao("T.I.","Professor")) return;
         mudarTela("/view/Rendimento.fxml");
     }
 
+    /**
+     * Carrega a tela Andamento PAI
+     * @throws IOException
+     */
     @FXML
     void abrirAndamento() throws IOException {
         if (!ControleAcesso.verificarPermissao("T.I.","Professor","Profissional Especializado")) return;
         mudarTela("/view/AndamentoPAI.fxml");
     }
 
+    /**
+     * Carrega a tela Consulta de Rendimento
+     * @throws IOException
+     */
     @FXML
     void abrirConsultaRendimento() throws IOException {
         if (!ControleAcesso.verificarPermissao("T.I.","Professor","Profissional Especializado", "Coordenador")) return;
         mudarTela("/view/ConsultaRendimento.fxml");
     }
 
-    // --- Métodos de 'Sair' e 'Trocar Usuário' ---
+    /**
+     * Leva o usuário de colta para o Login para possibilidade de troca de usuário
+     * @throws IOException
+     */
     @FXML
     void trocarUsuario() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
@@ -96,11 +136,28 @@ public class MenuController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Realiza a ação de fechamento completo da aplicação
+     * @throws IOException
+     */
     @FXML
     void sairSistema() throws IOException {
         NavegadorUtil.fecharAplicacao();
     }
 
+    /**
+     * Altera dinamicamente o conteúdo exibido dentro do AnchorPane principal da tela.
+     *
+     * Este método é responsável por carregar um arquivo FXML, criar seu controlador,
+     * substituir completamente o conteúdo atual do container e ajustar
+     * corretamente suas âncoras para que o novo layout ocupe toda a área disponível
+     *
+     * Além disso, se o controlador carregado implementar a interface, o método injeta a instância atual do menu,
+     * permitindo que a nova tela possa solicitar navegação de volta.
+     *
+     * @param caminhoFXML caminho relativo para o arquivo FXML que deve ser carregado.
+     * @throws IOException
+     */
     private void mudarTela(String caminhoFXML) throws IOException {
         try {
             URL fxmlUrl = getClass().getResource(caminhoFXML);
@@ -135,6 +192,14 @@ public class MenuController implements Initializable {
         }
     }
 
+    /**
+     * Realiza a navegação para uma nova tela dentro do container principal
+     *
+     * Este método é utilizado pelos controladores das telas internas para solicitar
+     * ao MenuController que troque o conteúdo exibido no AnchorPane principal
+     *
+     * @param caminhoFXML caminho relativo do arquivo FXML que deve ser carregado
+     */
     public void navegarPara(String caminhoFXML) {
         try {
             mudarTela(caminhoFXML);
