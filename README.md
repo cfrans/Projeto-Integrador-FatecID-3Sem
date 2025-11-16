@@ -4,5 +4,6 @@
   <source media="(prefers-color-scheme: light)" srcset="assets/logo-light.png" />
   <img alt="Logo" src="assets/logo-light.png" width="400">
 </picture>
-Em construção...
 </div>
+Em construção...
+
