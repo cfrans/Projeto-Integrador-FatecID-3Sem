@@ -2,6 +2,7 @@ package controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import util.ControladorNavegavel; // Use o caminho da sua interface
 
 public abstract class BaseController implements ControladorNavegavel {
@@ -45,5 +46,19 @@ public abstract class BaseController implements ControladorNavegavel {
     void onClickVoltar(ActionEvent event) {
         System.out.println("BaseController: Botão 'Voltar' clicado. Navegando para Home.");
         navegarParaHome();
+    }
+
+    /**
+     * Helper para exibir um Alerta de Erro padronizado.
+     * @param titulo O titulo do alerta de erro
+     * @param cabecalho O cabeçalho do alerta de erro
+     * @param conteudo O conteúdo do alerta de erro
+     */
+    void exibirAlertaErro(String titulo, String cabecalho, String conteudo) {
+        Alert alertErro = new Alert(Alert.AlertType.ERROR);
+        alertErro.setTitle(titulo);
+        alertErro.setHeaderText(cabecalho);
+        alertErro.setContentText(conteudo);
+        alertErro.showAndWait();
     }
 }

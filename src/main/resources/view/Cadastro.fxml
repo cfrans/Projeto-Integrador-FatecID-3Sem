@@ -5,64 +5,58 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.paint.Color?>
-<?import javafx.scene.control.Separator?>
 
-<AnchorPane
-        xmlns="http://javafx.com/javafx/24.0.1"
-        xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="controllers.CadastroController"
-        prefHeight="551.0" prefWidth="898.0">
-    <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" style="&#10;"
-           textAlignment="CENTER">
+<AnchorPane prefHeight="551.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CadastroController">
+    <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" style="&#10;" textAlignment="CENTER">
         <textFill>
-            <Color red="0.624" green="0.624" blue="0.624" fx:id="x2"/>
+            <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
         </textFill>
     </Label>
-    <Label layoutX="304.0" layoutY="50.0" text="Cadastro de Alunos e Responsáveis" textFill="#3d5390"
-           style="-fx-font-family: 'Selawk'; -fx-font-weight: bold; -fx-font-size: 18px;"/>
-    <TextField fx:id="tfNome" layoutX="52.0" layoutY="117.0" prefHeight="25.0" prefWidth="315.0"/>
-    <Label layoutX="53.0" layoutY="100.0" text="Nome"/>
-    <Label layoutX="379.0" layoutY="100.0" text="Data de nascimento"/>
-    <DatePicker fx:id="dpDataNascimento" layoutX="379.0" layoutY="117.0" prefHeight="25.0" prefWidth="150.0"/>
-    <Label layoutX="540.0" layoutY="101.0" text="RA"/>
-    <TextField fx:id="tfRA" layoutX="541.0" layoutY="118.0" prefHeight="25.0" prefWidth="166.0"/>
-    <ChoiceBox fx:id="chSerieTurma" layoutX="719.0" layoutY="117.0" prefHeight="25.0" prefWidth="120.0"/>
-    <Label layoutX="720.0" layoutY="100.0" text="Série/Turma"/>
-    <Label layoutX="51.0" layoutY="159.0" text="Necessidade Educacional Especial"/>
-    <CheckBox fx:id="cbTipoNecessidade1" layoutX="51.0" layoutY="185.0" mnemonicParsing="false" text="TDAH"/>
-    <CheckBox fx:id="cbTipoNecessidade2" layoutX="128.0" layoutY="185.0" mnemonicParsing="false"
-              text="Transtorno do Espectro Autista (TEA)"/>
-    <CheckBox fx:id="cbTipoNecessidade3" layoutX="372.0" layoutY="185.0" mnemonicParsing="false" text="Dislexia"/>
-    <CheckBox fx:id="cbTipoNecessidade4" layoutX="461.0" layoutY="185.0" mnemonicParsing="false"
-              text="Transtorno Desafiador Opositor (TDO)"/>
-    <CheckBox fx:id="cbTipoNecessidade5" layoutX="711.0" layoutY="185.0" mnemonicParsing="false" text="Outro"/>
-    <Separator layoutX="50.0" layoutY="153.0" prefHeight="2.0" prefWidth="788.0"/>
-    <Label layoutX="51.0" layoutY="212.0" text="Número do Laudo"/>
-    <TextField fx:id="tfNumeroLaudo" layoutX="51.0" layoutY="229.0" prefHeight="25.0" prefWidth="150.0"/>
-    <Label layoutX="227.0" layoutY="212.0" text="Data do Laudo"/>
-    <DatePicker fx:id="dpDataLaudo" layoutX="227.0" layoutY="229.0" prefHeight="25.0" prefWidth="166.0"/>
-    <Label layoutX="419.0" layoutY="212.0" text="Profissional"/>
-    <TextField fx:id="tfProfissional" layoutX="418.0" layoutY="229.0" prefHeight="25.0" prefWidth="430.0"/>
-    <Separator layoutX="52.0" layoutY="355.0" prefHeight="3.0" prefWidth="797.0"/>
-    <Label layoutX="51.0" layoutY="260.0" text="Observações"/>
-    <TextArea fx:id="taObservacoes" layoutX="52.0" layoutY="278.0" prefHeight="67.0" prefWidth="797.0"/>
-    <Label layoutX="52.0" layoutY="362.0" text="Dados do Responsável"/>
-    <Label layoutX="53.0" layoutY="383.0" text="Nome"/>
-    <TextField fx:id="tdNomeResponsavel" layoutX="52.0" layoutY="400.0" prefHeight="25.0" prefWidth="465.0"/>
-    <Label fx:id="lbParentesco" layoutX="543.0" layoutY="383.0" text="Parentesco"/>
-    <ChoiceBox fx:id="chParentesco" layoutX="543.0" layoutY="400.0" prefWidth="150.0"/>
-    <TextField fx:id="tfTelefone" layoutX="52.0" layoutY="449.0" prefHeight="25.0" prefWidth="150.0"/>
-    <TextField fx:id="tfEmail" layoutX="228.0" layoutY="449.0" prefHeight="25.0" prefWidth="465.0"/>
-    <Label layoutX="53.0" layoutY="432.0" text="Telefone"/>
-    <Label layoutX="228.0" layoutY="432.0" text="Email"/>
-    <Button fx:id="btSalvar" layoutX="730.0" layoutY="386.0" mnemonicParsing="false" onAction="#onClickSalvar"
-            prefHeight="27.0" prefWidth="120.0" text="Salvar"/>
-    <Button fx:id="btLimpar" layoutX="730.0" layoutY="419.0" mnemonicParsing="false" onAction="#onClickLimpar"
-            prefHeight="27.0" prefWidth="120.0" text="Limpar"/>
-    <Button fx:id="btVoltar" layoutX="730.0" layoutY="452.0" mnemonicParsing="false" onAction="#onClickVoltar"
-            prefHeight="27.0" prefWidth="120.0" text="Voltar"/>
+    <TextField fx:id="tfNome" layoutX="52.0" layoutY="143.0" prefHeight="25.0" prefWidth="315.0" />
+    <Label layoutX="53.0" layoutY="126.0" text="Nome" />
+    <Label layoutX="379.0" layoutY="126.0" text="Data de nascimento" />
+    <DatePicker fx:id="dpDataNascimento" layoutX="379.0" layoutY="143.0" prefHeight="25.0" prefWidth="150.0" />
+    <Label layoutX="540.0" layoutY="127.0" text="RA" />
+    <TextField fx:id="tfRA" layoutX="541.0" layoutY="144.0" prefHeight="25.0" prefWidth="166.0" />
+    <ChoiceBox fx:id="chSerieTurma" layoutX="719.0" layoutY="143.0" prefHeight="25.0" prefWidth="120.0" />
+    <Label layoutX="720.0" layoutY="126.0" text="Série/Turma" />
+    <Label layoutX="51.0" layoutY="185.0" text="Necessidade Educacional Especial" />
+    <CheckBox fx:id="cbTipoNecessidade1" layoutX="51.0" layoutY="211.0" mnemonicParsing="false" text="TDAH" />
+    <CheckBox fx:id="cbTipoNecessidade2" layoutX="128.0" layoutY="211.0" mnemonicParsing="false" text="Transtorno do Espectro Autista (TEA)" />
+    <CheckBox fx:id="cbTipoNecessidade3" layoutX="372.0" layoutY="211.0" mnemonicParsing="false" text="Dislexia" />
+    <CheckBox fx:id="cbTipoNecessidade4" layoutX="461.0" layoutY="211.0" mnemonicParsing="false" text="Transtorno Desafiador Opositor (TDO)" />
+    <CheckBox fx:id="cbTipoNecessidade5" layoutX="711.0" layoutY="211.0" mnemonicParsing="false" text="Outro" />
+    <Separator layoutX="50.0" layoutY="179.0" prefHeight="2.0" prefWidth="788.0" />
+    <Label layoutX="51.0" layoutY="238.0" text="Número do Laudo" />
+    <TextField fx:id="tfNumeroLaudo" layoutX="51.0" layoutY="255.0" prefHeight="25.0" prefWidth="150.0" />
+    <Label layoutX="227.0" layoutY="238.0" text="Data do Laudo" />
+    <DatePicker fx:id="dpDataLaudo" layoutX="227.0" layoutY="255.0" prefHeight="25.0" prefWidth="166.0" />
+    <Label layoutX="419.0" layoutY="238.0" text="Profissional" />
+    <TextField fx:id="tfProfissional" layoutX="418.0" layoutY="255.0" prefHeight="25.0" prefWidth="430.0" />
+    <Separator layoutX="52.0" layoutY="381.0" prefHeight="3.0" prefWidth="797.0" />
+    <Label layoutX="51.0" layoutY="286.0" text="Observações" />
+    <TextArea fx:id="taObservacoes" layoutX="52.0" layoutY="304.0" prefHeight="67.0" prefWidth="797.0" />
+    <Label layoutX="52.0" layoutY="388.0" text="Dados do Responsável" />
+    <Label layoutX="53.0" layoutY="409.0" text="Nome" />
+    <TextField fx:id="tdNomeResponsavel" layoutX="52.0" layoutY="426.0" prefHeight="25.0" prefWidth="465.0" />
+    <Label fx:id="lbParentesco" layoutX="543.0" layoutY="409.0" text="Parentesco" />
+    <ChoiceBox fx:id="chParentesco" layoutX="543.0" layoutY="426.0" prefWidth="150.0" />
+    <TextField fx:id="tfTelefone" layoutX="52.0" layoutY="475.0" prefHeight="25.0" prefWidth="150.0" />
+    <TextField fx:id="tfEmail" layoutX="228.0" layoutY="475.0" prefHeight="25.0" prefWidth="465.0" />
+    <Label layoutX="53.0" layoutY="458.0" text="Telefone" />
+    <Label layoutX="228.0" layoutY="458.0" text="Email" />
+    <Button fx:id="btSalvar" layoutX="730.0" layoutY="412.0" mnemonicParsing="false" onAction="#onClickSalvar" prefHeight="27.0" prefWidth="120.0" text="Salvar" />
+    <Button fx:id="btLimpar" layoutX="730.0" layoutY="445.0" mnemonicParsing="false" onAction="#onClickLimpar" prefHeight="27.0" prefWidth="120.0" text="Limpar" />
+    <Button fx:id="btVoltar" layoutX="730.0" layoutY="478.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="120.0" text="Voltar" />
+    <ImageView fitHeight="150.0" fitWidth="900.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="/images/cabecalho_padrao.png"/>
+    </ImageView>
+    <Label layoutX="296.0" layoutY="55.0" style="-fx-font-family: 'Selawk'; -fx-font-weight: bold; -fx-font-size: 18px;" text="Cadastro de Alunos e Responsáveis" textFill="#3d5390" />
 </AnchorPane>
