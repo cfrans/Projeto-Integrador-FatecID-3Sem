@@ -1,0 +1,41 @@
+@font-face {
+    -fx-font-family: 'Selawik';
+    -fx-font-weight: normal; /* 'normal' ou 400 */
+    -fx-font-style: normal;
+    src: url('../resources/fonts/Selawik.ttf');
+}
+
+@font-face {
+    -fx-font-family: 'Selawik';
+    -fx-font-weight: bold; /* 'bold' ou 700 */
+    -fx-font-style: normal;
+    src: url('../resources/fonts/Selawik-Bold.ttf');
+}
+
+@font-face {
+    -fx-font-family: 'Selawik';
+    -fx-font-weight: 300; /* 'light' */
+    -fx-font-style: normal;
+    src: url('../resources/fonts/Selawik-Light.ttf');
+}
+
+@font-face {
+    -fx-font-family: 'Selawik';
+    -fx-font-weight: 600; /* 'semibold' */
+    -fx-font-style: normal;
+    src: url('../resources/fonts/Selawik-SemiBold.ttf');
+}
+
+.root {
+    -fx-font-family: 'Selawik';
+    -fx-font-size: 12px;
+}
+
+/* * BÔNUS: Agora, se você quiser que um Label seja "SemiBold",
+ * você pode simplesmente fazer isso no seu FXML:
+ *
+ * <Label text="Olá Mundo" style="-fx-font-weight: 600;" />
+ *
+ * O JavaFX vai olhar o @font-face, ver a regra do '600' e
+ * carregar o arquivo 'Selawik-SemiBold.ttf' automaticamente.
+ */

@@ -78,7 +78,7 @@ public class NavegadorUtil {
 
         // Tenta carregar a imagem de sucesso do ícone
         try {
-            Image checkIcon = new Image(NavegadorUtil.class.getResourceAsStream("/resources/images/success.png"));
+            Image checkIcon = new Image(NavegadorUtil.class.getResourceAsStream("/images/success.png"));
             if (checkIcon.isError()) {
                 System.err.println("Imagem do ícone carregada, mas contém erro.");
             } else {

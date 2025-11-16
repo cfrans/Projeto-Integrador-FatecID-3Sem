@@ -14,10 +14,13 @@ public class Main extends Application {
         // Carrega a primeira tela (Login.fxml)
         Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
 
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/css/application.css").toExternalForm());
+
         try {
-            Image icon32 = new Image(getClass().getResourceAsStream("/resources/images/icon32.png"));
-            Image icon64 = new Image(getClass().getResourceAsStream("/resources/images/icon64.png"));
-            Image icon128 = new Image(getClass().getResourceAsStream("/resources/images/icon128.png"));
+            Image icon32 = new Image(getClass().getResourceAsStream("/images/icon32.png"));
+            Image icon64 = new Image(getClass().getResourceAsStream("/images/icon64.png"));
+            Image icon128 = new Image(getClass().getResourceAsStream("/images/icon128.png"));
 
             // Adiciona TODOS os ícones ao 'primaryStage'
             primaryStage.getIcons().addAll(icon32, icon64, icon128);
@@ -28,7 +31,7 @@ public class Main extends Application {
         }
 
         primaryStage.setTitle("Sistema de Acompanhamento Escolar");
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
     }
