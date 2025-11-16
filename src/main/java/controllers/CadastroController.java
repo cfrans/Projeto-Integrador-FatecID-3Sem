@@ -262,21 +262,6 @@ public class CadastroController extends BaseController implements Initializable 
         }
     }
 
-
-    /**
-     * Helper para exibir um Alerta de Erro padronizado.
-     * @param titulo
-     * @param cabecalho
-     * @param conteudo
-     */
-    private void exibirAlertaErro(String titulo, String cabecalho, String conteudo) {
-        Alert alertErro = new Alert(Alert.AlertType.ERROR);
-        alertErro.setTitle(titulo);
-        alertErro.setHeaderText(cabecalho);
-        alertErro.setContentText(conteudo);
-        alertErro.showAndWait();
-    }
-
     /**
      * Helper para juntar os textos dos CheckBoxes em uma única String.
      */

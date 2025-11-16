@@ -151,19 +151,4 @@ public class CadastroUsuarioController extends BaseController implements Initial
         }
     }
 
-
-    /**
-     * Helper para Alertas de Erro
-     * @param titulo
-     * @param cabecalho
-     * @param conteudo
-     */
-    private void exibirAlertaErro(String titulo, String cabecalho, String conteudo) {
-        Alert alertErro = new Alert(Alert.AlertType.ERROR);
-        alertErro.setTitle(titulo);
-        alertErro.setHeaderText(cabecalho);
-        alertErro.setContentText(conteudo);
-        alertErro.showAndWait();
-    }
-
 }

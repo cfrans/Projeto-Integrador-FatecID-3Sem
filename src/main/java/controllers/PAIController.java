@@ -211,21 +211,6 @@ public class PAIController extends BaseController implements Initializable {
     }
 
     /**
-     * Exibe uma janela de alerta do tipo Erro ao usuário
-     *
-     * @param titulo     o título da janela de erro exibida ao usuário
-     * @param cabecalho  o texto apresentado na área de cabeçalho do alerta
-     * @param conteudo   a mensagem detalhada exibida no corpo do alerta
-     */
-    private void exibirAlertaErro(String titulo, String cabecalho, String conteudo) {
-        Alert alertErro = new Alert(Alert.AlertType.ERROR);
-        alertErro.setTitle(titulo);
-        alertErro.setHeaderText(cabecalho);
-        alertErro.setContentText(conteudo);
-        alertErro.showAndWait();
-    }
-
-    /**
      * Manipula o evento de clique no botão Limpar, apagando todos os campos do formulário de criação de PAI
      *
      * @param event o evento de clique do botão associado ao método
