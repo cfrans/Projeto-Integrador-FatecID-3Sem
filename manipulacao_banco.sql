@@ -147,7 +147,7 @@ SELECT * FROM rendimento;
 SELECT * FROM responsavel;
 
 
------------------------------------------------------------ novo banco
+----------------------------------------------------------- novo banco (utilizar este)
 
 -- Tabela: funcao
 CREATE TABLE funcao (
