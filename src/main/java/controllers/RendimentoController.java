@@ -21,7 +21,7 @@ import util.DisciplinaItem;
 import util.SessaoUsuario;
 import util.TipoParticipacaoItem;
 
-public class RendimentoController implements Initializable {
+public class RendimentoController extends BaseController implements Initializable {
 
     /** Limpa os dados preenchidos da tela. */
     @FXML private Button btLimpar;
@@ -59,9 +59,9 @@ public class RendimentoController implements Initializable {
     @FXML private ChoiceBox<TipoParticipacaoItem> chNivelParticipacao;
 
     // Listas para guardar os dados do banco
-    private ObservableList<AlunoItem> listaAlunos = FXCollections.observableArrayList();
-    private ObservableList<DisciplinaItem> listaDisciplinas = FXCollections.observableArrayList();
-    private ObservableList<TipoParticipacaoItem> listaParticipacao = FXCollections.observableArrayList();
+    private final ObservableList<AlunoItem> listaAlunos = FXCollections.observableArrayList();
+    private final ObservableList<DisciplinaItem> listaDisciplinas = FXCollections.observableArrayList();
+    private final ObservableList<TipoParticipacaoItem> listaParticipacao = FXCollections.observableArrayList();
 
     // Lista de Checkboxes para o helper
     private List<CheckBox> listaEntregas;
@@ -262,8 +262,11 @@ public class RendimentoController implements Initializable {
             System.out.println("Rendimento salvo com sucesso!");
 
             // Sucesso
-            NavegadorUtil.exibirSucessoEVOLTAR(event, "Salvo com sucesso!",
-                    "Rendimento salvo com sucesso!");
+            NavegadorUtil.exibirSucessoAlerta(
+                    "Sucesso",
+                    "Rendimento salvo com sucesso!!"
+            );
+            navegarParaHome(); // Método herdado do BaseController
 
         } catch (NumberFormatException e) {
             exibirAlertaErro("Erro de Formato", "Todos os campos de nota (Avaliação 1, 2, Simulado, Atitude) devem ser números (use . (ponto) para decimais, ex: 8.5).");
@@ -324,17 +327,5 @@ public class RendimentoController implements Initializable {
         listaEntregas.forEach(cb -> cb.setSelected(false));
         taJustificativa.clear();
         chNome.requestFocus();
-    }
-
-    /**
-     * Ação do clique no botão 'Voltar'.
-     * Utiliza o {@link NavegadorUtil} para retornar à tela de menu principal.
-     *
-     * @param event O evento de ação que disparou o método (clique no botão).
-     */
-    @FXML
-    void onClickVoltar(ActionEvent event) {
-        System.out.println("Clicado em voltar.\nChamando o método estático de voltar ao menu");
-        NavegadorUtil.voltarParaMenu(event);
     }
 }

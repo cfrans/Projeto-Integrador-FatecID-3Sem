@@ -2,19 +2,12 @@ package controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
-import java.io.IOException;
-
-public class ConsultaRendimentoController {
+public class ConsultaRendimentoController extends BaseController  {
 
     @FXML
     private Button btImprimir;
@@ -30,7 +23,6 @@ public class ConsultaRendimentoController {
 
     @FXML
     private DatePicker dpDataInicio;
-
 
     @FXML
     private TextField tfMateria1;
@@ -89,27 +81,5 @@ public class ConsultaRendimentoController {
     void onClickImprimir(ActionEvent event) {
 
     }
-
-    /**
-     * Manipula o evento de clique no botão Voltar, retornando o usuário
-     * para a tela principal do menu
-     *
-     * @param event o evento gerado pelo clique no botão Voltar
-     */
-    @FXML
-    void onClickVoltar(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Menu.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
 }

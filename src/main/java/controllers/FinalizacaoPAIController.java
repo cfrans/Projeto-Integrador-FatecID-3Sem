@@ -2,30 +2,13 @@ package controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.stage.Stage;
-import util.ControladorNavegavel;
 
-import java.io.IOException;
-
-public class FinalizacaoPAIController implements ControladorNavegavel {
-
-    // Variável para guardar o controlador principal
-    private MenuController menuController;
-
-    // Método obrigatório da interface
-    @Override
-    public void setMenuController(MenuController menuController) {
-        this.menuController = menuController;
-    }
+public class FinalizacaoPAIController extends BaseController {
 
     @FXML private Button btImprimir;
     @FXML private Button btLmpar;
@@ -45,24 +28,8 @@ public class FinalizacaoPAIController implements ControladorNavegavel {
     @FXML private TextField tfStatus;
     @FXML private TextField tfTituloPlano;
 
-
     @FXML void onClickImprimir(ActionEvent event) { }
     @FXML void onClickLimpar(ActionEvent event) { }
     @FXML void onClickSalvar(ActionEvent event) { }
     @FXML void onClickSalvarCriar(ActionEvent event) { }
-
-    /**
-     * Manipula o evento do botão Voltar, retornando o usuário para a tela
-     * de andamento dos PAIs
-     *
-     * @param event o evento gerado pelo clique no botão Voltar
-     */
-    @FXML
-    void onClickVoltar(ActionEvent event) {
-        if (menuController != null) {
-            menuController.navegarPara("/view/AndamentoPAI.fxml");
-        } else {
-            System.err.println("Erro: MenuController não foi injetado!");
-        }
-    }
 }

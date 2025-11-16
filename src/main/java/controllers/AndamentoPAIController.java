@@ -4,17 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
-import util.ControladorNavegavel;
 import util.ControleAcesso;
 import java.io.IOException;
 import java.net.URL;
@@ -28,19 +22,7 @@ import java.util.ResourceBundle;
 import database.ConexaoDB;
 import util.SessaoUsuario;
 
-public class AndamentoPAIController implements Initializable, ControladorNavegavel {
-
-    // Variável para guardar o controlador principal
-    private MenuController menuController;
-
-    /**
-     * Método obrigatório da interface
-     * @param menuController O controlador principal do menu.
-     */
-    @Override
-    public void setMenuController(MenuController menuController) {
-        this.menuController = menuController;
-    }
+public class AndamentoPAIController extends BaseController implements Initializable {
 
     @FXML private Button btAbrirDescricao;
     @FXML private Button btCriarFinalizacao;
@@ -52,11 +34,10 @@ public class AndamentoPAIController implements Initializable, ControladorNavegav
     @FXML private TableColumn<PAIAndamento, String> colStatus;
     @FXML private TableColumn<PAIAndamento, String> colTitulo;
 
-    private ObservableList<PAIAndamento> listaPAIs = FXCollections.observableArrayList();
+    private final ObservableList<PAIAndamento> listaPAIs = FXCollections.observableArrayList();
 
     /**
      * Inicializa os componentes da interface após o carregamento do FXML
-     *
      * Método que configura as colunas da tabela associando cada uma às
      * propriedades correspondentes, carrega a lista inicial
      * de PAIs, define os itens da tabela e adiciona um listener para habilitar
@@ -133,12 +114,7 @@ public class AndamentoPAIController implements Initializable, ControladorNavegav
         if (paiSelecionado == null) return;
 
         SessaoUsuario.setIdPaiSelecionado(paiSelecionado.getIdPai());
-
-        if (menuController != null) {
-            menuController.navegarPara("/view/PAI.fxml");
-        } else {
-            System.err.println("Erro: MenuController não foi injetado!");
-        }
+        navegarPara("/view/PAI.fxml");
     }
 
     /**
@@ -160,37 +136,17 @@ public class AndamentoPAIController implements Initializable, ControladorNavegav
 
         SessaoUsuario.setIdPaiSelecionado(paiSelecionado.getIdPai());
 
-        if (menuController != null) {
-            menuController.navegarPara("/view/FinalizacaoPAI.fxml");
-        } else {
-            System.err.println("Erro: MenuController não foi injetado!");
-        }
+        navegarPara("/view/FinalizacaoPAI.fxml");
     }
-
-
-    /**
-     * Método que controla o funcionamento do botão voltar levando o usuário para
-     * tela home (tela inicial)
-     * @param event
-     */
-    @FXML
-    void onClickVoltar(ActionEvent event) {
-        if (menuController != null) {
-            menuController.navegarPara("/view/Home.fxml");
-        } else {
-            System.err.println("Erro: MenuController não foi injetado!");
-        }
-    }
-
 
     // --- CLASSE INTERNA (HELPER) ---
     public static class PAIAndamento {
-        private int idPai;
-        private String titulo;
-        private String nomeAluno;
-        private String nomeResponsavel;
-        private String status;
-        private LocalDate prazoRevisao;
+        private final int idPai;
+        private final String titulo;
+        private final String nomeAluno;
+        private final String nomeResponsavel;
+        private final String status;
+        private final LocalDate prazoRevisao;
 
         /**
          * Cria uma nova instância de {@code PAIAndamento} com os dados fornecidos
@@ -249,6 +205,5 @@ public class AndamentoPAIController implements Initializable, ControladorNavegav
          * @return o prazo de revisão
          */
         public LocalDate getPrazoRevisao() { return prazoRevisao; }
-
     }
 }
