@@ -53,7 +53,7 @@ public class ConexaoDB {
             Class.forName("org.postgresql.Driver");
 
             // Encontra o arquivo .properties dentro dos resources
-            InputStream input = ConexaoDB.class.getResourceAsStream("/resources/database.properties");
+            InputStream input = ConexaoDB.class.getResourceAsStream("/database.properties");
 
             if (input == null) {
                 System.err.println("Erro: Arquivo database.properties não encontrado!");

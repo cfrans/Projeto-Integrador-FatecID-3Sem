@@ -5,17 +5,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +21,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import database.ConexaoDB;
 import util.FuncaoItem;
 
-public class CadastroUsuarioController implements Initializable {
+public class CadastroUsuarioController extends BaseController implements Initializable {
 
     @FXML
     private Button btCadastrar;
@@ -43,7 +37,7 @@ public class CadastroUsuarioController implements Initializable {
     private TextField tfSenha;
     @FXML
     private ChoiceBox<FuncaoItem> chFuncao;
-    private ObservableList<FuncaoItem> listaFuncoes = FXCollections.observableArrayList();
+    private final ObservableList<FuncaoItem> listaFuncoes = FXCollections.observableArrayList();
 
     /**
      * Inicializa os componentes da interface após o carregamento do FXML.
@@ -93,11 +87,9 @@ public class CadastroUsuarioController implements Initializable {
     /**
      * Evento de clique no botão Cadastrar, realizando o processo
      * de criação de um novo usuário no sistema
-     *
      * Em caso de erro de integridade, uma mensagem adequada
      * é exibida ao usuário. Caso o cadastro seja bem-sucedido, uma notificação
      * é apresentada e a navegação retorna à tela anterior
-     *
      * @param event o evento disparado pelo clique no botão de cadastro.
      */
     @FXML
@@ -141,11 +133,11 @@ public class CadastroUsuarioController implements Initializable {
 
             System.out.println("Usuário salvo com sucesso!");
 
-            NavegadorUtil.exibirSucessoEVOLTAR(
-                    event,
+            NavegadorUtil.exibirSucessoAlerta(
                     "Sucesso",
                     "Usuário '" + nome + "' cadastrado com sucesso!"
             );
+            navegarParaHome(); // Método herdado do BaseController
 
         } catch (SQLException e) {
             System.err.println("Erro ao salvar usuário:");
@@ -172,17 +164,6 @@ public class CadastroUsuarioController implements Initializable {
         alertErro.setHeaderText(cabecalho);
         alertErro.setContentText(conteudo);
         alertErro.showAndWait();
-    }
-
-    /**
-     * Método que controla o funcionamento do botão voltar, levando o usuário após o event
-     * para o Menu
-     * @param event
-     */
-    @FXML
-    void onClickVoltar(ActionEvent event) {
-        // Chama o metodo estatico da NavegadorUtil
-        NavegadorUtil.voltarParaMenu(event);
     }
 
 }

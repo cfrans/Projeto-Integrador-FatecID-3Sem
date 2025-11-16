@@ -131,8 +131,10 @@ public class MenuController implements Initializable {
     @FXML
     void trocarUsuario() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/css/application.css").toExternalForm());
         Stage stage = (Stage) anchorRoot.getScene().getWindow();
-        stage.setScene(new Scene(root));
+        stage.setScene(scene);
         stage.show();
     }
 

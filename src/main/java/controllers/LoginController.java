@@ -133,8 +133,10 @@ public class LoginController {
      */
     private void mudarTela(ActionEvent event, String caminhoFXML) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(caminhoFXML));
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/css/application.css").toExternalForm());
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        stage.setScene(scene);
         stage.show();
     }
 

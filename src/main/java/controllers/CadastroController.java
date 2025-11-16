@@ -4,11 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -18,10 +14,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import javafx.scene.control.Alert;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -39,35 +32,58 @@ import database.ConexaoDB;
 import util.SerieTurmaItem;
 import util.TipoResponsavelItem;
 
-public class CadastroController implements Initializable {
+public class CadastroController extends BaseController implements Initializable {
 
-    @FXML private Button btLimpar;
-    @FXML private Button btSalvar;
-    @FXML private Button btVoltar;
-    @FXML private CheckBox cbTipoNecessidade1;
-    @FXML private CheckBox cbTipoNecessidade2;
-    @FXML private CheckBox cbTipoNecessidade3;
-    @FXML private CheckBox cbTipoNecessidade4;
-    @FXML private CheckBox cbTipoNecessidade5;
-    @FXML private Label lbParentesco;
-    @FXML private DatePicker dpDataLaudo;
-    @FXML private DatePicker dpDataNascimento;
-    @FXML private TextArea taObservacoes;
-    @FXML private TextField tdNomeResponsavel;
-    @FXML private TextField tfEmail;
-    @FXML private TextField tfNome;
-    @FXML private TextField tfNumeroLaudo;
-    @FXML private TextField tfProfissional;
-    @FXML private TextField tfTelefone;
-    @FXML private TextField tfRA;
-    @FXML private Font x1;
-    @FXML private Color x2;
-    @FXML private ChoiceBox<TipoResponsavelItem> chParentesco;
-    @FXML private ChoiceBox<SerieTurmaItem> chSerieTurma;
+    @FXML
+    private Button btLimpar;
+    @FXML
+    private Button btSalvar;
+    @FXML
+    private Button btVoltar;
+    @FXML
+    private CheckBox cbTipoNecessidade1;
+    @FXML
+    private CheckBox cbTipoNecessidade2;
+    @FXML
+    private CheckBox cbTipoNecessidade3;
+    @FXML
+    private CheckBox cbTipoNecessidade4;
+    @FXML
+    private CheckBox cbTipoNecessidade5;
+    @FXML
+    private Label lbParentesco;
+    @FXML
+    private DatePicker dpDataLaudo;
+    @FXML
+    private DatePicker dpDataNascimento;
+    @FXML
+    private TextArea taObservacoes;
+    @FXML
+    private TextField tdNomeResponsavel;
+    @FXML
+    private TextField tfEmail;
+    @FXML
+    private TextField tfNome;
+    @FXML
+    private TextField tfNumeroLaudo;
+    @FXML
+    private TextField tfProfissional;
+    @FXML
+    private TextField tfTelefone;
+    @FXML
+    private TextField tfRA;
+    @FXML
+    private Font x1;
+    @FXML
+    private Color x2;
+    @FXML
+    private ChoiceBox<TipoResponsavelItem> chParentesco;
+    @FXML
+    private ChoiceBox<SerieTurmaItem> chSerieTurma;
 
     // Listas para guardar os dados do banco
-    private ObservableList<TipoResponsavelItem> listaParentesco = FXCollections.observableArrayList();
-    private ObservableList<SerieTurmaItem> listaSerieTurma = FXCollections.observableArrayList();
+    private final ObservableList<TipoResponsavelItem> listaParentesco = FXCollections.observableArrayList();
+    private final ObservableList<SerieTurmaItem> listaSerieTurma = FXCollections.observableArrayList();
 
     // Lista de Checkboxes para o helper
     private List<CheckBox> listaNecessidades;
@@ -181,7 +197,7 @@ public class CadastroController implements Initializable {
 
                 // --- ETAPA 1: Salvar Responsável ---
                 stmtResp.setString(1, tdNomeResponsavel.getText());
-                stmtResp.setInt(2, parentescoSel.getId()); // ATUALIZADO: Salva o ID
+                stmtResp.setInt(2, parentescoSel.getId());
                 stmtResp.setString(3, tfEmail.getText());
                 stmtResp.setString(4, tfTelefone.getText());
 
@@ -196,9 +212,9 @@ public class CadastroController implements Initializable {
                 // --- ETAPA 2: Salvar Aluno ---
                 stmtAluno.setString(1, tfNome.getText());
                 stmtAluno.setDate(2, (dpDataNascimento.getValue() != null) ? Date.valueOf(dpDataNascimento.getValue()) : null);
-                stmtAluno.setInt(3, serieSel.getId()); // Salva o ID
-                stmtAluno.setString(4, tfRA.getText()); // Salva como String
-                stmtAluno.setLong(5, idResponsavel); // Usa o ID do Responsável
+                stmtAluno.setInt(3, serieSel.getId());
+                stmtAluno.setString(4, tfRA.getText());
+                stmtAluno.setLong(5, idResponsavel);
 
                 ResultSet rsAluno = stmtAluno.executeQuery();
                 if (rsAluno.next()) {
@@ -209,11 +225,11 @@ public class CadastroController implements Initializable {
                 }
 
                 // --- ETAPA 3: Salvar Laudo ---
-                stmtLaudo.setString(1, tfNumeroLaudo.getText()); // Salva como String
+                stmtLaudo.setString(1, tfNumeroLaudo.getText());
                 stmtLaudo.setDate(2, (dpDataLaudo.getValue() != null) ? Date.valueOf(dpDataLaudo.getValue()) : null);
                 stmtLaudo.setString(3, taObservacoes.getText());
                 stmtLaudo.setString(4, getTipoNecessidadeSelecionada());
-                stmtLaudo.setLong(5, idAluno); // Usa o ID do Aluno
+                stmtLaudo.setLong(5, idAluno);
 
                 stmtLaudo.executeUpdate();
                 System.out.println("Laudo salvo com sucesso.");
@@ -223,11 +239,11 @@ public class CadastroController implements Initializable {
 
                 System.out.println("Transação concluída com sucesso!");
 
-                NavegadorUtil.exibirSucessoEVOLTAR(
-                        event,
+                NavegadorUtil.exibirSucessoAlerta(
                         "Cadastro",
                         "Aluno, Responsável e Laudo salvos com sucesso!"
                 );
+                navegarParaHome(); // Método herdado do BaseController
 
             } catch (Exception e) {
                 System.err.println("Erro durante a transação, executando rollback...");
@@ -274,6 +290,7 @@ public class CadastroController implements Initializable {
 
     /**
      * Método que controla o funcionamento do botão Limpar, realizando um clear em todos os campos da tela
+     *
      * @param event
      */
     @FXML
@@ -293,31 +310,5 @@ public class CadastroController implements Initializable {
         listaNecessidades.forEach(cb -> cb.setSelected(false));
         taObservacoes.clear();
         tfNome.requestFocus();
-    }
-
-    /**
-     * Controla o botão Voltar, redirecionando o usuário para o Menu após o event
-     * @param event
-     */
-    @FXML
-    void onClickVoltar(ActionEvent event) {
-        System.out.println("Clicado em voltar.\nChamando o método estático de voltar ao menu.");
-        NavegadorUtil.voltarParaMenu(event);
-    }
-
-    /**
-     * Realiza a troca de tela
-     * Este método obtém a janela (Stage) a partir do evento acionado
-     * É utilizado para navegação interna entre telas da aplicação
-     *
-     * @param event        o evento que disparou a ação de mudança de tela
-     * @param caminhoFXML  caminho do arquivo FXML que será carregado
-     * @throws IOException caso o arquivo FXML não seja encontrado ou não possa ser carregado
-     */
-    private void mudarTela(ActionEvent event, String caminhoFXML) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(caminhoFXML));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
     }
 }

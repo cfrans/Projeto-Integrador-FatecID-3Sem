@@ -26,7 +26,7 @@ import database.ConexaoDB;
 import util.AlunoItem;
 import util.SessaoUsuario;
 
-public class IntervencoesController implements Initializable {
+public class IntervencoesController extends BaseController implements Initializable {
 
     @FXML private Button btLimpar;
     @FXML private Button btSalvar;
@@ -187,10 +187,11 @@ public class IntervencoesController implements Initializable {
 
             stmt.executeUpdate();
 
-            System.out.println("Intervenção salva com sucesso!");
-
-            NavegadorUtil.exibirSucessoEVOLTAR(event, "Salvo com sucesso!",
-                    "Intervenção salva com sucesso!");
+            NavegadorUtil.exibirSucessoAlerta(
+                    "Sucesso",
+                    "Intervenção salva com sucesso!"
+            );
+            navegarParaHome(); // Método herdado do BaseController
 
         } catch (SQLException e) {
             exibirAlertaErro("Erro de Banco de Dados", "Erro: " + e.getMessage());
@@ -268,18 +269,6 @@ public class IntervencoesController implements Initializable {
 
         //Coloca o foco do cursor de volta no primeiro campo
         chNome.requestFocus();
-    }
-
-    /**
-     * Manipula o evento de clique no botão Voltar, retornando o usuário
-     * para a tela principal do menu
-     *
-     * @param event o evento gerado pelo clique no botão Voltar
-     */
-    @FXML
-    void onClickVoltar(ActionEvent event) {
-        System.out.println("Clicado em voltar.\nChamando o método estático de voltar ao menu");
-        NavegadorUtil.voltarParaMenu(event);
     }
 
 }

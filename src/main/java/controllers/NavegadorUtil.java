@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import static java.lang.System.exit;
 
@@ -78,7 +79,7 @@ public class NavegadorUtil {
 
         // Tenta carregar a imagem de sucesso do ícone
         try {
-            Image checkIcon = new Image(NavegadorUtil.class.getResourceAsStream("/resources/images/success.png"));
+            Image checkIcon = new Image(NavegadorUtil.class.getResourceAsStream("/images/success.png"));
             if (checkIcon.isError()) {
                 System.err.println("Imagem do ícone carregada, mas contém erro.");
             } else {
@@ -106,6 +107,36 @@ public class NavegadorUtil {
 
         // Chama o metodo estatico da NavegadorUtil para voltar ao Menu
         voltarParaMenu(event);
+    }
+
+    /**
+     * Exibe um alerta de sucesso com título, mensagem e ícone personalizado.
+     *
+     * @param titulo    o título da janela do alerta.
+     * @param mensagem  o texto principal exibido dentro do alerta.
+     */
+    public static void exibirSucessoAlerta(String titulo, String mensagem) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+
+        // Tenta carregar a imagem de sucesso do ícone
+        try {
+            Image checkIcon = new Image(Objects.requireNonNull(NavegadorUtil.class.getResourceAsStream("/images/success.png")));
+            if (checkIcon.isError()) {
+                System.err.println("Imagem do ícone carregada, mas contém erro.");
+            } else {
+                ImageView imageView = new ImageView(checkIcon);
+                imageView.setFitWidth(50);
+                imageView.setFitHeight(50);
+                alert.setGraphic(imageView);
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar ícone de sucesso: " + e.getMessage());
+        }
+
+        alert.showAndWait();
     }
 
 }

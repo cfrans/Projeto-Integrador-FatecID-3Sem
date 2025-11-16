@@ -9,7 +9,6 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane
         xmlns="http://javafx.com/javafx/24.0.1"
@@ -18,10 +17,8 @@
         prefHeight="551.0" prefWidth="898.0">
 
     <children>
-        <Label layoutX="285.0" layoutY="67.0" text="Plano de Acompanhamento Individual (PAI)" textFill="#3d5390">
-            <font>
-                <Font name="System Bold" size="16.0" />
-            </font>
+        <Label layoutX="285.0" layoutY="67.0" text="Plano de Acompanhamento Individual (PAI)" textFill="#3d5390"
+               style="-fx-font-family: 'Selawk'; -fx-font-weight: bold; -fx-font-size: 18px;">
         </Label>
         <Label layoutX="63.0" layoutY="419.0" text="Descrição" />
         <Label layoutX="63.0" layoutY="341.0" text="Plano Especifico" />

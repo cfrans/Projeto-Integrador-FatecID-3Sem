@@ -1,0 +1,32 @@
+@font-face {
+    -fx-font-family: 'Selawk';
+    -fx-font-weight: normal; /* 'normal' ou 400 */
+    -fx-font-style: normal;
+    src: url('../fonts/Selawk.ttf');
+}
+
+@font-face {
+    -fx-font-family: 'Selawk';
+    -fx-font-weight: bold; /* 'bold' ou 700 */
+    -fx-font-style: normal;
+    src: url('../fonts/Selawk-Bold.ttf');
+}
+
+@font-face {
+    -fx-font-family: 'Selawk';
+    -fx-font-weight: 300; /* 'light' */
+    -fx-font-style: normal;
+    src: url('../fonts/Selawk-Light.ttf');
+}
+
+@font-face {
+    -fx-font-family: 'Selawk';
+    -fx-font-weight: 600; /* 'semibold' */
+    -fx-font-style: normal;
+    src: url('../fonts/Selawk-SemiBold.ttf');
+}
+
+.root {
+    -fx-font-family: 'Selawk';
+    -fx-font-size: 12px;
+}

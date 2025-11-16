@@ -17,8 +17,7 @@
         prefHeight="551.0" prefWidth="898.0">
 
     <children>
-        <Label layoutX="65.0" layoutY="70.0" text="Título do
- Plano" />
+        <Label layoutX="65.0" layoutY="70.0" text="Título do Plano" />
         <TextField fx:id="tfTituloPlano" layoutX="66.0" layoutY="88.0" prefHeight="25.0" prefWidth="293.0" />
         <TextField fx:id="tfNomeAluno" layoutX="376.0" layoutY="88.0" prefHeight="25.0" prefWidth="456.0" />
         <Label layoutX="376.0" layoutY="70.0" text="Aluno" />

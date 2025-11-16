@@ -23,7 +23,7 @@ import database.ConexaoDB;
 import util.AlunoItem;
 import util.SessaoUsuario;
 
-public class PAIController implements Initializable {
+public class PAIController extends BaseController implements Initializable {
 
     @FXML private TextField tfMeta2;
     @FXML private TextField tfMeta3;
@@ -41,7 +41,7 @@ public class PAIController implements Initializable {
     @FXML private TextField tfResponsavelPlano;
 
     // Lista para guardar os dados do banco
-    private ObservableList<AlunoItem> listaAlunos = FXCollections.observableArrayList();
+    private final ObservableList<AlunoItem> listaAlunos = FXCollections.observableArrayList();
 
     /**
      * Inicializa o controlador após o carregamento do arquivo FXML
@@ -137,7 +137,6 @@ public class PAIController implements Initializable {
     /**
      * Manipula o evento do botão **Salvar**, realizando a criação de um novo
      * Plano de Atendimento Individual (PAI) no banco de dados
-     *
      * Em caso de falha, mensagens de erro são exibidas com detalhes sobre o problema encontrado
      *
      * @param event o evento gerado pelo clique no botão **Salvar**
@@ -196,10 +195,11 @@ public class PAIController implements Initializable {
 
             stmtInsertPAI.executeUpdate();
 
-            System.out.println(" PAI salvo e associado ao aluno com sucesso!");
-
-            NavegadorUtil.exibirSucessoEVOLTAR(event, "Salvo com sucesso!",
-                    "PAI salvo e associado ao aluno com sucesso!");
+            NavegadorUtil.exibirSucessoAlerta(
+                    "Sucesso",
+                    "PAI salvo e associado ao aluno com sucesso!"
+            );
+            navegarParaHome(); // Método herdado do BaseController
 
         } catch (SQLException e) {
             exibirAlertaErro("Erro de Banco de Dados", "Não foi possível salvar o PAI.", "Erro: " + e.getMessage());
@@ -256,13 +256,4 @@ public class PAIController implements Initializable {
         chNome.requestFocus();
     }
 
-    /**
-     * Manipula o evento de clique no botão Voltar, retornando o usuário para a tela principal do menu
-     *
-     * @param event o evento acionado pelo clique do botão
-     */
-    @FXML void onClickVoltar(ActionEvent event) {
-        System.out.println("Clicado em voltar.\nChamando o método estático de voltar ao menu");
-        NavegadorUtil.voltarParaMenu(event);
-    }
 }
