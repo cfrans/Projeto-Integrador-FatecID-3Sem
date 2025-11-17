@@ -29,6 +29,8 @@ public class MenuController implements Initializable {
     @FXML
     private MenuItem menuHistorico;
     @FXML
+    private MenuItem menuVisualizacaoIntervencao;
+    @FXML
     private MenuItem menuRendimento;
     @FXML
     private MenuItem menuAcompanhamento;
@@ -92,6 +94,16 @@ public class MenuController implements Initializable {
     void abrirHistorico() throws IOException {
         if (!ControleAcesso.verificarPermissao("T.I.","Professor","Coordenador","Profissional Especializado")) return;
         mudarTela("/view/Intervencoes.fxml");
+    }
+
+    /**
+     * Carrega a tela Visualização de Intervencões
+     * @throws IOException
+     */
+    @FXML
+    void abrirVisualizacaoIntervencao() throws IOException {
+        if (!ControleAcesso.verificarPermissao("T.I.","Professor","Coordenador","Profissional Especializado")) return;
+        mudarTela("/view/VisualizacaoIntervencao.fxml");
     }
 
     /**
