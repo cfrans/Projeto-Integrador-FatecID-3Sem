@@ -17,7 +17,8 @@
                         <MenuItem fx:id="menuNovoCadastro" mnemonicParsing="false" onAction="#abrirNovoCadastro" text="Novo Cadastro" />
                         <MenuItem fx:id="menuPlano" mnemonicParsing="false" onAction="#abrirPlano" text="Plano de Acompanhamento Individual" />
                   <MenuItem fx:id="menuAndamento" mnemonicParsing="false" onAction="#abrirAndamento" text="Andamento PAI" />
-                        <MenuItem fx:id="menuHistorico" mnemonicParsing="false" onAction="#abrirHistorico" text="Historico de Intervenções" />
+                        <MenuItem fx:id="menuHistorico" mnemonicParsing="false" onAction="#abrirHistorico" text="Cadastro de Intervenções" />
+                        <MenuItem fx:id="menuVisualizacaoIntervencao" mnemonicParsing="false" onAction="#abrirVisualizacaoIntervencao" text="Visualização de Intervenções" />
                         <MenuItem fx:id="menuRendimento" mnemonicParsing="false" onAction="#abrirRendimento" text="Cadastro de Rendimento" />
                         <MenuItem fx:id="menuAcompanhamento" mnemonicParsing="false" onAction="#abrirConsultaRendimento" text="Acompanhamento Escolar" />
                         <SeparatorMenuItem mnemonicParsing="false" />
