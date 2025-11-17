@@ -17,7 +17,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class VisualizacaoIntervencaoController implements Initializable {
+public class VisualizacaoIntervencaoController extends BaseController implements Initializable {
+
 
     @FXML private TableView<IntervencaoData> tabelaPAIs;
 
@@ -100,13 +101,9 @@ public class VisualizacaoIntervencaoController implements Initializable {
 
     @FXML
     void onClickVoltar(ActionEvent event) {
-
+        navegarParaHome();
     }
 
-
-    // ==========================================
-    // CLASS MODEL (dados para a tabela)
-    // ==========================================
     public static class IntervencaoData {
 
         private final int id;
