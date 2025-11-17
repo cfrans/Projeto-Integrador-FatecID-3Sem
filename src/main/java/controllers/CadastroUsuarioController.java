@@ -1,21 +1,21 @@
 package controllers;
 
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 import database.ConexaoDB;
@@ -25,45 +25,35 @@ public class CadastroUsuarioController extends BaseController implements Initial
 
     @FXML
     private Button btCadastrar;
+
     @FXML
     private Button btVoltar;
+
     @FXML
     private TextField tfConfirmacaoSenha;
+
     @FXML
     private TextField tfEmail;
+
     @FXML
     private TextField tfNomeAcesso;
+
     @FXML
     private TextField tfSenha;
+
     @FXML
     private ChoiceBox<FuncaoItem> chFuncao;
+
     private final ObservableList<FuncaoItem> listaFuncoes = FXCollections.observableArrayList();
 
-    /**
-     * Inicializa os componentes da interface após o carregamento do FXML.
 
-     * Este método associa a lista de funções ao ChoiceBox responsável pela
-     * seleção de função e, em seguida, carrega as funções armazenadas no
-     * banco de dados para preenchê-lo
-     *
-     * @param location   localização do arquivo FXML.
-     * @param resources  recursos de internacionalização, caso existam.
-     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // 1. Vincula a lista ao ChoiceBox
         chFuncao.setItems(listaFuncoes);
-        // 2. Carrega os dados do banco
         carregarFuncoes();
     }
 
-    /**
-     * Carrega do banco de dados todas as funções cadastradas na tabela {@code funcao}
-     * e preenche a lista utilizada pelo ChoiceBox na interface
 
-     * O método executa uma consulta ordenando as funções por nome, limpa a lista atual
-     * e adiciona cada função encontrada como um objeto {@code FuncaoItem}.
-     */
     private void carregarFuncoes() {
         String sql = "SELECT id_funcao, nome FROM funcao ORDER BY nome";
         try (Connection conn = ConexaoDB.getConexao();
@@ -71,27 +61,32 @@ public class CadastroUsuarioController extends BaseController implements Initial
              ResultSet rs = stmt.executeQuery()) {
 
             listaFuncoes.clear();
+
             while (rs.next()) {
                 listaFuncoes.add(new FuncaoItem(
                         rs.getInt("id_funcao"),
                         rs.getString("nome")
                 ));
             }
+
         } catch (SQLException e) {
-            System.err.println("Erro ao carregar funções!");
-            e.printStackTrace();
             exibirAlertaErro("Erro de Banco", "Falha ao carregar lista de funções.", e.getMessage());
         }
     }
 
-    /**
-     * Evento de clique no botão Cadastrar, realizando o processo
-     * de criação de um novo usuário no sistema
-     * Em caso de erro de integridade, uma mensagem adequada
-     * é exibida ao usuário. Caso o cadastro seja bem-sucedido, uma notificação
-     * é apresentada e a navegação retorna à tela anterior
-     * @param event o evento disparado pelo clique no botão de cadastro.
-     */
+    /** Validação de email */
+    private boolean emailValido(String email) {
+        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        return email.matches(regex);
+    }
+
+    /** Validação de senha forte */
+    private boolean senhaForte(String senha) {
+        String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=!?.*()\\-_]).{8,}$";
+        return senha.matches(regex);
+    }
+
+
     @FXML
     void onClickCadastrar(ActionEvent event) {
 
@@ -101,24 +96,47 @@ public class CadastroUsuarioController extends BaseController implements Initial
         String confirmSenha = tfConfirmacaoSenha.getText();
         FuncaoItem funcaoSel = chFuncao.getValue();
 
-        // --- 1. Validação dos Campos ---
+        // --- Campos obrigatórios ---
         if (nome.isEmpty() || email.isEmpty() || senha.isEmpty() || funcaoSel == null) {
-            exibirAlertaErro("Campos Obrigatórios", "Nome, Email, Senha e Função são obrigatórios.", "");
+            exibirAlertaErro("Campos Obrigatórios",
+                    "Nome, Email, Senha e Função são obrigatórios.",
+                    ""
+            );
             return;
         }
 
+        // --- Email válido ---
+        if (!emailValido(email)) {
+            exibirAlertaErro(
+                    "Email inválido",
+                    "O email informado não está em um formato válido.",
+                    "Exemplos: usuario@gmail.com, teste@yahoo.com, nome@outlook.com"
+            );
+            return;
+        }
+
+        // --- Senha forte ---
+        if (!senhaForte(senha)) {
+            exibirAlertaErro(
+                    "Senha Fraca",
+                    "A senha deve conter no mínimo 8 caracteres e incluir:",
+                    "- Uma letra maiúscula\n- Uma letra minúscula\n- Um número\n- Um caractere especial"
+            );
+            return;
+        }
+
+        // --- Confirmação de senha ---
         if (!senha.equals(confirmSenha)) {
-            exibirAlertaErro("Senhas Diferentes", "A senha e a confirmação de senha não são iguais.", "");
+            exibirAlertaErro("Senhas Diferentes",
+                    "A senha e a confirmação de senha não são iguais.",
+                    ""
+            );
             return;
         }
 
-        // --- 2. Hashing da Senha ---
+        // --- Hash da senha ---
         String senhaHash = BCrypt.hashpw(senha, BCrypt.gensalt());
 
-        System.out.println("Cadastro de usuário: " + nome);
-        System.out.println("Senha Hash: " + senhaHash);
-
-        // --- 3. SQL Insert ---
         String sql = "INSERT INTO usuario (nome, email, id_funcao, senha_hash) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConexaoDB.getConexao();
@@ -127,28 +145,32 @@ public class CadastroUsuarioController extends BaseController implements Initial
             stmt.setString(1, nome);
             stmt.setString(2, email);
             stmt.setInt(3, funcaoSel.getId());
-            stmt.setString(4, senhaHash); // Salva o HASH, não a senha
+            stmt.setString(4, senhaHash);
 
             stmt.executeUpdate();
-
-            System.out.println("Usuário salvo com sucesso!");
 
             NavegadorUtil.exibirSucessoAlerta(
                     "Sucesso",
                     "Usuário '" + nome + "' cadastrado com sucesso!"
             );
-            navegarParaHome(); // Método herdado do BaseController
+
+            navegarParaHome();
 
         } catch (SQLException e) {
-            System.err.println("Erro ao salvar usuário:");
-            e.printStackTrace();
-            // Verifica se é um erro de email duplicado (unique constraint)
-            if (e.getSQLState().equals("23505")) {
-                exibirAlertaErro("Erro de Banco", "Email já cadastrado.", "O email '" + email + "' já existe no sistema.");
+
+            // Email duplicado
+            if ("23505".equals(e.getSQLState())) {
+                exibirAlertaErro(
+                        "Erro de Banco",
+                        "Email já cadastrado.",
+                        "O email '" + email + "' já existe no sistema."
+                );
             } else {
-                exibirAlertaErro("Erro de Banco", "Não foi possível salvar o usuário.", "Erro: " + e.getMessage());
+                exibirAlertaErro("Erro de Banco",
+                        "Não foi possível salvar o usuário.",
+                        e.getMessage()
+                );
             }
         }
     }
-
 }
