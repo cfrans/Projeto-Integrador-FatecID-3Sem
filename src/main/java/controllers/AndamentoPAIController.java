@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -17,9 +18,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import database.ConexaoDB;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import util.SessaoUsuario;
 
 public class AndamentoPAIController extends BaseController implements Initializable {
@@ -33,6 +37,7 @@ public class AndamentoPAIController extends BaseController implements Initializa
     @FXML private TableColumn<PAIAndamento, LocalDate> colRevisao;
     @FXML private TableColumn<PAIAndamento, String> colStatus;
     @FXML private TableColumn<PAIAndamento, String> colTitulo;
+    @FXML private CheckBox cbVisualizarFinalizados;
 
     private final ObservableList<PAIAndamento> listaPAIs = FXCollections.observableArrayList();
 
@@ -55,15 +60,27 @@ public class AndamentoPAIController extends BaseController implements Initializa
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colRevisao.setCellValueFactory(new PropertyValueFactory<>("prazoRevisao"));
         tabelaPAIs.setItems(listaPAIs);
-        carregarPAIs();
+        carregarPAIs(); // Carrega o estado inicial (só "Em Andamento")
 
+        // Listener
         tabelaPAIs.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldSelection, newSelection) -> {
-                    if (newSelection != null) {
-                        btAbrirDescricao.setDisable(false);
-                        btCriarFinalizacao.setDisable(false);
+                    boolean itemSelecionado = (newSelection != null);
+
+                    // Botão "Ver Detalhes" só precisa que um item esteja selecionado
+                    btAbrirDescricao.setDisable(!itemSelecionado);
+
+                    // Botão "Finalizar PAI"
+                    if (itemSelecionado) {
+                        // Se o PAI selecionado já está 'Finalizado', desabilita o botão
+                        if ("Finalizado".equals(newSelection.getStatus())) {
+                            btCriarFinalizacao.setDisable(true);
+                        } else {
+                            // Se está 'Em Andamento', habilita
+                            btCriarFinalizacao.setDisable(false);
+                        }
                     } else {
-                        btAbrirDescricao.setDisable(true);
+                        // Se nada está selecionado, desabilita
                         btCriarFinalizacao.setDisable(true);
                     }
                 }
@@ -71,17 +88,34 @@ public class AndamentoPAIController extends BaseController implements Initializa
     }
 
     /**
-     * Apresenta em tela as informações cadastradas na tabela PAI do banco de dados
+     * Apresenta em tela as informações cadastradas na tabela PAI do banco de dados.
+     * A consulta SQL é dinâmica e depende do estado do CheckBox 'cbVisualizarFinalizados'.
      */
     private void carregarPAIs() {
         listaPAIs.clear();
-        String sql = "SELECT p.id_pai, p.titulo, p.status, p.prazo_revisao, " +
+
+        // 1. Define a base da consulta
+        String sqlBase = "SELECT p.id_pai, p.titulo, p.status, p.prazo_revisao, " +
                 "a.nome AS nome_aluno, u.nome AS nome_responsavel " +
                 "FROM pai p " +
                 "JOIN aluno a ON p.id_aluno = a.id_aluno " +
-                "JOIN usuario u ON p.id_usuario = u.id_usuario " +
-                "WHERE p.status = 'Em Andamento' " +
-                "ORDER BY p.prazo_revisao";
+                "JOIN usuario u ON p.id_usuario = u.id_usuario ";
+
+        // 2. Define o filtro (WHERE) com base no CheckBox
+        String sqlFiltro;
+        if (cbVisualizarFinalizados != null && cbVisualizarFinalizados.isSelected()) {
+            // Se marcado, busca "Em Andamento" E "Finalizado"
+            sqlFiltro = "WHERE p.status IN ('Em Andamento', 'Finalizado') ";
+        } else {
+            // Se desmarcado (default), busca SÓ "Em Andamento"
+            sqlFiltro = "WHERE p.status = 'Em Andamento' ";
+        }
+
+        // 3. Define a ordenação
+        String sqlOrderBy = "ORDER BY p.status, p.prazo_revisao"; // Ordena por status primeiro
+
+        // 4. Junta tudo
+        String sql = sqlBase + sqlFiltro + sqlOrderBy;
 
         try (Connection conn = ConexaoDB.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -103,6 +137,18 @@ public class AndamentoPAIController extends BaseController implements Initializa
     }
 
     /**
+     * Este método é chamado toda vez que o CheckBox é clicado.
+     * Ele simplesmente manda recarregar a lista de PAIs com o novo filtro.
+     *
+     * @param event O evento de clique no CheckBox
+     */
+    @FXML
+    void onCheckFinalizados(ActionEvent event) {
+        carregarPAIs();
+    }
+
+
+    /**
      * Metodo que ao clicar no botão de ver detalhes na tela AndamentoPAI ela levará para a tela PAI,
      * onde deverá mostrar os detalhes cadastrados
      * @param event
@@ -114,7 +160,8 @@ public class AndamentoPAIController extends BaseController implements Initializa
         if (paiSelecionado == null) return;
 
         SessaoUsuario.setIdPaiSelecionado(paiSelecionado.getIdPai());
-        navegarPara("/view/PAI.fxml");
+
+        navegarPara("/view/DetalhesPAI.fxml");
     }
 
     /**
@@ -126,18 +173,73 @@ public class AndamentoPAIController extends BaseController implements Initializa
      * é redirecionada para a tela de finalização do PAI.
      *
      * @param event o evento de ação gerado pelo clique no botão.
-     * @throws IOException caso ocorra algum erro ao carregar a nova interface FXML.
      */
     @FXML
-    void onClickCriarFinalizacao(ActionEvent event) throws IOException {
+    void onClickCriarFinalizacao(ActionEvent event) {
         PAIAndamento paiSelecionado = tabelaPAIs.getSelectionModel().getSelectedItem();
         if (paiSelecionado == null) return;
-        if (!ControleAcesso.verificarPermissao("T.I.","Professor","Profissional Especializado")) return;
 
-        SessaoUsuario.setIdPaiSelecionado(paiSelecionado.getIdPai());
+        // Verificação de permissão
+        if (!ControleAcesso.verificarPermissao("T.I.","Professor","Profissional Especializado")) {
+            Alert alertPermissao = new Alert(Alert.AlertType.WARNING);
+            alertPermissao.setTitle("Acesso Negado");
+            alertPermissao.setHeaderText("Você não tem permissão para esta ação.");
+            alertPermissao.setContentText("Apenas T.I., Professores e Profissionais Especializados podem finalizar um PAI.");
+            alertPermissao.showAndWait();
+            return;
+        }
 
-        navegarPara("/view/FinalizacaoPAI.fxml");
+        // 1. Criar o Alerta de Confirmação
+        Alert alertConfirmacao = new Alert(Alert.AlertType.CONFIRMATION);
+        alertConfirmacao.setTitle("Confirmar Finalização");
+        alertConfirmacao.setHeaderText("Finalizar PAI");
+        alertConfirmacao.setContentText("Tem certeza que deseja finalizar o PAI de título '" + paiSelecionado.getTitulo() + "'?");
+
+        // 2. Mostrar o alerta e esperar a resposta
+        Optional<ButtonType> resultado = alertConfirmacao.showAndWait();
+
+        // 3. Verificar se o usuário clicou em "OK"
+        if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+            // 4. Chamar o método para atualizar o banco
+            boolean sucesso = finalizarPAINoBanco(paiSelecionado.getIdPai());
+
+            if (sucesso) {
+                // 5. Mostrar alerta de sucesso
+                NavegadorUtil.exibirSucessoAlerta("PAI Finalizado", "O PAI foi alterado para 'Finalizado' com sucesso.");
+
+                // 6. Recarregar a tabela (o item finalizado desaparecerá)
+                carregarPAIs();
+            }
+        }
+        // Se o usuário clicar em "Cancelar", nada acontece.
     }
+
+    /**
+     * Método helper para atualizar o status do PAI no banco de dados.
+     */
+    private boolean finalizarPAINoBanco(int idPai) {
+        String sql = "UPDATE pai SET status = 'Finalizado' WHERE id_pai = ?";
+
+        try (Connection conn = ConexaoDB.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idPai);
+            int linhasAfetadas = stmt.executeUpdate();
+
+            return linhasAfetadas > 0; // Retorna true se pelo menos 1 linha foi afetada
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Exibir alerta de erro
+            Alert alertErro = new Alert(Alert.AlertType.ERROR);
+            alertErro.setTitle("Erro de Banco de Dados");
+            alertErro.setHeaderText("Não foi possível finalizar o PAI.");
+            alertErro.setContentText("Ocorreu um erro ao tentar atualizar o banco de dados: " + e.getMessage());
+            alertErro.showAndWait();
+            return false;
+        }
+    }
+
 
     // --- CLASSE INTERNA (HELPER) ---
     public static class PAIAndamento {

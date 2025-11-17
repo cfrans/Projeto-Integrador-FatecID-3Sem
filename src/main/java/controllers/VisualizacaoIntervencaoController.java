@@ -42,7 +42,7 @@ public class VisualizacaoIntervencaoController extends BaseController implements
 
         tabelaPAIs.setItems(listaIntervencoes);
 
-        // 🔥 NÃO carregar nada quando abrir a tela
+        // NÃO carregar nada quando abrir a tela
         listaIntervencoes.clear();
     }
 
