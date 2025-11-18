@@ -57,9 +57,12 @@ public class SessaoUsuario {
     public static void setIdPaiSelecionado(int id) {
         idPaiSelecionado = id;
     }
-
     public static int getIdPaiSelecionado() {
         return idPaiSelecionado;
     }
+
+    private static int idIntervencaoSelecionada;
+    public static int getIdIntervencaoSelecionada() { return idIntervencaoSelecionada; }
+    public static void setIdIntervencaoSelecionada(int id) { idIntervencaoSelecionada = id; }
 }
 

@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import util.SessaoUsuario;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -21,14 +22,14 @@ public class VisualizacaoIntervencaoController extends BaseController implements
 
 
     @FXML private TableView<IntervencaoData> tabelaPAIs;
-
     @FXML private TableColumn<IntervencaoData, String> colTitulo;
     @FXML private TableColumn<IntervencaoData, String> colAluno;        // Responsável
     @FXML private TableColumn<IntervencaoData, String> colResponsavel;  // Observação
     @FXML private TableColumn<IntervencaoData, LocalDate> colRevisao;   // Data
-
     @FXML private TextField tfNome;
     @FXML private TextField tfRA;
+    @FXML private Button btDetalhes;
+    @FXML private Button btPesquisarTodos;
 
     private final ObservableList<IntervencaoData> listaIntervencoes = FXCollections.observableArrayList();
 
@@ -41,6 +42,16 @@ public class VisualizacaoIntervencaoController extends BaseController implements
         colRevisao.setCellValueFactory(new PropertyValueFactory<>("data"));
 
         tabelaPAIs.setItems(listaIntervencoes);
+
+        // Desabilitar o botão de detalhes por padrão
+        btDetalhes.setDisable(true);
+
+        // Adicionar listener para habilitar o botão
+        tabelaPAIs.getSelectionModel().selectedItemProperty().addListener(
+                (obs, oldSelection, newSelection) -> {
+                    btDetalhes.setDisable(newSelection == null);
+                }
+        );
 
         // NÃO carregar nada quando abrir a tela
         listaIntervencoes.clear();
@@ -99,6 +110,41 @@ public class VisualizacaoIntervencaoController extends BaseController implements
         }
     }
 
+    /**
+     * Quando o usuário clicar em PESQUISAR TODOS.
+     * Limpa os campos de filtro e chama o carregarIntervencoes
+     * com parâmetros vazios, que buscará todos os registros.
+     */
+    @FXML
+    void onClickPesquisarTodos(ActionEvent event) {
+        tfNome.clear();
+        tfRA.clear();
+
+        // Chama o método de carregar existente com strings vazias.
+        carregarIntervencoes("", "");
+    }
+
+
+    @FXML
+    void onClickDetalhes(ActionEvent event) {
+        IntervencaoData intervencaoSelecionada = tabelaPAIs.getSelectionModel().getSelectedItem();
+
+        if (intervencaoSelecionada == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Nenhuma Seleção");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor, selecione uma intervenção na tabela para ver os detalhes.");
+            alert.showAndWait();
+            return;
+        }
+
+        // 1. Salvar o ID na sessão
+        SessaoUsuario.setIdIntervencaoSelecionada(intervencaoSelecionada.getId());
+
+        // 2. Navegar para a tela de detalhes
+        navegarPara("/view/DetalhesIntervencoes.fxml");
+    }
+
     @FXML
     void onClickVoltar(ActionEvent event) {
         navegarParaHome();
@@ -129,6 +175,3 @@ public class VisualizacaoIntervencaoController extends BaseController implements
         public LocalDate getData() { return data; }
     }
 }
-
-
-

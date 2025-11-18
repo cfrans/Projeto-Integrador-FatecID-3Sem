@@ -18,7 +18,7 @@
             <TableColumn fx:id="colRevisao" prefWidth="118.0" text="Data" />
         </columns>
     </TableView>
-    <Button fx:id="btVoltar" layoutX="708.0" layoutY="494.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="120.0" text="Voltar" />
+    <Button fx:id="btVoltar" layoutX="708.0" layoutY="492.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="120.0" text="Voltar" />
       <TextField fx:id="tfNome" layoutX="70.0" layoutY="153.0" prefHeight="25.0" prefWidth="447.0" />
       <TextField fx:id="tfRA" layoutX="531.0" layoutY="153.0" prefHeight="25.0" prefWidth="183.0" />
       <Button fx:id="btPesquisar" layoutX="724.0" layoutY="151.0" mnemonicParsing="false" onAction="#perquisarIntervencoes" prefHeight="27.0" prefWidth="101.0" text="Pesquisar" />
@@ -31,5 +31,7 @@
       </ImageView>
     <Label layoutX="328.0" layoutY="70.0" style="-fx-font-family: 'Selawk'; -fx-font-weight: bold; -fx-font-size: 18px;" text="Visualização de Intervenções" textFill="#3d5390">
     </Label>
+      <Button fx:id="btDetalhes" layoutX="571.0" layoutY="492.0" mnemonicParsing="false" onAction="#onClickDetalhes" prefHeight="27.0" prefWidth="120.0" text="Ver Detalhes" />
+      <Button fx:id="btPesquisarTodos" layoutX="70.0" layoutY="492.0" mnemonicParsing="false" onAction="#onClickPesquisarTodos" prefHeight="27.0" prefWidth="120.0" text="Pesquisar Todos" />
 </children>
 </AnchorPane>
