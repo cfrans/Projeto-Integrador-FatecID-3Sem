@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="551.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DetalhesPAIController">
+
+    <children>
+        <Label layoutX="285.0" layoutY="67.0" style="-fx-font-family: 'Selawk'; -fx-font-weight: bold; -fx-font-size: 18px;" text="Plano de Acompanhamento Individual (PAI)" textFill="#3d5390" />
+        <Label layoutX="63.0" layoutY="419.0" text="Descrição" />
+        <Label layoutX="63.0" layoutY="341.0" text="Plano Especifico" />
+        <Label layoutX="63.0" layoutY="122.0" text="Nome" />
+        <Label layoutX="471.0" layoutY="122.0" text="Série/Turma" />
+        <Label layoutX="647.0" layoutY="122.0" text="RA" />
+        <Label layoutX="62.0" layoutY="251.0" text="Metas do Aluno" />
+        <Label layoutX="63.0" layoutY="273.0" text="Meta 1" />
+        <Label layoutX="504.0" layoutY="368.0" text="Prazo de Revisão do Plano" />
+        <Label layoutX="63.0" layoutY="192.0" text="Título do Plano" />
+        <Label layoutX="504.0" layoutY="192.0" text="Responsável do Plano" />
+
+        <TextField fx:id="tfNome" editable="false" layoutX="63.0" layoutY="139.0" prefHeight="25.0" prefWidth="379.0" />
+
+        <TextField fx:id="tfSerieTurma" editable="false" layoutX="471.0" layoutY="139.0" prefHeight="25.0" prefWidth="150.0" />
+        <TextField fx:id="tfRA" editable="false" layoutX="647.0" layoutY="139.0" prefHeight="25.0" prefWidth="190.0" />
+        <Separator layoutX="63.0" layoutY="332.0" prefHeight="6.0" prefWidth="774.0" />
+        <TextField fx:id="tfTituloPlano" editable="false" layoutX="63.0" layoutY="209.0" prefHeight="25.0" prefWidth="418.0" />
+        <TextField fx:id="tfResponsavelPlano" editable="false" layoutX="504.0" layoutY="209.0" prefHeight="25.0" prefWidth="331.0" />
+        <Separator layoutX="62.0" layoutY="245.0" prefHeight="6.0" prefWidth="774.0" />
+        <TextField fx:id="tfMeta" editable="false" layoutX="63.0" layoutY="290.0" prefHeight="25.0" prefWidth="239.0" />
+        <Label layoutX="329.0" layoutY="273.0" text="Meta 2" />
+        <TextField fx:id="tfMeta2" editable="false" layoutX="329.0" layoutY="290.0" prefHeight="25.0" prefWidth="239.0" />
+        <Label layoutX="594.0" layoutY="273.0" text="Meta 3" />
+        <TextField fx:id="tfMeta3" editable="false" layoutX="594.0" layoutY="290.0" prefHeight="25.0" prefWidth="239.0" />
+        <Separator layoutX="63.0" layoutY="180.0" prefHeight="6.0" prefWidth="774.0" />
+        <Label layoutX="63.0" layoutY="368.0" text="Recursos Necessários" />
+        <TextField fx:id="tfRecursos" editable="false" layoutX="63.0" layoutY="385.0" prefHeight="25.0" prefWidth="418.0" />
+
+        <DatePicker fx:id="dpRevisaoPlano" disable="true" layoutX="504.0" layoutY="385.0" />
+
+        <TextArea fx:id="taDescricaoPlano" editable="false" layoutX="63.0" layoutY="437.0" prefHeight="63.0" prefWidth="620.0" />
+        <Button fx:id="btImprimir" layoutX="713.0" layoutY="400.0" mnemonicParsing="false" onAction="#onClickImprimir" prefHeight="27.0" prefWidth="120.0" text="Imprimir" />
+        <Button fx:id="btFinalizar" layoutX="713.0" layoutY="437.0" mnemonicParsing="false" onAction="#onClickFinalizar" prefHeight="27.0" prefWidth="120.0" text="Finalizar" />
+        <Button fx:id="btVoltar" layoutX="713.0" layoutY="473.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="120.0" text="Voltar" />
+    </children>
+</AnchorPane>
