@@ -21,7 +21,7 @@
 
       <PasswordField fx:id="pfSenha" layoutX="298.0" layoutY="417.0" prefHeight="25.0" prefWidth="309.0" />
 
-      <Button fx:id="btEntrar" layoutX="387.0" layoutY="468.0" mnemonicParsing="false" onAction="#onClickEntrar" prefHeight="30.0" prefWidth="131.0" text="Entrar">
+      <Button fx:id="btEntrar" defaultButton="true" layoutX="387.0" layoutY="468.0" mnemonicParsing="false" onAction="#onClickEntrar" prefHeight="30.0" prefWidth="131.0" text="Entrar">
 
          <font>
             <Font size="14.0" />

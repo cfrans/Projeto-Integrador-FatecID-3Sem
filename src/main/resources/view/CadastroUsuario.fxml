@@ -22,7 +22,7 @@
         <TextField fx:id="tfEmail" layoutX="261.0" layoutY="269.0" prefHeight="25.0" prefWidth="376.0" />
         <PasswordField fx:id="tfSenha" layoutX="261.0" layoutY="317.0" prefHeight="25.0" prefWidth="376.0" />
         <PasswordField fx:id="tfConfirmacaoSenha" layoutX="261.0" layoutY="363.0" prefHeight="25.0" prefWidth="376.0" />
-        <Button fx:id="btCadastrar" layoutX="314.0" layoutY="402.0" mnemonicParsing="false" onAction="#onClickCadastrar" prefHeight="30.0" prefWidth="131.0" text="Cadastrar" />
+        <Button fx:id="btCadastrar" defaultButton="true" layoutX="314.0" layoutY="402.0" mnemonicParsing="false" onAction="#onClickCadastrar" prefHeight="30.0" prefWidth="131.0" text="Cadastrar" />
         <Button fx:id="btVoltar" layoutX="452.0" layoutY="402.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="30.0" prefWidth="131.0" text="Voltar" />
     </children>
 </AnchorPane>

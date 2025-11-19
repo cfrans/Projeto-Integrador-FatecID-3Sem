@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
+import java.util.Objects;
+
 public class Main extends Application {
 
     @Override
@@ -18,9 +20,9 @@ public class Main extends Application {
         scene.getStylesheets().add(getClass().getResource("/css/application.css").toExternalForm());
 
         try {
-            Image icon32 = new Image(getClass().getResourceAsStream("/images/icon32.png"));
-            Image icon64 = new Image(getClass().getResourceAsStream("/images/icon64.png"));
-            Image icon128 = new Image(getClass().getResourceAsStream("/images/icon128.png"));
+            Image icon32 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/icon32.png")));
+            Image icon64 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/icon64.png")));
+            Image icon128 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/icon128.png")));
 
             // Adiciona TODOS os ícones ao 'primaryStage'
             primaryStage.getIcons().addAll(icon32, icon64, icon128);

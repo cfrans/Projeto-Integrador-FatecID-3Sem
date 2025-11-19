@@ -15,7 +15,7 @@
     <children>
         <Label layoutX="57.0" layoutY="169.0" text="Nome" />
         <Label layoutX="467.0" layoutY="169.0" text="Série/Turma" />
-        <Label layoutX="644.0" layoutY="169.0" text="RA" />
+        <Label layoutX="644.0" layoutY="169.0" text="R.A." />
         <Label layoutX="57.0" layoutY="291.0" text="Data da Intervenção" />
         <Label layoutX="320.0" layoutY="291.0" text="Responsável pela Intervenção" />
         <Label layoutX="57.0" layoutY="342.0" text="Tipos e Observações" />
