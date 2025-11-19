@@ -7,7 +7,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
-public class ConsultaRendimentoController {
+public class ConsultaRendimentoController extends BaseController  {
 
     @FXML
     private Button btImprimir;
