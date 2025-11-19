@@ -7,10 +7,13 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
-public class ConsultaRendimentoController extends BaseController  {
+public class ConsultaRendimentoController {
 
     @FXML
     private Button btImprimir;
+
+    @FXML
+    private Button btPesquisar;
 
     @FXML
     private Button btVoltar;
@@ -25,6 +28,9 @@ public class ConsultaRendimentoController extends BaseController  {
     private DatePicker dpDataInicio;
 
     @FXML
+    private TextField tfEntregaTrabalho;
+
+    @FXML
     private TextField tfMateria1;
 
     @FXML
@@ -35,6 +41,18 @@ public class ConsultaRendimentoController extends BaseController  {
 
     @FXML
     private TextField tfMateria4;
+
+    @FXML
+    private TextField tfMateria5;
+
+    @FXML
+    private TextField tfMateria6;
+
+    @FXML
+    private TextField tfMateria7;
+
+    @FXML
+    private TextField tfMateria8;
 
     @FXML
     private TextField tfNota1;
@@ -49,13 +67,25 @@ public class ConsultaRendimentoController extends BaseController  {
     private TextField tfNota4;
 
     @FXML
-    private TextField tfPorcentagemMetas;
+    private TextField tfNota5;
 
     @FXML
-    private TextField tfQuantidadeFinalizados;
+    private TextField tfNota6;
+
+    @FXML
+    private TextField tfNota7;
+
+    @FXML
+    private TextField tfNota8;
+
+    @FXML
+    private TextField tfParticipacao;
 
     @FXML
     private TextField tfQuantidadeIntervencoes;
+
+    @FXML
+    private TextField tfQuantidadePlanosFinalizados;
 
     @FXML
     private TextField tfQunatidadePlanos;
@@ -70,15 +100,17 @@ public class ConsultaRendimentoController extends BaseController  {
     private TextField tfSerieTurma;
 
     @FXML
-    private TextField tfTipoFrequente;
-
-    /**
-     * Método que é utilizado para carregar o funcionamento do botão imprimir
-     * após a realização do event
-     * @param event
-     */
-    @FXML
     void onClickImprimir(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onClickPesquisar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onClickVoltar(ActionEvent event) {
 
     }
 
