@@ -16,7 +16,7 @@
         <Label layoutX="63.0" layoutY="341.0" text="Plano Especifico" />
         <Label layoutX="63.0" layoutY="122.0" text="Nome" />
         <Label layoutX="471.0" layoutY="122.0" text="Série/Turma" />
-        <Label layoutX="647.0" layoutY="122.0" text="RA" />
+        <Label layoutX="647.0" layoutY="122.0" text="R.A." />
         <Label layoutX="62.0" layoutY="251.0" text="Metas do Aluno" />
         <Label layoutX="63.0" layoutY="273.0" text="Meta 1" />
         <Label layoutX="504.0" layoutY="368.0" text="Prazo de Revisão do Plano" />

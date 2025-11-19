@@ -25,7 +25,7 @@
         </Label>
         <Label layoutX="57.0" layoutY="140.0" text="Nome" />
         <Label layoutX="467.0" layoutY="140.0" text="Série/Turma" />
-        <Label layoutX="644.0" layoutY="140.0" text="RA" />
+        <Label layoutX="644.0" layoutY="140.0" text="R.A." />
         <Label layoutX="57.0" layoutY="201.0" text="Registro de Nova Intervenção" />
         <Label layoutX="57.0" layoutY="269.0" text="Data da Intervenção" />
         <Label layoutX="320.0" layoutY="269.0" text="Responsável pela Intervenção" />

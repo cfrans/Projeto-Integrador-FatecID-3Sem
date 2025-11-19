@@ -22,7 +22,7 @@
         </Label>
         <Label layoutX="64.0" layoutY="129.0" text="Nome" />
         <Label layoutX="468.0" layoutY="129.0" text="Série/Turma" />
-        <Label layoutX="646.0" layoutY="129.0" text="RA" />
+        <Label layoutX="646.0" layoutY="129.0" text="R.A." />
         <Label layoutX="64.0" layoutY="188.0" text="Avaliações do
  Trimestre" />
         <Label layoutX="351.0" layoutY="214.0" text="Avaliação 1" />

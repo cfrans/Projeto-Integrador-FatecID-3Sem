@@ -23,7 +23,7 @@
     <Label layoutX="53.0" layoutY="126.0" text="Nome" />
     <Label layoutX="379.0" layoutY="126.0" text="Data de nascimento" />
     <DatePicker fx:id="dpDataNascimento" layoutX="379.0" layoutY="143.0" prefHeight="25.0" prefWidth="150.0" />
-    <Label layoutX="540.0" layoutY="127.0" text="RA" />
+    <Label layoutX="540.0" layoutY="127.0" text="R.A." />
     <TextField fx:id="tfRA" layoutX="541.0" layoutY="144.0" prefHeight="25.0" prefWidth="166.0" />
     <ChoiceBox fx:id="chSerieTurma" layoutX="719.0" layoutY="143.0" prefHeight="25.0" prefWidth="120.0" />
     <Label layoutX="720.0" layoutY="126.0" text="Série/Turma" />
