@@ -1,153 +1,4 @@
---------------------------------------- CÓDIGO ORIGINAL DO PEDRO
-CREATE TABLE coordenador (
-    id_coordenador SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    segmento VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE PAI (
-    id_PAI SERIAL PRIMARY KEY,
-    titulo VARCHAR(255) NOT NULL,
-    descricao VARCHAR(255) NOT NULL,
-    meta VARCHAR(255) NOT NULL,
-    recurso_necessario VARCHAR(255) NOT NULL,
-    prazo_revisao DATE NOT NULL,
-    data DATE NOT NULL,
-    status VARCHAR(255) NOT NULL,
-    id_coordenador INT REFERENCES coordenador(id_coordenador)
-);
-
-CREATE TABLE professor (
-    id_professor SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    sala VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE responsavel (
-    id_responsavel SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    parentesco VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    telefone VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE aluno (
-    id_aluno SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    data_nascimento DATE NOT NULL,
-    serie_turma VARCHAR(255) NOT NULL,
-    RA INT UNIQUE NOT NULL,
-    id_professor INT REFERENCES professor(id_professor),
-    id_responsavel INT REFERENCES responsavel(id_responsavel),
-    idPAI INT REFERENCES PAI(id_PAI),
-    idcoordenador INT REFERENCES coordenador(id_coordenador)
-);
-
-CREATE TABLE disciplina (
-    id_disciplina SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    id_professor INT REFERENCES professor(id_professor)
-);
-
-CREATE TABLE rendimento (
-    id_rendimento SERIAL PRIMARY KEY,
-    avaliacao_1 INT NOT NULL,
-    avaliacao_2 INT NOT NULL,
-    trimestre INT NOT NULL,
-    consideracoes VARCHAR(255) NOT NULL,
-    simulado INT NOT NULL,
-    atitude_academica INT NOT NULL,
-    id_disciplina INT REFERENCES disciplina(id_disciplina),
-    id_aluno INT REFERENCES aluno(id_aluno)
-);
-
-CREATE TABLE profissional_especializado (
-    id_profissional_especializado SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    cargo VARCHAR(255) NOT NULL,
-    telefone VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE laudo (
-    id_laudo SERIAL PRIMARY KEY,
-    numero INT UNIQUE NOT NULL,
-    data DATE,
-    descricao VARCHAR(255) NOT NULL,
-    tipo VARCHAR(255) NOT NULL,
-    id_aluno INT REFERENCES aluno(id_aluno),
-    id_profissional_especializado INT REFERENCES profissional_especializado(id_profissional_especializado)
-);
-
-CREATE TABLE intervencao (
-    id_intervencao SERIAL PRIMARY KEY,
-    descricao VARCHAR(255) NOT NULL,
-    tipo VARCHAR(255) NOT NULL,
-    data DATE NOT NULL,
-    id_aluno INT REFERENCES aluno(id_aluno),
-    id_profissional_especializado INT REFERENCES profissional_especializado(id_profissional_especializado),
-    id_professor INT REFERENCES professor(id_professor)
-);
-
------------------------- FIM DO CÓDIGO DO PEDRO
---------ABAIXO TEMOS A CRIAÇAO DOS LOGINS, COM INSERTS DE EXEMPLO PARA USARMOS POR HORA
-
-CREATE TABLE usuario (
-    id_usuario SERIAL PRIMARY KEY,
-    nome_acesso VARCHAR(100) UNIQUE NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    senha_hash VARCHAR(255) NOT NULL, -- Depois pesquisar sobre 'bcrypt' para salvar isso
-    funcao VARCHAR(50) NOT NULL
-);
-
--- Inserindo usuários de exemplo (senha '123' por enquanto)
-INSERT INTO usuario (nome_acesso, email, funcao, senha_hash) VALUES
-('Coordenadora Ana', 'ana@escola.com', 'Coordenador', '123'),
-('Professora Bia', 'bia@escola.com', 'Professor', '123'),
-('Admin', 'admin@escola.com', 'Administrador', 'admin');
-
--------------------------------------------------------------------------------------------
-------------------------ALGUNS INSERTS PARA SIMULARMOS O RESTANTE, ESSES AINDA NAO TEM CRUD
--------------------------------------------------------------------------------------------
-
--- COORDENADOR (Para a tela de PAI)
-INSERT INTO coordenador (nome, segmento) VALUES
-('Ana Maria Braga', 'Ensino Fundamental I'),
-('Carlos Alberto Nobrega', 'Ensino Fundamental II'),
-('Silvio Santos', 'Ensino Médio');
-
--- PROFESSOR (Para as telas de Aluno, Intervenção, Disciplina)
-INSERT INTO professor (nome, sala) VALUES
-('Beatriz Souza', 'Sala 101'),
-('Marcos Silva', 'Sala 205'),
-('Juliana Pereira', 'Sala 302');
-
--- PROFISSIONAL ESPECIALIZADO (Para a tela de Cadastro/Laudo)
-INSERT INTO profissional_especializado (nome, cargo, telefone, email) VALUES
-('Dr. Drauzio Varella', 'Neurologista', '11999998888', 'drauzio@med.com'),
-('Dr. Roberto Almeida', 'Psicopedagogo', '19988887777', 'roberto@psico.com'),
-('Dra. Carla Antunes', 'Fonoaudióloga', '21977776666', 'carla@fono.com');
-
-INSERT INTO disciplina (nome, id_professor) VALUES
-('Matemática', 1), -- (Professora Beatriz)
-('Português', 2),  -- (Professor Marcos)
-('História', 2),    -- (Professor Marcos)
-('Ciências', 3);  -- (Professora Juliana)
-
------------------------------- SELECTS DE TESTE
-SELECT * FROM aluno;
-SELECT * FROM coordenador;
-SELECT * FROM disciplina;
-SELECT * FROM intervencao;
-SELECT * FROM laudo;
-SELECT * FROM pai;
-SELECT * FROM professor;
-SELECT * FROM profissional_especializado;
-SELECT * FROM rendimento;
-SELECT * FROM responsavel;
-
-
------------------------------------------------------------ novo banco (utilizar este)
+----------------------------------------------------------- Schema atualizado (19 nov 25)
 
 -- Tabela: funcao
 CREATE TABLE funcao (
@@ -297,115 +148,112 @@ CREATE TABLE rendimento (
         REFERENCES tipo_participacao (id_tipo_participacao)
 );
 
+---- Inserts obrigatórios
+-- Matérias padrão
+INSERT INTO materia (nome) VALUES
+    ('Português'),
+    ('Redação'),
+    ('Matemática'),
+    ('Ciências'),
+    ('História'),
+    ('Geografia'),
+    ('Educação física'),
+    ('Inglês');
 
-
--------------------------------------------------------- INSERTS PARA TESTE
--- NÍVEL 0: Tabelas "Mãe" (Sem dependências)
--- Inserir Funções (Ex: Coordenador, Professor)
+-- Funções padrão
 INSERT INTO funcao (nome) VALUES
 ('Coordenador'),
 ('Professor'),
 ('Administrador'),
 ('T.I.');
--- IDs gerados: 1, 2, 3
 
--- Inserir Tipos de Responsável (Ex: Mãe, Pai)
-INSERT INTO tipo_responsavel (nome) VALUES
-('Mãe'),
-('Pai'),
-('Avó/Avô'),
-('Responsável Legal');
--- IDs gerados: 1, 2, 3, 4
-
--- Inserir Séries/Turmas
-INSERT INTO serie_turma (nome) VALUES
-('1º Ano A'),
-('5º Ano B'),
-('9º Ano A');
--- IDs gerados: 1, 2, 3
-
--- Inserir Matérias
-INSERT INTO materia (nome) VALUES
-('Matemática'),
-('Português'),
-('Ciências'),
-('História');
--- IDs gerados: 1, 2, 3, 4
-
--- Inserir Tipos de Participação (para Rendimento)
+-- Tipos de participação padrão
 INSERT INTO tipo_participacao (nome) VALUES
 ('Muito Alta'),
 ('Alta'),
 ('Média'),
 ('Baixa'),
 ('Nenhuma');
--- IDs gerados: 1, 2, 3, 4, 5
 
----
--- NÍVEL 1: Dependem do Nível 0
----
+-- Tipos padrão de responsável
+INSERT INTO tipo_responsavel (nome) VALUES
+('Mãe'),
+('Pai'),
+('Avó/Avô'),
+('Responsável Legal'),
+('Outro');
+----
 
-select * from funcao
--- Inserir Usuários (depende de 'funcao')
-INSERT INTO usuario (nome, email, id_funcao) VALUES
-('Ana Coordenadora', 'ana@escola.com', 1), -- ID 1 (Coordenador)
-('Bruno Professor', 'bruno@escola.com', 2), -- ID 2 (Professor)
-('Carla Professora', 'carla@escola.com', 2), -- ID 3 (Professor)
-('Davi Admin', 'davi@escola.com', 3);        -- ID 4 (Admin)
--- IDs gerados: 1, 2, 3, 4
+-- Séries padrão
+-- (a definir)
 
--- Inserir Responsáveis (depende de 'tipo_responsavel')
+-------------------------------------------------------- INSERTS PARA TESTE
+-- 1. Inserindo Séries/Turmas
+INSERT INTO serie_turma (nome) VALUES
+('1º Ano A'),
+('5º Ano B'),
+('3º Ano C');
+
+-- 2. Inserindo Usuários
+INSERT INTO usuario (nome, email, id_funcao, senha_hash) VALUES
+('Admin Padrão', 'admin@escola.com', 4, 'admin123');    -- ID 1
+
+-- 3. Inserindo Responsáveis (Pais/Mães)
 INSERT INTO responsavel (nome, telefone, email, id_tipo_responsavel) VALUES
-('Maria Silva', '11999991111', 'maria@email.com', 1), -- ID 1 (Mãe)
-('João Santos', '19988882222', 'joao@email.com', 2),  -- ID 2 (Pai)
-('Laura Oliveira', '21977773333', 'laura@email.com', 1); -- ID 3 (Mãe)
--- IDs gerados: 1, 2, 3
+('Maria da Silva', '(11) 99999-1111', 'maria.silva@email.com', 1), -- Mãe
+('Carlos Souza', '(11) 98888-2222', 'carlos.souza@email.com', 2),   -- Pai
+('Ana Pereira', '(11) 97777-3333', 'ana.pereira@email.com', 3);     -- Avó
 
----
--- NÍVEL 2: Dependem do Nível 1
----
+SELECT * FROM aluno st ;
 
--- Inserir Alunos (depende de 'responsavel' e 'serie_turma')
+-- 4. Inserindo Alunos (Vinculados aos responsáveis e turmas acima)
 INSERT INTO aluno (nome, ra, data_nascimento, id_responsavel, id_serie_turma) VALUES
-('Caio Silva', 'RA1001', '2015-03-10', 1, 2), -- ID 1 (Resp: Maria, Turma: 5º Ano B)
-('Beatriz Santos', 'RA1002', '2017-07-20', 2, 1), -- ID 2 (Resp: João, Turma: 1º Ano A)
-('Lucas Oliveira', 'RA1003', '2010-11-05', 3, 3); -- ID 3 (Resp: Laura, Turma: 9º Ano A)
--- IDs gerados: 1, 2, 3
+('Joãozinho da Silva', 'RA2024001', '2015-05-10', 1, 1), -- Filho da Maria, 1º Ano
+('Pedrinho Souza', 'RA2024002', '2011-08-20', 2, 2),     -- Filho do Carlos, 5º Ano
+('Mariana Pereira', 'RA2024003', '2013-02-15', 3, 3);    -- Neta da Ana, 3º Ano
 
----
--- NÍVEL 3: Tabelas de "Ação" (Dependem de Alunos, Usuários, etc.)
----
-
--- Inserir PAIs (depende de 'aluno' e 'usuario')
-INSERT INTO pai (titulo, descricao, meta, meta2, meta3, recurso_necessario, prazo_revisao, status, id_aluno, id_usuario) VALUES
-('PAI de Leitura 2025', 'Foco em alfabetização e interpretação de texto.', 'Ler 1 livro por mês', 'Ler 2 livros por mês', 'Ler 3 livros por mês', 'Livros da biblioteca', '2025-12-31', 'Em Andamento', 2, 1), -- PAI da Beatriz(2), criado pela Ana(1)
-('PAI de Matemática', 'Foco em operações de multiplicação.', 'Dominar tabuada do 7', 'Dominar tabuada do 8', 'Dominar tabuada do 9', 'Jogos educativos', '2025-06-30', 'Em Andamento', 1, 2); -- PAI do Caio(1), criado pelo Bruno(2)
-
--- Inserir Laudos (depende de 'aluno')
+-- 5. Inserindo Laudos
 INSERT INTO laudo (numero, data, descricao, tipo, id_aluno) VALUES
-('LDO-456', '2024-02-15', 'Laudo fonoaudiológico sobre dificuldades na fala.', 'Dislexia', 2), -- Laudo da Beatriz(2)
-('LDO-789', '2024-05-20', 'Laudo neurológico sobre foco e atenção.', 'TDAH', 1); -- Laudo do Caio(1)
+('L-1001', '2024-01-10', 'Diagnóstico de TDAH com predominância em desatenção.', 'Neurológico', 1),
+('L-1002', '2023-11-05', 'Acompanhamento fonoaudiológico para dislalia.', 'Fonoaudiológico', 2),
+('L-1003', '2024-02-20', 'TEA Nível 1 de suporte.', 'Multidisciplinar', 3);
 
--- Inserir Intervenções (depende de 'aluno' e 'usuario')
+-- OBS: Na execução do dia 19/11 não estava listando todos esses inserts, apenas um. Analisar o motivo.
+-- 6. Inserindo PAI (Plano de Atendimento Individual)
+INSERT INTO pai (titulo, descricao, meta, meta2, meta3, recurso_necessario, prazo_revisao, status, id_aluno, id_usuario) VALUES
+('Plano de Leitura', 'Foco na alfabetização e reconhecimento de sílabas complexas.', 'Ler 10 palavras novas', 'Ler frases simples', 'Interpretar texto curto', 'Jogos Pedagógicos', '2024-06-30', 'Em Andamento', 1, 1),
+('Plano Comportamental', 'Aluno apresenta dificuldade em permanecer sentado.', 'Permanecer 20min sentado', 'Pedir vez para falar', 'Organizar material', 'Cronômetro visual', '2024-05-15', 'Revisão', 2, 1),
+('Plano de Socialização', 'Incentivar interação com colegas no recreio.', 'Brincar com 1 colega', 'Participar de grupo', 'Iniciar conversa', 'Mediação do monitor', '2024-07-01', 'Iniciado', 3, 1);
+
+-- 7. Inserindo Intervenções
 INSERT INTO intervencao (observacao, titulo, data, id_aluno, id_usuario) VALUES
-('Aluno apresentou dificuldade com sílabas complexas (lh, nh). Foi usada atividade lúdica.', 'Sessão de Reforço 1', '2025-03-10', 2, 3), -- Intervenção na Beatriz(2) pela Carla(3)
-('Reunião com os pais sobre a importância de rotina de estudos em casa.', 'Alinhamento Familiar', '2025-04-15', 1, 1); -- Intervenção no Caio(1) pela Ana(1)
-
--- Inserir Rendimentos (depende de 'materia', 'aluno', 'usuario', 'tipo_participacao')
-INSERT INTO rendimento (avaliacao1, avaliacao2, simulado, atitude_academica, entrega, id_materia, id_aluno, id_usuario, id_tipo_participacao, justificativa_participacao) VALUES
-(7.5, 8.0, 6.5, 9.0, 'Totalmente Entregue', 1, 1, 2, 2, 'Participa bem das aulas de exatas'); -- Rend. Caio(1) em Mat.(1) pelo Bruno(2), part. Alta(2)
-
-INSERT INTO rendimento (avaliacao1, avaliacao2, simulado, atitude_academica, entrega, id_materia, id_aluno, id_usuario, id_tipo_participacao, justificativa_entrega) VALUES
-(9.0, 9.5, 8.0, 10.0, 'Totalmente Entregue', 2, 2, 3, 1, 'Excelente aluna, muito dedicada.'); -- Rend. Beatriz(2) em Port.(2) pela Carla(3), part. Muito Alta(1)
-
-INSERT INTO rendimento (avaliacao1, avaliacao2, simulado, atitude_academica, entrega, id_materia, id_aluno, id_usuario, id_tipo_participacao, justificativa_entrega) VALUES
-(5.0, 4.5, 3.0, 6.0, 'Parcialmente Entregue', 3, 1, 2, 4, 'Esqueceu metade dos trabalhos'); -- Rend. Caio(1) em Ciên.(3) pelo Bruno(2), part. Baixa(4)
+('Aluno estava muito agitado hoje, realizado exercício de respiração.', 'Agitação em sala', '2024-03-10', 1, 1),
+('Conversa com a família sobre a falta de tarefa de casa.', 'Reunião Rápida', '2024-03-12', 2, 1),
+('Realizada adaptação da prova de matemática (fonte maior e menos questões).', 'Adaptação Curricular', '2024-03-15', 3, 1);
 
 
-select * from pai;
+-- 8. Inserindo Rendimento
+INSERT INTO rendimento
+(avaliacao1, avaliacao2, simulado, atitude_academica, justificativa_participacao, justificativa_entrega, entrega, id_materia, id_aluno, id_usuario, id_tipo_participacao)
+VALUES
+-- Aluno 1, Português (id 1), Participação Média (id 3)
+(7.5, 8.0, 7.0, 9.0, 'Participa quando estimulado.', 'Entregou no prazo.', 'Sim', 1, 1, 1, 3),
 
-ALTER TABLE pai ADD COLUMN meta2 VARCHAR(255) NOT NULL DEFAULT '';
-ALTER TABLE pai ADD COLUMN meta3 VARCHAR(255) NOT NULL DEFAULT '';
+-- Aluno 2, Matemática (id 3), Participação Baixa (id 4)
+(5.0, 6.5, 6.0, 6.0, 'Distrai-se com facilidade.', 'Entregou com atraso.', 'Sim', 3, 2, 1, 4),
 
+-- Aluno 3, História (id 5), Participação Alta (id 2)
+(9.0, 9.5, 8.5, 10.0, 'Sempre levanta a mão.', 'Trabalho impecável.', 'Sim', 5, 3, 1, 2);
 
+-------------------------------------------------------- Querys úteis
 
+-- Query para limpar o banco mantendo apenas os dados padrão
+TRUNCATE TABLE
+	aluno,
+	intervencao,
+	laudo,
+	pai,
+	rendimento,
+	responsavel,
+	serie_turma
+RESTART IDENTITY CASCADE;
