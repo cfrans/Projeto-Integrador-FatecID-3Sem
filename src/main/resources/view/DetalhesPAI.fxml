@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="551.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DetalhesPAIController">
+<AnchorPane fx:id="rootPane" prefHeight="551.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DetalhesPAIController">
 
     <children>
         <Label layoutX="285.0" layoutY="67.0" style="-fx-font-family: 'Selawk'; -fx-font-weight: bold; -fx-font-size: 18px;" text="Plano de Acompanhamento Individual (PAI)" textFill="#3d5390" />
