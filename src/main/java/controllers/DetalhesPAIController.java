@@ -4,7 +4,13 @@ import database.ConexaoDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.print.Printer;
+import javafx.print.PrinterJob;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import javafx.scene.layout.AnchorPane;
 import util.SessaoUsuario;
 
 import java.net.URL;
@@ -29,6 +35,7 @@ public class DetalhesPAIController extends BaseController implements Initializab
     @FXML private TextField tfRecursos;
     @FXML private DatePicker dpRevisaoPlano;
     @FXML private TextArea taDescricaoPlano;
+    @FXML private AnchorPane rootPane;
 
     // Botões
     @FXML private Button btImprimir;
@@ -188,13 +195,64 @@ public class DetalhesPAIController extends BaseController implements Initializab
      * Botão Imprimir (placeholder).
      */
     @FXML
-    void onClickImprimir(ActionEvent event) {
-        System.out.println("Botão Imprimir clicado. (Lógica a implementar)");
-        Alert alertInfo = new Alert(Alert.AlertType.INFORMATION);
-        alertInfo.setTitle("Em Breve");
-        alertInfo.setHeaderText(null);
-        alertInfo.setContentText("A funcionalidade de impressão será implementada futuramente.");
-        alertInfo.showAndWait();
+    private void onClickImprimir(ActionEvent event) {
+        try {
+
+            btImprimir.setVisible(false);
+            btFinalizar.setVisible(false);
+            btVoltar.setVisible(false);
+
+            WritableImage snapshot = rootPane.snapshot(new SnapshotParameters(), null);
+
+
+            btImprimir.setVisible(true);
+            btFinalizar.setVisible(true);
+            btVoltar.setVisible(true);
+            // menuBar.setVisible(true);
+
+
+            PrinterJob job = PrinterJob.createPrinterJob();
+            if (job != null && job.showPrintDialog(rootPane.getScene().getWindow())) {
+
+                ImageView imageView = new ImageView(snapshot);
+                imageView.setPreserveRatio(true);
+
+
+                double pageWidth = job.getJobSettings().getPageLayout().getPrintableWidth();
+                double pageHeight = job.getJobSettings().getPageLayout().getPrintableHeight();
+
+                double scaleX = pageWidth / snapshot.getWidth();
+                double scaleY = pageHeight / snapshot.getHeight();
+                double scale = Math.min(scaleX, scaleY);
+
+                imageView.setFitWidth(snapshot.getWidth() * scale);
+                imageView.setFitHeight(snapshot.getHeight() * scale);
+
+                boolean success = job.printPage(imageView);
+                if (success) {
+                    job.endJob();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Erro ao imprimir: " + e.getMessage());
+        }
+    }
+
+
+    private void restaurarBotoes() {
+        btImprimir.setVisible(true);
+        btFinalizar.setVisible(true);
+        btVoltar.setVisible(true);
+    }
+
+    private void showAlert(String msg) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Aviso");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 
     /**
