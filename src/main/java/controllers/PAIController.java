@@ -71,6 +71,9 @@ public class PAIController extends BaseController implements Initializable {
             tfResponsavelPlano.setText("Nenhum usuário logado");
             tfResponsavelPlano.setDisable(true);
         }
+
+        // Bloqueia a inserção de datas passadas
+        desabilitarDatas(dpRevisaoPlano, TipoBloqueio.PASSADAS);
     }
 
     /**
@@ -156,6 +159,18 @@ public class PAIController extends BaseController implements Initializable {
         if (alunoSel == null || tfTituloPlano.getText().isEmpty() || dpRevisaoPlano.getValue() == null) {
             exibirAlertaErro("Erro de Validação", "Campos obrigatórios", "Aluno, Título e Prazo de Revisão são obrigatórios.");
             return;
+        }
+
+        // Validação da Data de revisão
+        if (dpRevisaoPlano.getValue() != null) {
+            if (dpRevisaoPlano.getValue().isBefore(LocalDate.now())) {
+                exibirAlertaErro(
+                        "Data Inválida",
+                        "A Data da Revisão não pode ser no passado.",
+                        "Você selecionou: " + dpRevisaoPlano.getValue().format(DATA_FORMATTER) + ". Por favor, insira uma data posterior."
+                );
+                return;
+            }
         }
 
         if (idUsuarioLogado == 0) {

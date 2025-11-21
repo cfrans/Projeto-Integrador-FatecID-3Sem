@@ -160,6 +160,14 @@ public class MenuController implements Initializable {
     }
 
     /**
+     * Navega até a tela de Sobre do Projeto.
+     */
+    @FXML
+    void sobreProjeto() throws IOException {
+        mudarTela("/view/Sobre.fxml");
+    }
+
+    /**
      * Altera dinamicamente o conteúdo exibido dentro do AnchorPane principal da tela.
      *
      * Este método é responsável por carregar um arquivo FXML, criar seu controlador,

@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
+import java.util.Locale;
 
 import java.util.Objects;
 
@@ -39,6 +40,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        Locale.setDefault(new Locale("pt", "BR"));
         launch(args);
     }
 }

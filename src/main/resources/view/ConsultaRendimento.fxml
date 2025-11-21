@@ -6,22 +6,22 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
 <AnchorPane fx:id="rootPane" prefHeight="551.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ConsultaRendimentoController">
 
     <children>
-        <Label layoutX="364.0" layoutY="57.0" style="-fx-font-family: 'Selawk'; -fx-font-weight: bold; -fx-font-size: 16px;" text="Rendimento Trimestral" textFill="#3d5390">
-        </Label>
-        <ChoiceBox fx:id="chNome" layoutX="62.0" layoutY="124.0" prefHeight="25.0" prefWidth="226.0" />
-        <Label layoutX="62.0" layoutY="107.0" text="Nome" />
-        <TextField fx:id="tfSerieTurma" layoutX="297.0" layoutY="125.0" prefHeight="25.0" prefWidth="107.0" />
-        <TextField fx:id="tfRA" layoutX="416.0" layoutY="125.0" prefHeight="25.0" prefWidth="127.0" />
-        <Label layoutX="297.0" layoutY="108.0" text="Série/Turma" />
-        <Label layoutX="416.0" layoutY="108.0" text="R.A." />
-        <Separator layoutX="64.0" layoutY="162.0" prefHeight="6.0" prefWidth="768.0" />
-        <Pane layoutX="62.0" layoutY="191.0" prefHeight="304.0" prefWidth="263.0" style="-fx-background-color: #E8E8E8;">
+        <ChoiceBox fx:id="chNome" layoutX="62.0" layoutY="141.0" prefHeight="25.0" prefWidth="226.0" />
+        <Label layoutX="62.0" layoutY="124.0" text="Nome" />
+        <TextField fx:id="tfSerieTurma" layoutX="297.0" layoutY="142.0" prefHeight="25.0" prefWidth="107.0" />
+        <TextField fx:id="tfRA" layoutX="416.0" layoutY="142.0" prefHeight="25.0" prefWidth="127.0" />
+        <Label layoutX="297.0" layoutY="125.0" text="Série/Turma" />
+        <Label layoutX="416.0" layoutY="125.0" text="R.A." />
+        <Separator layoutX="64.0" layoutY="179.0" prefHeight="6.0" prefWidth="768.0" />
+        <Pane layoutX="62.0" layoutY="208.0" prefHeight="304.0" prefWidth="263.0" style="-fx-background-color: #E8E8E8;">
             <children>
                 <TextField fx:id="tfMateria1" editable="false" layoutX="18.0" layoutY="18.0" prefHeight="25.0" prefWidth="150.0" text="Português" />
                 <TextField fx:id="tfNota1" layoutX="179.0" layoutY="18.0" prefHeight="25.0" prefWidth="65.0" />
@@ -41,8 +41,8 @@
             <TextField fx:id="tfNota8" layoutX="179.0" layoutY="256.0" prefHeight="25.0" prefWidth="65.0" />
             </children>
         </Pane>
-        <Label layoutX="62.0" layoutY="173.0" text="Notas por Disciplina" />
-        <Pane layoutX="342.0" layoutY="276.0" prefHeight="60.0" prefWidth="494.0" style="-fx-background-color: #E8E8E8;">
+        <Label layoutX="62.0" layoutY="190.0" text="Notas por Disciplina" />
+        <Pane layoutX="342.0" layoutY="293.0" prefHeight="60.0" prefWidth="494.0" style="-fx-background-color: #E8E8E8;">
             <children>
                 <TextField fx:id="tfQuantidadeIntervencoes" layoutX="14.0" layoutY="23.0" prefHeight="25.0" prefWidth="107.0" />
                 <TextField fx:id="tfResponsavelFrequente" layoutX="135.0" layoutY="23.0" prefHeight="25.0" prefWidth="346.0" />
@@ -50,8 +50,8 @@
             <Label layoutX="135.0" layoutY="8.0" text="Responsavel Mais Frequente pelas Intervenções" />
             </children>
         </Pane>
-        <Label layoutX="342.0" layoutY="259.0" text="Interveções" />
-        <Pane layoutX="342.0" layoutY="356.0" prefHeight="60.0" prefWidth="494.0" style="-fx-background-color: #E8E8E8;">
+        <Label layoutX="342.0" layoutY="276.0" text="Interveções" />
+        <Pane layoutX="342.0" layoutY="373.0" prefHeight="60.0" prefWidth="494.0" style="-fx-background-color: #E8E8E8;">
             <children>
                 <TextField fx:id="tfQunatidadePlanos" layoutX="14.0" layoutY="22.0" prefHeight="25.0" prefWidth="226.0" />
                 <TextField fx:id="tfQuantidadePlanosFinalizados" layoutX="254.0" layoutY="22.0" prefHeight="25.0" prefWidth="226.0" />
@@ -59,14 +59,13 @@
             <Label layoutX="254.0" layoutY="7.0" text="Qnt de Finalizados" />
             </children>
         </Pane>
-        <Label layoutX="342.0" layoutY="339.0" text="Planos" />
-        <Button fx:id="btImprimir" layoutX="522.0" layoutY="434.0" mnemonicParsing="false" onAction="#onClickImprimir" prefHeight="27.0" prefWidth="150.0" text="Imprimir" />
-        <Button fx:id="btVoltar" layoutX="687.0" layoutY="434.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="150.0" text="Voltar" />
-        <DatePicker fx:id="dpDataInicio" layoutX="554.0" layoutY="125.0" prefHeight="17.0" prefWidth="107.0" />
-        <DatePicker fx:id="dpDataFinal" layoutX="673.0" layoutY="127.0" prefHeight="17.0" prefWidth="107.0" />
-        <Label layoutX="554.0" layoutY="108.0" prefHeight="17.0" prefWidth="96.0" text="Data Inicio" />
-        <Label layoutX="671.0" layoutY="109.0" prefHeight="17.0" prefWidth="96.0" text="Data Final" />
-      <Pane layoutX="342.0" layoutY="191.0" prefHeight="60.0" prefWidth="494.0" style="-fx-background-color: #E8E8E8;">
+        <Label layoutX="342.0" layoutY="356.0" text="Planos" />
+        <Button fx:id="btImprimir" layoutX="522.0" layoutY="451.0" mnemonicParsing="false" onAction="#onClickImprimir" prefHeight="27.0" prefWidth="150.0" text="Imprimir" />
+        <Button fx:id="btVoltar" layoutX="687.0" layoutY="451.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="150.0" text="Voltar" />
+        <DatePicker fx:id="dpDataFinal" layoutX="673.0" layoutY="144.0" prefHeight="17.0" prefWidth="107.0" />
+        <Label layoutX="554.0" layoutY="125.0" prefHeight="17.0" prefWidth="96.0" text="Data Inicio" />
+        <Label layoutX="671.0" layoutY="126.0" prefHeight="17.0" prefWidth="96.0" text="Data Final" />
+      <Pane layoutX="342.0" layoutY="208.0" prefHeight="60.0" prefWidth="494.0" style="-fx-background-color: #E8E8E8;">
          <children>
             <TextField fx:id="tfEntregaTrabalho" layoutX="16.0" layoutY="23.0" prefHeight="25.0" prefWidth="226.0" />
             <TextField fx:id="tfParticipacao" layoutX="253.0" layoutY="23.0" prefHeight="25.0" prefWidth="226.0" />
@@ -74,7 +73,15 @@
             <Label layoutX="253.0" layoutY="7.0" text="Participação" />
          </children>
       </Pane>
-      <Label layoutX="344.0" layoutY="173.0" text="Média Entrega de Trabalhos e Participação" />
-      <Button fx:id="btPesquisar" layoutX="791.0" layoutY="126.0" mnemonicParsing="false" onAction="#onClickPesquisar" prefHeight="27.0" prefWidth="41.0" text="🔎" />
+      <Label layoutX="344.0" layoutY="190.0" text="Média Entrega de Trabalhos e Participação" />
+      <Button fx:id="btPesquisar" layoutX="791.0" layoutY="143.0" mnemonicParsing="false" onAction="#onClickPesquisar" prefHeight="27.0" prefWidth="41.0" text="🔎" />
+        <DatePicker fx:id="dpDataInicio" layoutX="554.0" layoutY="142.0" prefHeight="17.0" prefWidth="107.0" />
+      <ImageView fitHeight="157.0" fitWidth="898.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/cabecalho_padrao.png" />
+         </image>
+      </ImageView>
+        <Label layoutX="362.0" layoutY="63.0" style="-fx-font-family: 'Selawk'; -fx-font-weight: bold; -fx-font-size: 16px;" text="Rendimento Trimestral" textFill="#3d5390">
+        </Label>
     </children>
 </AnchorPane>
