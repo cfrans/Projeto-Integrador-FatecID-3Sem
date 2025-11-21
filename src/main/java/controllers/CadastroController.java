@@ -20,6 +20,10 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.List;
 import java.util.Arrays;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Period;
+import javafx.scene.control.DateCell;
 
 // Imports do banco
 import java.sql.Connection;
@@ -103,6 +107,10 @@ public class CadastroController extends BaseController implements Initializable 
 
         // 3. Agrupa os checkboxes para facilitar a leitura
         listaNecessidades = Arrays.asList(cbTipoNecessidade1, cbTipoNecessidade2, cbTipoNecessidade3, cbTipoNecessidade4, cbTipoNecessidade5);
+
+        // --- Bloqueia datas futuras no calendário visualmente ---
+        desabilitarDatas(dpDataLaudo, TipoBloqueio.FUTURAS);
+        desabilitarDatas(dpDataNascimento, TipoBloqueio.FUTURAS);
     }
 
     /**
@@ -151,6 +159,36 @@ public class CadastroController extends BaseController implements Initializable 
         }
     }
 
+    /**
+     * Valida se o aluno completa 6 anos até 31 de março do ano corrente.
+     * Baseado no Parecer CEE 137/19. (<a href="https://atendimento.educacao.sp.gov.br/knowledgebase/article/SED-06775/pt-br">...</a>)
+     * @return true se a idade for válida, false se for muito novo.
+     */
+    private boolean validarCorteEtario() {
+        LocalDate dataNascimento = dpDataNascimento.getValue();
+
+        // Se não tiver data preenchida, retornamos true para deixar
+        // a validação de "campo obrigatório" do onClickSalvar tratar depois,
+        // ou retornamos false se quiser barrar aqui mesmo.
+        if (dataNascimento == null) {
+            return false;
+        }
+
+        int anoAtual = LocalDate.now().getYear();
+
+        // Data limite: 31 de Março do ano corrente
+        LocalDate dataCorte = LocalDate.of(anoAtual, Month.MARCH, 31);
+
+        // Data em que a criança completa 6 anos
+        LocalDate dataQueFaz6Anos = dataNascimento.plusYears(6);
+
+        // Se a data que ela faz 6 anos for DEPOIS da data de corte, ela é muito nova.
+        if (dataQueFaz6Anos.isAfter(dataCorte)) {
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      * Manipula o evento de clique no botão Salvar, realizando o cadastro
@@ -176,10 +214,40 @@ public class CadastroController extends BaseController implements Initializable 
         TipoResponsavelItem parentescoSel = chParentesco.getValue();
         SerieTurmaItem serieSel = chSerieTurma.getValue();
 
-        // Validação de tela
+        // ---  Validação de tela básica ---
         if (parentescoSel == null || serieSel == null || tfNome.getText().isEmpty() || tdNomeResponsavel.getText().isEmpty()) {
             exibirAlertaErro("Campos Obrigatórios", "Nome, Responsável, Parentesco e Série/Turma são obrigatórios.", "");
             return;
+        }
+
+        // --- Validação da Data de Nascimento (Obrigatória para o cálculo) ---
+        if (dpDataNascimento.getValue() == null) {
+            exibirAlertaErro("Campos Obrigatórios", "A Data de Nascimento é obrigatória para verificar a idade.", "");
+            return;
+        }
+
+        // --- Validação de Corte Etário ---
+        if (!validarCorteEtario()) {
+            int anoAtual = LocalDate.now().getYear();
+            exibirAlertaErro(
+                    "Idade Insuficiente",
+                    "O aluno não atende ao critério de idade mínima (Corte Etário).",
+                    "Segundo a legislação, a criança deve completar 6 anos até 31 de Março de " + anoAtual + ".\n" +
+                            "Data de Nascimento informada: " + dpDataNascimento.getValue()
+            );
+            return; // Para a execução aqui, não salva no banco.
+        }
+
+        // Validação da Data do Laudo (Futuro) ---
+        if (dpDataLaudo.getValue() != null) {
+            if (dpDataLaudo.getValue().isAfter(LocalDate.now())) {
+                exibirAlertaErro(
+                        "Data Inválida",
+                        "A Data do Laudo não pode ser futura.",
+                        "Você selecionou: " + dpDataLaudo.getValue() + ". Por favor, insira uma data de hoje ou anterior."
+                );
+                return;
+            }
         }
 
         String sqlResponsavel = "INSERT INTO responsavel (nome, id_tipo_responsavel, email, telefone) VALUES (?, ?, ?, ?) RETURNING id_responsavel";

@@ -3,7 +3,11 @@ package controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
 import util.ControladorNavegavel; // Use o caminho da sua interface
+
+import java.time.LocalDate;
 
 public abstract class BaseController implements ControladorNavegavel {
 
@@ -60,5 +64,52 @@ public abstract class BaseController implements ControladorNavegavel {
         alertErro.setHeaderText(cabecalho);
         alertErro.setContentText(conteudo);
         alertErro.showAndWait();
+    }
+
+    /**
+     * Enum para definir qual direção de tempo bloquear no método desabilitarDatas.
+     */
+    protected enum TipoBloqueio {
+        FUTURAS, // Bloqueia do amanhã para frente
+        PASSADAS // Bloqueia do ontem para trás
+    }
+
+    /**
+     * Método genérico para desabilitar dias no calendário.
+     * @param datePicker O componente a ser configurado.
+     * @param tipo O tipo de bloqueio (FUTURAS ou PASSADAS).
+     */
+    protected void desabilitarDatas(DatePicker datePicker, TipoBloqueio tipo) {
+        datePicker.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+
+                // Se a data for nula ou vazia, não faz nada
+                if (date == null || empty) {
+                    return;
+                }
+
+                boolean deveBloquear = false;
+                LocalDate hoje = LocalDate.now();
+
+                // Lógica de decisão
+                if (tipo == TipoBloqueio.FUTURAS) {
+                    if (date.isAfter(hoje)) {
+                        deveBloquear = true;
+                    }
+                } else if (tipo == TipoBloqueio.PASSADAS) {
+                    if (date.isBefore(hoje)) {
+                        deveBloquear = true;
+                    }
+                }
+
+                // Aplica o estilo se necessário
+                if (deveBloquear) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #ffc0cb;"); // Vermelho claro
+                }
+            }
+        });
     }
 }
