@@ -8,46 +8,45 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane
-        xmlns="http://javafx.com/javafx/24.0.1"
-        xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="controllers.IntervencoesController"
-        prefHeight="551.0" prefWidth="898.0">
+<AnchorPane prefHeight="551.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.IntervencoesController">
 
     <children>
-        <Label layoutX="226.0" layoutY="89.0" text="Histórico de Intervenções Pedagógicas e Terapêuticas" textFill="#3d5390">
-            <font>
-                <Font name="System Bold" size="16.0" />
-            </font>
+        <Label layoutX="57.0" layoutY="155.0" text="Nome" />
+        <Label layoutX="467.0" layoutY="155.0" text="Série/Turma" />
+        <Label layoutX="644.0" layoutY="155.0" text="R.A." />
+        <Label layoutX="57.0" layoutY="216.0" text="Registro de Nova Intervenção" />
+        <Label layoutX="57.0" layoutY="284.0" text="Data da Intervenção" />
+        <Label layoutX="320.0" layoutY="284.0" text="Responsável pela Intervenção" />
+        <Label layoutX="57.0" layoutY="335.0" text="Observações" />
+        <Label layoutX="559.0" layoutY="341.0" text="Tipo de Intervenção" />
+        <Label layoutX="57.0" layoutY="236.0" text="Título Intervenção" />
+        <ChoiceBox fx:id="chNome" layoutX="57.0" layoutY="172.0" prefHeight="25.0" prefWidth="379.0" />
+        <TextField fx:id="tfSerieTurma" layoutX="467.0" layoutY="172.0" prefHeight="25.0" prefWidth="150.0" />
+        <TextField fx:id="tfRA" layoutX="644.0" layoutY="172.0" prefHeight="25.0" prefWidth="190.0" />
+        <Separator layoutX="57.0" layoutY="209.0" prefHeight="6.0" prefWidth="778.0" />
+        <TextField fx:id="tfTituloIntervencao" layoutX="57.0" layoutY="253.0" prefHeight="25.0" prefWidth="778.0" />
+        <DatePicker fx:id="dpDataIntervencao" layoutX="57.0" layoutY="301.0" prefHeight="25.0" prefWidth="236.0" />
+        <TextField fx:id="tfResponsavelIntervencao" layoutX="318.0" layoutY="301.0" prefHeight="25.0" prefWidth="524.0" />
+        <TextArea fx:id="taObservacoes" layoutX="57.0" layoutY="353.0" prefHeight="104.0" prefWidth="489.0" />
+        <CheckBox fx:id="cbTipoIntervencao1" layoutX="559.0" layoutY="364.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="125.0" text="Apoio Pedagógico" />
+        <CheckBox fx:id="cbTipoIntervencao2" layoutX="687.0" layoutY="364.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="125.0" text="Orientação Familiar" />
+        <CheckBox fx:id="cbTipoIntervencao3" layoutX="559.0" layoutY="385.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="150.0" text="Reforço Escolar" />
+        <CheckBox fx:id="cbTipoIntervencao4" layoutX="687.0" layoutY="385.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="157.0" text="Atendimento Terapêutico" />
+        <CheckBox fx:id="cbTipoIntervencao5" layoutX="559.0" layoutY="406.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="179.0" text="Outro" />
+        <TextField fx:id="tfOutroTipoIntervencao" layoutX="559.0" layoutY="432.0" prefHeight="25.0" prefWidth="280.0" />
+        <Button fx:id="btSalvar" layoutX="58.0" layoutY="470.0" mnemonicParsing="false" onAction="#onClickSalvar" prefHeight="27.0" prefWidth="150.0" text="Salvar" />
+        <Button fx:id="btLimpar" layoutX="229.0" layoutY="470.0" mnemonicParsing="false" onAction="#onClickLimpar" prefHeight="27.0" prefWidth="150.0" text="Limpar" />
+        <Button fx:id="btVoltar" layoutX="397.0" layoutY="470.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="150.0" text="Voltar" />
+      <ImageView fitHeight="111.0" fitWidth="898.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/cabecalho_padrao.png" />
+         </image>
+      </ImageView>
+        <Label layoutX="244.0" layoutY="78.0" text="Histórico de Intervenções Pedagógicas e Terapêuticas" textFill="#3d5390" style="-fx-font-family: 'Selawk'; -fx-font-weight: bold; -fx-font-size: 18px;">
         </Label>
-        <Label layoutX="57.0" layoutY="140.0" text="Nome" />
-        <Label layoutX="467.0" layoutY="140.0" text="Série/Turma" />
-        <Label layoutX="644.0" layoutY="140.0" text="R.A." />
-        <Label layoutX="57.0" layoutY="201.0" text="Registro de Nova Intervenção" />
-        <Label layoutX="57.0" layoutY="269.0" text="Data da Intervenção" />
-        <Label layoutX="320.0" layoutY="269.0" text="Responsável pela Intervenção" />
-        <Label layoutX="57.0" layoutY="320.0" text="Observações" />
-        <Label layoutX="559.0" layoutY="326.0" text="Tipo de Intervenção" />
-        <Label layoutX="57.0" layoutY="221.0" text="Título Intervenção" />
-        <ChoiceBox fx:id="chNome" layoutX="57.0" layoutY="157.0" prefHeight="25.0" prefWidth="379.0" />
-        <TextField fx:id="tfSerieTurma" layoutX="467.0" layoutY="157.0" prefHeight="25.0" prefWidth="150.0" />
-        <TextField fx:id="tfRA" layoutX="644.0" layoutY="157.0" prefHeight="25.0" prefWidth="190.0" />
-        <Separator layoutX="57.0" layoutY="194.0" prefHeight="6.0" prefWidth="778.0" />
-        <TextField fx:id="tfTituloIntervencao" layoutX="57.0" layoutY="238.0" prefHeight="25.0" prefWidth="778.0" />
-        <DatePicker fx:id="dpDataIntervencao" layoutX="57.0" layoutY="286.0" prefHeight="25.0" prefWidth="236.0" />
-        <TextField fx:id="tfResponsavelIntervencao" layoutX="318.0" layoutY="286.0" prefHeight="25.0" prefWidth="524.0" />
-        <TextArea fx:id="taObservacoes" layoutX="57.0" layoutY="338.0" prefHeight="96.0" prefWidth="489.0" />
-        <CheckBox fx:id="cbTipoIntervencao1" layoutX="558.0" layoutY="331.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="125.0" text="Apoio Pedagógico" />
-        <CheckBox fx:id="cbTipoIntervencao2" layoutX="685.0" layoutY="331.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="125.0" text="Orientação Familiar" />
-        <CheckBox fx:id="cbTipoIntervencao3" layoutX="558.0" layoutY="352.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="150.0" text="Reforço Escolar" />
-        <CheckBox fx:id="cbTipoIntervencao4" layoutX="685.0" layoutY="355.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="157.0" text="Atendimento Terapêutico"  />
-        <CheckBox fx:id="cbTipoIntervencao5" layoutX="559.0" layoutY="374.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="179.0" text="Outro" />
-        <TextField fx:id="tfOutroTipoIntervencao" layoutX="560.0" layoutY="410.0" prefHeight="25.0" prefWidth="280.0" />
-        <Button fx:id="btSalvar" layoutX="58.0" layoutY="452.0" mnemonicParsing="false" onAction="#onClickSalvar" prefHeight="27.0" prefWidth="150.0" text="Salvar" />
-        <Button fx:id="btLimpar" layoutX="229.0" layoutY="452.0" mnemonicParsing="false" onAction="#onClickLimpar" prefHeight="27.0" prefWidth="150.0" text="Limpar" />
-        <Button fx:id="btVoltar" layoutX="397.0" layoutY="452.0" mnemonicParsing="false" onAction="#onClickVoltar" prefHeight="27.0" prefWidth="150.0" text="Voltar" />
     </children>
 </AnchorPane>
