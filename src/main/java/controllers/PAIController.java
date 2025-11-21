@@ -167,7 +167,7 @@ public class PAIController extends BaseController implements Initializable {
                 exibirAlertaErro(
                         "Data Inválida",
                         "A Data da Revisão não pode ser no passado.",
-                        "Você selecionou: " + dpRevisaoPlano.getValue() + ". Por favor, insira uma data posterior."
+                        "Você selecionou: " + dpRevisaoPlano.getValue().format(DATA_FORMATTER) + ". Por favor, insira uma data posterior."
                 );
                 return;
             }

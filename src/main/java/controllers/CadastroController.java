@@ -233,7 +233,7 @@ public class CadastroController extends BaseController implements Initializable 
                     "Idade Insuficiente",
                     "O aluno não atende ao critério de idade mínima (Corte Etário).",
                     "Segundo a legislação, a criança deve completar 6 anos até 31 de Março de " + anoAtual + ".\n" +
-                            "Data de Nascimento informada: " + dpDataNascimento.getValue()
+                            "Data de Nascimento informada: " + dpDataNascimento.getValue().format(DATA_FORMATTER)
             );
             return; // Para a execução aqui, não salva no banco.
         }
@@ -244,7 +244,7 @@ public class CadastroController extends BaseController implements Initializable 
                 exibirAlertaErro(
                         "Data Inválida",
                         "A Data do Laudo não pode ser futura.",
-                        "Você selecionou: " + dpDataLaudo.getValue() + ". Por favor, insira uma data de hoje ou anterior."
+                        "Você selecionou: " + dpDataLaudo.getValue().format(DATA_FORMATTER) + ". Por favor, insira uma data de hoje ou anterior."
                 );
                 return;
             }

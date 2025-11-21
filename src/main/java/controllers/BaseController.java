@@ -5,11 +5,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
-import util.ControladorNavegavel; // Use o caminho da sua interface
+import util.ControladorNavegavel;
+import java.time.format.DateTimeFormatter;
 
 import java.time.LocalDate;
 
 public abstract class BaseController implements ControladorNavegavel {
+
+
+    protected static final DateTimeFormatter DATA_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     protected MenuController menuController;
 

@@ -41,6 +41,21 @@ public class VisualizacaoIntervencaoController extends BaseController implements
         colResponsavel.setCellValueFactory(new PropertyValueFactory<>("observacao"));
         colRevisao.setCellValueFactory(new PropertyValueFactory<>("data"));
 
+        // Define como a data é exibida
+        colRevisao.setCellFactory(column -> new TableCell<IntervencaoData, LocalDate>() {
+            @Override
+            protected void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty); // Mantém funcionamento padrão
+
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    // Usa o formatador do BaseController
+                    setText(item.format(DATA_FORMATTER));
+                }
+            }
+        });
+
         tabelaPAIs.setItems(listaIntervencoes);
 
         // Desabilitar o botão de detalhes por padrão
