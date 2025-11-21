@@ -117,7 +117,7 @@ public class CadastroController extends BaseController implements Initializable 
      * Carrega os tipos de parentesco do banco
      */
     private void carregarParentescos() {
-        String sql = "SELECT id_tipo_responsavel, nome FROM tipo_responsavel ORDER BY nome";
+        String sql = "SELECT id_tipo_responsavel, nome FROM tipo_responsavel ORDER BY id_tipo_responsavel";
         try (Connection conn = ConexaoDB.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
