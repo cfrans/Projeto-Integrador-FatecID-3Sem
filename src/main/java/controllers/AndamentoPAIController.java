@@ -5,10 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import util.ControleAcesso;
 import java.io.IOException;
@@ -22,8 +19,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import database.ConexaoDB;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import util.SessaoUsuario;
 
 public class AndamentoPAIController extends BaseController implements Initializable {
@@ -61,6 +56,21 @@ public class AndamentoPAIController extends BaseController implements Initializa
         colRevisao.setCellValueFactory(new PropertyValueFactory<>("prazoRevisao"));
         tabelaPAIs.setItems(listaPAIs);
         carregarPAIs(); // Carrega o estado inicial (só "Em Andamento")
+
+        // Define como a data é exibida
+        colRevisao.setCellFactory(column -> new TableCell<AndamentoPAIController.PAIAndamento, LocalDate>() {
+            @Override
+            protected void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty); // Mantém funcionamento padrão
+
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    // Usa o formatador do BaseController
+                    setText(item.format(DATA_FORMATTER));
+                }
+            }
+        });
 
         // Listener
         tabelaPAIs.getSelectionModel().selectedItemProperty().addListener(
