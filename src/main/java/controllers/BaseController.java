@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.stage.Stage;
 import util.ControladorNavegavel;
 import java.time.format.DateTimeFormatter;
 
@@ -57,7 +58,7 @@ public abstract class BaseController implements ControladorNavegavel {
     }
 
     /**
-     * Helper para exibir um Alerta de Erro padronizado.
+     * Helper para exibir um Alerta de Erro padronizado e centralizado.
      * @param titulo O titulo do alerta de erro
      * @param cabecalho O cabeçalho do alerta de erro
      * @param conteudo O conteúdo do alerta de erro
@@ -67,6 +68,15 @@ public abstract class BaseController implements ControladorNavegavel {
         alertErro.setTitle(titulo);
         alertErro.setHeaderText(cabecalho);
         alertErro.setContentText(conteudo);
+
+        // Tenta pegar o Stage (janela) através do MenuController para centralizar o alerta
+        if (menuController != null) {
+            Stage stage = menuController.getStage();
+            if (stage != null) {
+                alertErro.initOwner(stage);
+            }
+        }
+
         alertErro.showAndWait();
     }
 

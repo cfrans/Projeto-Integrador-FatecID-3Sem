@@ -230,4 +230,15 @@ public class MenuController implements Initializable {
             // TODO: adicionar talvez um Alert
         }
     }
+
+    /**
+     * Retorna o Stage (janela) atual da aplicação.
+     * Útil para definir o 'owner' de modais e alertas.
+     */
+    public Stage getStage() {
+        if (anchorRoot != null && anchorRoot.getScene() != null) {
+            return (Stage) anchorRoot.getScene().getWindow();
+        }
+        return null;
+    }
 }
