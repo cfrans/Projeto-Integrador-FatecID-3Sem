@@ -40,7 +40,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        Locale.setDefault(new Locale("pt", "BR"));
+        Locale.setDefault(Locale.of("pt", "BR"));
         launch(args);
     }
 }
