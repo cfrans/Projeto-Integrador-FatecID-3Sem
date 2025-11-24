@@ -70,6 +70,10 @@ public class VisualizacaoIntervencaoController extends BaseController implements
 
         // NÃO carregar nada quando abrir a tela
         listaIntervencoes.clear();
+
+        // --- Bloqueia tipos não permitidos nos campos digitáveis e ajusta tamanhos ---
+        campoSomenteTexto(tfNome);
+        campoSomenteNumeros(tfRA);
     }
 
     /**

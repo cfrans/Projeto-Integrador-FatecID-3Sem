@@ -111,6 +111,18 @@ public class CadastroController extends BaseController implements Initializable 
         // --- Bloqueia datas futuras no calendário visualmente ---
         desabilitarDatas(dpDataLaudo, TipoBloqueio.FUTURAS);
         desabilitarDatas(dpDataNascimento, TipoBloqueio.FUTURAS);
+
+        // --- Bloqueia tipos não permitidos nos campos digitáveis e ajusta tamanhos ---
+        campoSomenteTexto(tfNome);
+        limitarTamanhoCampo(tfNome, 150);
+        campoSomenteNumeros(tfRA);
+        limitarTamanhoCampo(tfRA, 20);
+        campoSomenteTexto(tfProfissional);
+        campoSomenteTexto(tdNomeResponsavel);
+        limitarTamanhoCampo(tdNomeResponsavel, 100);
+        campoSomenteNumeros(tfTelefone);
+        limitarTamanhoCampo(tfTelefone, 11);
+        limitarTamanhoCampo(tfEmail, 100);
     }
 
     /**
@@ -248,6 +260,16 @@ public class CadastroController extends BaseController implements Initializable 
                 );
                 return;
             }
+        }
+
+        // Validação de Email válido ---
+        if (!validacaoEmail(String.valueOf(tfEmail))) {
+            exibirAlertaErro(
+                    "Email inválido",
+                    "O email informado não está em um formato válido.",
+                    "Exemplos: usuario@gmail.com, teste@yahoo.com, nome@outlook.com"
+            );
+            return;
         }
 
         String sqlResponsavel = "INSERT INTO responsavel (nome, id_tipo_responsavel, email, telefone) VALUES (?, ?, ?, ?) RETURNING id_responsavel";
