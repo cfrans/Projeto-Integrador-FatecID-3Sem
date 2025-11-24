@@ -100,6 +100,20 @@ public class RendimentoController extends BaseController implements Initializabl
         chNome.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldVal, newVal) -> preencherDadosAluno(newVal)
         );
+
+        // --- Bloqueia tipos não permitidos nos campos digitáveis e ajusta tamanhos ---
+        campoSomenteNumeros(tfRA);
+        limitarTamanhoCampo(tfRA, 20);
+        limitarTamanhoCampo(tfAvaliacao1, 4);
+        limitarTamanhoCampo(tfAvaliacao2, 4);
+        limitarTamanhoCampo(tfSimulado, 4);
+        limitarTamanhoCampo(tfAtitudeAcademica, 4);
+
+        // Bloqueio de notas
+        configurarCampoNota(tfAvaliacao1);
+        configurarCampoNota(tfAvaliacao2);
+        configurarCampoNota(tfSimulado);
+        configurarCampoNota(tfAtitudeAcademica);
     }
 
     /**
@@ -230,13 +244,13 @@ public class RendimentoController extends BaseController implements Initializabl
             System.out.println("--- Salvando Rendimento ---");
 
             // 1. avaliacao1
-            stmt.setDouble(1, Double.parseDouble(tfAvaliacao1.getText()));
+            stmt.setDouble(1, obterValorNota(tfAvaliacao1));
             // 2. avaliacao2
-            stmt.setDouble(2, Double.parseDouble(tfAvaliacao2.getText()));
+            stmt.setDouble(2, obterValorNota(tfAvaliacao2));
             // 3. simulado
-            stmt.setDouble(3, Double.parseDouble(tfSimulado.getText()));
+            stmt.setDouble(3, obterValorNota(tfSimulado));
             // 4. atitude_academica
-            stmt.setDouble(4, Double.parseDouble(tfAtitudeAcademica.getText()));
+            stmt.setDouble(4, obterValorNota(tfAtitudeAcademica));
             // 5. justificativa_participacao
             stmt.setString(5, tfJustificativaPartifipacao.getText());
             // 6. justificativa_entrega (usando o <TextArea> genérico)
@@ -302,6 +316,65 @@ public class RendimentoController extends BaseController implements Initializabl
         alertErro.setHeaderText(cabecalho);
         alertErro.setContentText(conteudo);
         alertErro.showAndWait();
+    }
+
+    /**
+     * Configura um TextField para aceitar apenas notas (0 a 10) com vírgula.
+     * Ex: 8,5 | 10 | 0,5
+     */
+    protected void configurarCampoNota(TextField textField) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Se apagar tudo, deixa passar
+            if (newValue.isEmpty()) return;
+
+            // 1. REGEX: Se tiver qualquer coisa que NÃO seja número ou vírgula, volta
+            if (!newValue.matches("[\\d,]*")) {
+                textField.setText(oldValue);
+                return;
+            }
+
+            // 2. CONTAGEM: Se tiver mais de uma vírgula, volta
+            long qtdVirgulas = newValue.chars().filter(ch -> ch == ',').count();
+            if (qtdVirgulas > 1) {
+                textField.setText(oldValue);
+                return;
+            }
+
+            // 3. LIMITE: Verifica se é maior que 10
+            try {
+                // Substitui virgula por ponto apenas para verificar o valor numérico
+                String valorParaVerificar = newValue.replace(",", ".");
+
+                // Se o usuário digitou apenas "," ou "8," ainda não validamos valor, deixa continuar
+                if (valorParaVerificar.endsWith(".")) {
+                    return;
+                }
+
+                double valor = Double.parseDouble(valorParaVerificar);
+                if (valor > 10.0) {
+                    textField.setText(oldValue); // Bloqueia se for 10.1 ou 11, etc.
+                }
+            } catch (NumberFormatException e) {
+                // Se der erro de conversão bizarro, restaura o valor antigo por segurança
+                textField.setText(oldValue);
+            }
+        });
+    }
+
+    /**
+     * Helper para converter o texto da tela (que pode ter vírgula) para Double do banco.
+     */
+    protected Double obterValorNota(TextField textField) {
+        if (textField.getText() == null || textField.getText().isEmpty()) {
+            return 0.0;
+        }
+        // Troca a vírgula visual (PT-BR) por ponto (padrão Java/SQL)
+        String valorString = textField.getText().replace(",", ".");
+        try {
+            return Double.parseDouble(valorString);
+        } catch (NumberFormatException e) {
+            return 0.0;
+        }
     }
 
     /**

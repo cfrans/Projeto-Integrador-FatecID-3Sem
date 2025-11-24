@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import util.ControladorNavegavel;
 import java.time.format.DateTimeFormatter;
@@ -126,4 +127,49 @@ public abstract class BaseController implements ControladorNavegavel {
             }
         });
     }
+
+    /**
+     * Configura um TextField para NÃO aceitar números.
+     * @param textField O campo a ser monitorado.
+     */
+    protected void campoSomenteTexto(TextField textField) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Se o novo valor tiver algum número (dígito 0-9)
+            if (newValue != null && newValue.matches(".*\\d.*")) {
+                textField.setText(oldValue);
+            }
+        });
+    }
+
+    /**
+     * Configura um TextField para aceitar APENAS números.
+     * @param textField O campo a ser monitorado.
+     */
+    protected void campoSomenteNumeros(TextField textField) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Se o novo valor tiver qualquer coisa que NÃO seja número
+            if (newValue != null && !newValue.matches("\\d*")) {
+                textField.setText(oldValue);
+            }
+        });
+    }
+
+    /**
+     * Limita o tamanho máximo de caracteres de um campo.
+     * @param textField O campo.
+     * @param tamanhoMaximo Quantidade máxima de caracteres.
+     */
+    protected void limitarTamanhoCampo(TextField textField, int tamanhoMaximo) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && newValue.length() > tamanhoMaximo) {
+                textField.setText(oldValue);
+            }
+        });
+    }
+
+    protected boolean validacaoEmail(String email) {
+        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        return email.matches(regex);
+    }
+
 }

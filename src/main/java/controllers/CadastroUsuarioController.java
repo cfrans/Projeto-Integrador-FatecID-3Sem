@@ -49,6 +49,12 @@ public class CadastroUsuarioController extends BaseController implements Initial
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        // --- Bloqueia tipos não permitidos nos campos digitáveis e ajusta tamanhos ---
+        campoSomenteTexto(tfNomeAcesso);
+        limitarTamanhoCampo(tfNomeAcesso, 100);
+        limitarTamanhoCampo(tfEmail, 100);
+
         chFuncao.setItems(listaFuncoes);
         carregarFuncoes();
     }
@@ -72,12 +78,6 @@ public class CadastroUsuarioController extends BaseController implements Initial
         } catch (SQLException e) {
             exibirAlertaErro("Erro de Banco", "Falha ao carregar lista de funções.", e.getMessage());
         }
-    }
-
-    /** Validação de email */
-    private boolean emailValido(String email) {
-        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-        return email.matches(regex);
     }
 
     /** Validação de senha forte */
@@ -106,7 +106,7 @@ public class CadastroUsuarioController extends BaseController implements Initial
         }
 
         // --- Email válido ---
-        if (!emailValido(email)) {
+        if (!validacaoEmail(email)) {
             exibirAlertaErro(
                     "Email inválido",
                     "O email informado não está em um formato válido.",

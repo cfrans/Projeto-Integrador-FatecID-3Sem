@@ -86,6 +86,9 @@ public class IntervencoesController extends BaseController implements Initializa
 
         // 6 "Liga" a propriedade 'disable' do campo de texto ao OPOSTO da caixa de seleção
         tfOutroTipoIntervencao.disableProperty().bind(cbTipoIntervencao5.selectedProperty().not());
+
+        // --- Bloqueia tipos não permitidos nos campos digitáveis e ajusta tamanhos ---
+        limitarTamanhoCampo(tfTituloIntervencao, 100);
     }
 
     /**

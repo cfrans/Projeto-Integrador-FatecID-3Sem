@@ -72,8 +72,13 @@ public class PAIController extends BaseController implements Initializable {
             tfResponsavelPlano.setDisable(true);
         }
 
-        // Bloqueia a inserção de datas passadas
+        // --- Bloqueia tipos não permitidos nos campos digitáveis e ajusta tamanhos ---
         desabilitarDatas(dpRevisaoPlano, TipoBloqueio.PASSADAS);
+        limitarTamanhoCampo(tfTituloPlano, 100);
+        limitarTamanhoCampo(tfMeta, 100);
+        limitarTamanhoCampo(tfMeta2, 255);
+        limitarTamanhoCampo(tfMeta3, 255);
+        limitarTamanhoCampo(tfRecursos, 100);
     }
 
     /**
