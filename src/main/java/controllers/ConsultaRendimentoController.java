@@ -58,9 +58,9 @@ public class ConsultaRendimentoController extends BaseController {
     @FXML private TextField tfResponsavelFrequente;
     @FXML private TextField tfSerieTurma;
 
-    // -----------------------------------------------------
-    // INITIALIZE
-    // -----------------------------------------------------
+    /**
+     * Inicializa a tela após o carregamento do FXML
+     */
     @FXML
     public void initialize() {
         carregarAlunos();
@@ -74,9 +74,9 @@ public class ConsultaRendimentoController extends BaseController {
         carregarNomesMaterias();
     }
 
-    // -----------------------------------------------------
-    // 1) CARREGAR ALUNOS NO CHOICEBOX
-    // -----------------------------------------------------
+    /**
+     * Carrega todos os alunos cadastrados no banco de dados e popula o ChoiceBox
+     */
     private void carregarAlunos() {
         ObservableList<AlunoItem> lista = FXCollections.observableArrayList();
 
@@ -97,9 +97,12 @@ public class ConsultaRendimentoController extends BaseController {
         chNome.setItems(lista);
     }
 
-    // -----------------------------------------------------
-    // 2) CARREGAR RA E SERIE/TURMA AO SELECIONAR O ALUNO
-    // -----------------------------------------------------
+    /**
+     * Carrega informações básicas do aluno selecionado, como RA e série/turma, preenchendo os campos correspondentes
+     * na interface.
+     *
+     * @param idAluno o identificador do aluno selecionado
+     */
     private void carregarDadosAluno(int idAluno) {
         String sql = """
                 SELECT a.ra, st.nome AS serie
@@ -124,9 +127,12 @@ public class ConsultaRendimentoController extends BaseController {
         }
     }
 
-    // -----------------------------------------------------
-    // 3) BOTÃO PESQUISAR
-    // -----------------------------------------------------
+    /**
+     * Ação executada ao clicar no botão "Pesquisar"
+     * Preenche todos os campos da interface com os resultados encontrados
+     *
+     * @param event o evento de clique do botão
+     */
     @FXML
     void onClickPesquisar(ActionEvent event) {
 
@@ -143,7 +149,6 @@ public class ConsultaRendimentoController extends BaseController {
 
         Map<String, Double> medias = buscarMediasPorMateria(idAluno, inicio, fim);
 
-        // PREENCHER NA TELA (MÉDIAS)
         tfNota1.setText(format(medias.get("Redação")));
         tfNota2.setText(format(medias.get("Matemática")));
         tfNota3.setText(format(medias.get("Ciências")));
@@ -151,28 +156,28 @@ public class ConsultaRendimentoController extends BaseController {
         tfNota5.setText(format(medias.get("Geografia")));
         tfNota6.setText(format(medias.get("Educação Física")));
         tfNota7.setText(format(medias.get("Inglês")));
-        tfNota8.setText(format(medias.get("Outros"))); // caso exista 8 matérias no banco
+        tfNota8.setText(format(medias.get("Outros")));
 
-        // ENTREGA MAIS FREQUENTE
         tfEntregaTrabalho.setText(buscarEntregaMaisFrequente(idAluno, inicio, fim));
 
-        // PARTICIPAÇÃO MAIS FREQUENTE
         tfParticipacao.setText(buscarTipoParticipacaoMaisFrequente(idAluno, inicio, fim));
 
-        // QUANTIDADE INTERVENÇÕES
         tfQuantidadeIntervencoes.setText(String.valueOf(buscarQuantidadeIntervencoes(idAluno, inicio, fim)));
 
-        // RESPONSÁVEL MAIS FREQUENTE
         tfResponsavelFrequente.setText(buscarResponsavelMaisFrequente(idAluno));
 
-        // PLANOS
         tfQunatidadePlanos.setText(String.valueOf(buscarQuantidadePlanos(idAluno)));
         tfQuantidadePlanosFinalizados.setText(String.valueOf(buscarQuantidadePlanosFinalizados(idAluno)));
     }
 
-    // -----------------------------------------------------
-    // 4) MÉDIAS POR MATÉRIA
-    // -----------------------------------------------------
+    /**
+     * Calcula a média geral das avaliações do aluno em cada matéria dentro do intervalo de datas especificado
+     *
+     * @param idAluno o identificador do aluno
+     * @param inicio  a data inicial do intervalo (inclusive)
+     * @param fim a data final do intervalo (inclusive)
+     * @return um mapa onde a chave é o nome da matéria e o valor é a média calculada
+     */
     private Map<String, Double> buscarMediasPorMateria(int idAluno, LocalDate inicio, LocalDate fim) {
 
         Map<String, Double> medias = new HashMap<>();
@@ -205,9 +210,14 @@ public class ConsultaRendimentoController extends BaseController {
         return medias;
     }
 
-    // -----------------------------------------------------
-    // 5) ENTREGA DE TRABALHO MAIS FREQUENTE
-    // -----------------------------------------------------
+    /**
+     * Busca qual foi o tipo de entrega mais frequente realizada pelo aluno dentro do intervalo de datas informado
+     *
+     * @param idAluno o identificador do aluno para filtrar os registros
+     * @param inicio a data inicial do intervalo de busca (inclusive)
+     * @param fim a data final do intervalo de busca (inclusive)
+     * @return o valor de entrega mais frequente ou "-" caso não haja dados
+     */
     private String buscarEntregaMaisFrequente(int idAluno, LocalDate inicio, LocalDate fim) {
         String sql = """
                 SELECT entrega, COUNT(*) AS qtd
@@ -236,9 +246,14 @@ public class ConsultaRendimentoController extends BaseController {
         return "-";
     }
 
-    // -----------------------------------------------------
-    // 6) PARTICIPAÇÃO MAIS FREQUENTE
-    // -----------------------------------------------------
+    /**
+     * Busca o tipo de participação mais frequente registrado para um aluno dentro de um intervalo de datas
+     *
+     * @param idAluno o identificador do aluno cujo tipo de participação mais frequente será buscado
+     * @param inicio  a data inicial do intervalo da busca (inclusiva)
+     * @param fim a data final do intervalo da busca (inclusiva)
+     * @return o nome do tipo de participação mais frequente, ou {@code "-"} se nenhum for encontrado
+     */
     private String buscarTipoParticipacaoMaisFrequente(int idAluno, LocalDate inicio, LocalDate fim) {
 
         String sql = """
@@ -269,9 +284,14 @@ public class ConsultaRendimentoController extends BaseController {
         return "-";
     }
 
-    // -----------------------------------------------------
-    // 7) QUANTIDADE DE INTERVENÇÕES
-    // -----------------------------------------------------
+    /**
+     * Retorna a quantidade de intervenções registradas para um aluno dentro de um intervalo de datas
+     *
+     * @param idAluno o identificador do aluno cujas intervenções devem ser contabilizadas
+     * @param inicio a data inicial do intervalo da busca (inclusiva)
+     * @param fim a data final do intervalo da busca (inclusiva)
+     * @return a quantidade de intervenções no intervalo informado, ou {@code 0} em caso de falha na consulta
+     */
     private int buscarQuantidadeIntervencoes(int idAluno, LocalDate inicio, LocalDate fim) {
 
         String sql = """
@@ -298,9 +318,12 @@ public class ConsultaRendimentoController extends BaseController {
         return 0;
     }
 
-    // -----------------------------------------------------
-    // 8) RESPONSÁVEL MAIS FREQUENTE
-    // -----------------------------------------------------
+    /**
+     * Busca o nome do usuário responsável que mais registrou intervenções para um aluno específico.
+     *
+     * @param idAluno o identificador do aluno para o qual o responsável mais frequente será buscado
+     * @return o nome do responsável mais frequente, ou {@code "-"} se nenhum for encontrado
+     */
     private String buscarResponsavelMaisFrequente(int idAluno) {
         String sql = """
         SELECT u.nome, COUNT(*) AS total
@@ -328,10 +351,12 @@ public class ConsultaRendimentoController extends BaseController {
     }
 
 
-
-    // -----------------------------------------------------
-    // 9) QUANTIDADE DE PLANOS
-    // -----------------------------------------------------
+    /**
+     * Busca a quantidade total de PAI cadastrados para um aluno específico.
+     *
+     * @param idAluno o identificador do aluno cujos planos serão contabilizados
+     * @return o número total de planos cadastrados para o aluno, ou {@code 0} em caso de falha na consulta
+     */
     private int buscarQuantidadePlanos(int idAluno) {
 
         String sql = "SELECT COUNT(*) AS qtd FROM pai WHERE id_aluno = ?";
@@ -351,9 +376,13 @@ public class ConsultaRendimentoController extends BaseController {
         return 0;
     }
 
-    // -----------------------------------------------------
-    // 10) QUANTIDADE DE PLANOS FINALIZADOS
-    // -----------------------------------------------------
+    /**
+     /**
+     * Busca a quantidade de PAI finalizados para um aluno específico
+     *
+     * @param idAluno o identificador do aluno cujos planos finalizados serão contabilizados
+     * @return o número de planos finalizados do aluno, ou {@code 0} em caso de falha na consulta
+     */
     private int buscarQuantidadePlanosFinalizados(int idAluno) {
 
         String sql = """
@@ -378,14 +407,23 @@ public class ConsultaRendimentoController extends BaseController {
         return 0;
     }
 
-    // -----------------------------------------------------
-    // BOTÕES EXTRAS
-    // -----------------------------------------------------
+    /**
+     * Este método simplesmente solicita a navegação de retorno para a tela inicial,
+     * utilizando o mecanismo de navegação fornecido pela classe BaseController
+     *
+     * @param event o evento de ação disparado pelo clique do botão
+     */
     @FXML
     void onClickVoltar(ActionEvent event) {
         navegarParaHome();
     }
 
+    /**
+     * Manipula o evento de clique no botão "Imprimir"
+     * Oculta temporariamente os botões de ação para não aparecerem na impressão e gera um snapshot da interface contida no {@code rootPane}
+     *
+     * @param event o evento de ação disparado pelo botão "Imprimir"
+     */
     @FXML
     void onClickImprimir(ActionEvent event) {
 
@@ -422,14 +460,18 @@ public class ConsultaRendimentoController extends BaseController {
     }
 
 
-
-    // -----------------------------------------------------
-    // FUNÇÕES AUXILIARES
-    // -----------------------------------------------------
+    /**
+     * Formata um valor numérico para exibição.
+     * @param d o valor numérico a ser formatado
+     * @return uma string com o valor formatado ou "-" se o valor for {@code null}
+     */
     private String format(Double d) {
         return d == null ? "-" : String.format("%.1f", d);
     }
 
+    /**
+     * Carrega nos campos de texto os nomes padrão das disciplinas exibida na interface.
+     */
     private void carregarNomesMaterias() {
         tfMateria1.setText("Redação");
         tfMateria2.setText("Matemática");
@@ -441,6 +483,10 @@ public class ConsultaRendimentoController extends BaseController {
         tfMateria8.setText("Outros");
     }
 
+    /**
+     * Exibe um alerta do tipo {@code WARNING} com a mensagem informada
+     * @param msg a mensagem a ser exibida no alerta
+     */
     private void showAlert(String msg) {
         Alert a = new Alert(Alert.AlertType.WARNING);
         a.setHeaderText(null);
