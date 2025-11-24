@@ -1,4 +1,4 @@
 // Preencha esse arquivo com os dados do banco, e remova o .example da extensão do arquivo.
-db.url=jdbc:postgresql://localhost:5432/nome_da_tabela
+db.url=jdbc:postgresql://localhost:5432/sinepe_db
 db.user=usuario_do_banco
 db.password=senha_do_banco

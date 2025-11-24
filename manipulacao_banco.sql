@@ -165,7 +165,8 @@ INSERT INTO funcao (nome) VALUES
 ('Coordenador'),
 ('Professor'),
 ('Administrador'),
-('T.I.');
+('T.I.'),
+('Profissional Especializado');
 
 -- Tipos de participação padrão
 INSERT INTO tipo_participacao (nome) VALUES
@@ -185,7 +186,11 @@ INSERT INTO tipo_responsavel (nome) VALUES
 ----
 
 -- Séries padrão
--- (a definir)
+INSERT INTO serie_turma (nome) VALUES
+('5º Ano'),
+('6º Ano'),
+('7º Ano'),
+('8º Ano');
 
 -------------------------------------------------------- INSERTS PARA TESTE
 -- 1. Inserindo Séries/Turmas

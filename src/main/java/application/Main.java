@@ -40,6 +40,9 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        System.out.println("Iniciando migrações do banco de dados...");
+        database.DatabaseMigration.rodarMigracao();
+
         Locale.setDefault(Locale.of("pt", "BR"));
         launch(args);
     }
