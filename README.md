@@ -82,7 +82,7 @@ Renomeie o arquivo `\src\main\resources\database.properties.example` para `\src\
 
 ```bash
 # database.properties
-db.url=jdbc:postgresql://localhost:5432/nome_da_tabela
+db.url=jdbc:postgresql://localhost:5432/sinepe_db
 db.user=usuario_do_banco
 db.password=senha_do_banco
 ```
