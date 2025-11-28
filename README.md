@@ -58,9 +58,10 @@ Siga os passos abaixo para baixar, configurar e rodar o projeto localmente.
 ### Pré-requisitos
 
 Certifique-se de ter instalado em sua máquina:
-* **Java Development Kit (JDK):** Versão 24 ou superior.
-* **Git:** Para versionamento e clonagem.
-* **PostgreSQL:** Instância local do banco de dados rodando.
+* **Java Development Kit (JDK):** Versão 24 ou superior. [(Download)](https://www.oracle.com/java/technologies/downloads/)
+* **Git:** Para versionamento e clonagem. [(Download)](https://git-scm.com/install/)
+* **PostgreSQL:** Instância local do banco de dados rodando. [(Download)](https://www.postgresql.org/download/)
+* **Maven:** Para a execução do projeto. [(Download)](https://maven.apache.org/download.cgi)
 
 ### 1. Clonar o Repositório
 
@@ -92,9 +93,7 @@ Não é necessário rodar scripts SQL manualmente. O projeto utiliza Flyway para
 Ao iniciar a aplicação (ou rodar o comando maven), as tabelas serão criadas/atualizadas automaticamente.
 
 ### 3. Executar a Aplicação
-O projeto utiliza o plugin do JavaFX para Maven (Certifique-se que o Maven está instalado https://maven.apache.org/download.cgi). 
-
-Para rodar, execute no terminal dentro da pasta do projeto:
+O projeto utiliza o plugin do JavaFX para Maven. Para rodar, execute no terminal dentro da pasta do projeto:
 
 ```bash
 mvn clean javafx:run
