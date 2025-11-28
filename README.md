@@ -7,10 +7,10 @@
 
   <br>
 
-  ![Status](https://img.shields.io/badge/Status-Em_Desenvolvimento-yellow)
-  ![Version](https://img.shields.io/badge/Versão-v0.5.0-blue)
-  ![License](https://img.shields.io/badge/Licença-MIT-green)
-  ![Java](https://img.shields.io/badge/Java-24-orange)
+  ![Status](https://img.shields.io/badge/Status-Manutenção_Ativa-yellow?logo=rocket&logoColor=white)
+  ![Versão](https://img.shields.io/badge/Versão-v1.0.0-blue?logo=git&logoColor=white)
+  ![Licença](https://img.shields.io/badge/Licença-CC%20BY--NC--ND%204.0-blue?logo=creativecommons&logoColor=white)
+  ![Java](https://img.shields.io/badge/Java-24-orange?logo=openjdk&logoColor=white)
 
 </div>
 
@@ -104,4 +104,8 @@ Para o primeiro login, utilize o usuário `admin` e a senha `sinepe`.
 
 Logo após o login, você será redirecionado para a criação do primeiro usuário.
 
-<div align="center"> Desenvolvido pelo Grupo 6 - Fatec (2025) </div>
+
+
+<div align="center"> Desenvolvido pelo Grupo 6 de Análise e Desenvolvimento de Sistemas - Fatec Indaiatuba (2025)
+
+Este projeto é licenciado sob CC BY-NC-ND 4.0.</div>
