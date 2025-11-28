@@ -92,7 +92,9 @@ Não é necessário rodar scripts SQL manualmente. O projeto utiliza Flyway para
 Ao iniciar a aplicação (ou rodar o comando maven), as tabelas serão criadas/atualizadas automaticamente.
 
 ### 3. Executar a Aplicação
-O projeto utiliza o plugin do JavaFX para Maven. Para rodar, execute no terminal dentro da pasta do projeto:
+O projeto utiliza o plugin do JavaFX para Maven (Certifique-se que o Maven está instalado https://maven.apache.org/download.cgi). 
+
+Para rodar, execute no terminal dentro da pasta do projeto:
 
 ```bash
 mvn clean javafx:run
