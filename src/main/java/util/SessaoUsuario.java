@@ -6,6 +6,7 @@ public class SessaoUsuario {
     private static String nomeUsuario;
     private static String funcaoUsuario;
     private static int idPaiSelecionado;
+    private static boolean modoAdminPadrao = false;
 
     /**
      * Define o usuário que acabou de logar.
@@ -14,10 +15,15 @@ public class SessaoUsuario {
      * @param nome   O nome do usuário.
      * @param funcao O nome da função (ex: "Administrador", "Professor", "T.I.")
      */
-    public static void setUsuarioLogado(int id, String nome, String funcao) {
+    public static void setUsuarioLogado(int id, String nome, String funcao, boolean isPadrao) {
         idUsuario = id;
         nomeUsuario = nome;
         funcaoUsuario = funcao;
+        modoAdminPadrao = isPadrao;
+    }
+
+    public static boolean isModoAdminPadrao() {
+        return modoAdminPadrao;
     }
 
     /**
