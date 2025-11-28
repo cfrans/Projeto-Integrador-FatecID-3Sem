@@ -194,7 +194,7 @@ public class IntervencoesController extends BaseController implements Initializa
                     "Sucesso",
                     "Intervenção salva com sucesso!"
             );
-            navegarParaHome(); // Método herdado do BaseController
+            onClickLimpar(null);
 
         } catch (SQLException e) {
             exibirAlertaErro("Erro de Banco de Dados", "Erro: " + e.getMessage());
