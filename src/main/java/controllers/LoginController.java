@@ -74,9 +74,16 @@ public class LoginController {
                     String nome = rs.getString("nome");
                     String funcao = rs.getString("funcao");
 
+                    // VERIFICAÇÃO SE É O ADMIN PADRÃO (pelo email ou ID)
+                    boolean isAdminPadrao = email.equalsIgnoreCase("admin");
+
                     // 5. Salva o usuário na Sessão Global
-                    SessaoUsuario.setUsuarioLogado(id, nome, funcao);
+                    SessaoUsuario.setUsuarioLogado(id, nome, funcao, isAdminPadrao);
                     System.out.println("LOGIN SUCESSO! ID: " + id + ", Nome: " + nome);
+                    // Se for admin padrão, imprime aviso no console (o alerta visual será no Menu)
+                    if (isAdminPadrao) {
+                        System.out.println("ALERTA: Login com usuário padrão detectado. Iniciando protocolo de troca.");
+                    }
 
                     // 6. Muda para a tela de Menu
                     mudarTela(event, "/view/Menu.fxml");

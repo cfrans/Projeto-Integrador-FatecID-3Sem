@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -13,6 +14,8 @@ import util.ControleAcesso;
 import java.io.IOException;
 import java.net.URL;
 import javafx.fxml.Initializable;
+import util.SessaoUsuario;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -52,8 +55,30 @@ public class MenuController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Carrega a tela "Home" como tela inicial
-        navegarPara("/view/Home.fxml");
+        // Verifica se é o admin padrão
+        if (SessaoUsuario.isModoAdminPadrao()) {
+            iniciarFluxoTrocaAdmin();
+        } else {
+            // Fluxo normal
+            navegarPara("/view/Home.fxml");
+        }
+    }
+
+    private void iniciarFluxoTrocaAdmin() {
+        // 1. Exibe o Alerta
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Atenção - Configuração Inicial");
+        alert.setHeaderText("Usuário Administrativo Padrão Detectado");
+        alert.setContentText("Você será redirecionado para cadastrar seu usuário.\n" +
+                "Ao concluir, o usuário 'admin' será excluído.");
+        alert.showAndWait();
+
+        // 2. Navega direto para o cadastro
+        try {
+            abrirCadastrarUsuario();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
