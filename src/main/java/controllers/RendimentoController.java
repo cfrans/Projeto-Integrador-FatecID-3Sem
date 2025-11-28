@@ -280,7 +280,7 @@ public class RendimentoController extends BaseController implements Initializabl
                     "Sucesso",
                     "Rendimento salvo com sucesso!!"
             );
-            navegarParaHome(); // Método herdado do BaseController
+            onClickLimpar(null);
 
         } catch (NumberFormatException e) {
             exibirAlertaErro("Erro de Formato", "Todos os campos de nota (Avaliação 1, 2, Simulado, Atitude) devem ser números (use . (ponto) para decimais, ex: 8.5).");

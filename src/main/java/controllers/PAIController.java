@@ -219,7 +219,7 @@ public class PAIController extends BaseController implements Initializable {
                     "Sucesso",
                     "PAI salvo e associado ao aluno com sucesso!"
             );
-            navegarParaHome(); // Método herdado do BaseController
+            onClickLimpar(null);
 
         } catch (SQLException e) {
             exibirAlertaErro("Erro de Banco de Dados", "Não foi possível salvar o PAI.", "Erro: " + e.getMessage());

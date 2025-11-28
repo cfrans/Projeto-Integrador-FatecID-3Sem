@@ -263,7 +263,7 @@ public class CadastroController extends BaseController implements Initializable 
         }
 
         // Validação de Email válido ---
-        if (!validacaoEmail(String.valueOf(tfEmail))) {
+        if (!validacaoEmail(tfEmail.getText())) {
             exibirAlertaErro(
                     "Email inválido",
                     "O email informado não está em um formato válido.",
@@ -333,7 +333,7 @@ public class CadastroController extends BaseController implements Initializable 
                         "Cadastro",
                         "Aluno, Responsável e Laudo salvos com sucesso!"
                 );
-                navegarParaHome(); // Método herdado do BaseController
+                onClickLimpar(null);
 
             } catch (Exception e) {
                 System.err.println("Erro durante a transação, executando rollback...");
