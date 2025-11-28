@@ -76,7 +76,7 @@ cd Projeto-Integrador-FatecID-3Sem
 
 ### 2. Configurar Banco de Dados
 
-Crie um banco de dados vazio no PostgreSQL chamado sinepe_db.
+Crie um banco de dados vazio no PostgreSQL chamado `sinepe_db`.
 
 Renomeie o arquivo `\src\main\resources\database.properties.example` para `\src\main\resources\database.properties` e altere os dados do banco criado
 
@@ -97,5 +97,10 @@ O projeto utiliza o plugin do JavaFX para Maven. Para rodar, execute no terminal
 ```bash
 mvn clean javafx:run
 ```
+
+### 4. Primeiro Login
+Para o primeiro login, utilize o usuário `admin` e a senha `sinepe`.
+
+Logo após o login, você será redirecionado para a criação do primeiro usuário.
 
 <div align="center"> Desenvolvido pelo Grupo 6 - Fatec (2025) </div>
