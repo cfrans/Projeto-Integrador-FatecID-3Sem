@@ -155,7 +155,7 @@ public class ConsultaRendimentoController extends BaseController {
         tfNota4.setText(format(medias.get("Ciências")));
         tfNota5.setText(format(medias.get("História")));
         tfNota6.setText(format(medias.get("Geografia")));
-        tfNota7.setText(format(medias.get("Educação Física")));
+        tfNota7.setText(format(medias.get("Educação física")));
         tfNota8.setText(format(medias.get("Inglês")));
 
 
