@@ -149,14 +149,15 @@ public class ConsultaRendimentoController extends BaseController {
 
         Map<String, Double> medias = buscarMediasPorMateria(idAluno, inicio, fim);
 
-        tfNota1.setText(format(medias.get("Redação")));
-        tfNota2.setText(format(medias.get("Matemática")));
-        tfNota3.setText(format(medias.get("Ciências")));
-        tfNota4.setText(format(medias.get("História")));
-        tfNota5.setText(format(medias.get("Geografia")));
-        tfNota6.setText(format(medias.get("Educação Física")));
-        tfNota7.setText(format(medias.get("Inglês")));
-        tfNota8.setText(format(medias.get("Outros")));
+        tfNota1.setText(format(medias.get("Português")));
+        tfNota2.setText(format(medias.get("Redação")));
+        tfNota3.setText(format(medias.get("Matemática")));
+        tfNota4.setText(format(medias.get("Ciências")));
+        tfNota5.setText(format(medias.get("História")));
+        tfNota6.setText(format(medias.get("Geografia")));
+        tfNota7.setText(format(medias.get("Educação Física")));
+        tfNota8.setText(format(medias.get("Inglês")));
+
 
         tfEntregaTrabalho.setText(buscarEntregaMaisFrequente(idAluno, inicio, fim));
 
@@ -473,14 +474,14 @@ public class ConsultaRendimentoController extends BaseController {
      * Carrega nos campos de texto os nomes padrão das disciplinas exibida na interface.
      */
     private void carregarNomesMaterias() {
-        tfMateria1.setText("Redação");
-        tfMateria2.setText("Matemática");
-        tfMateria3.setText("Ciências");
-        tfMateria4.setText("História");
-        tfMateria5.setText("Geografia");
-        tfMateria6.setText("Educação Física");
-        tfMateria7.setText("Inglês");
-        tfMateria8.setText("Outros");
+        tfMateria1.setText("Português");
+        tfMateria2.setText("Redação");
+        tfMateria3.setText("Matemática");
+        tfMateria4.setText("Ciências");
+        tfMateria5.setText("História");
+        tfMateria6.setText("Geografia");
+        tfMateria7.setText("Educação Física");
+        tfMateria8.setText("Inglês");
     }
 
     /**
@@ -494,7 +495,3 @@ public class ConsultaRendimentoController extends BaseController {
         a.showAndWait();
     }
 }
-
-
-
-
