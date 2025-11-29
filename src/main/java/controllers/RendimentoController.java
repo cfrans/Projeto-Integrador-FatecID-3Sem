@@ -96,6 +96,19 @@ public class RendimentoController extends BaseController implements Initializabl
         // 3. Agrupar checkboxes
         listaEntregas = Arrays.asList(cbTipoEntrega1, cbTipoEntrega2, cbTipoEntrega3);
 
+        // Permite que apenas um seja selecionado
+        for (CheckBox cbAtual : listaEntregas) {
+            cbAtual.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+                if (isNowSelected) {
+                    for (CheckBox outroCb : listaEntregas) {
+                        if (outroCb != cbAtual) {
+                            outroCb.setSelected(false);
+                        }
+                    }
+                }
+            });
+        }
+
         // 4. Fazer os campos RA e Turma atualizarem sozinhos
         chNome.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldVal, newVal) -> preencherDadosAluno(newVal)
