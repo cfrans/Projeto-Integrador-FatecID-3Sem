@@ -11,6 +11,7 @@
   ![Versão](https://img.shields.io/badge/Versão-v1.0.1-blue?logo=git&logoColor=white)
   ![Licença](https://img.shields.io/badge/Licença-CC%20BY--NC--ND%204.0-blue?logo=creativecommons&logoColor=white)
   ![Java](https://img.shields.io/badge/Java-24-orange?logo=openjdk&logoColor=white)
+  [![Javadoc](https://img.shields.io/badge/JavaDoc-Reference-blue)](https://cfrans.github.io/Projeto-Integrador-FatecID-3Sem/)
 
 </div>
 
