@@ -192,7 +192,8 @@ public class IntervencoesController extends BaseController implements Initializa
 
             NavegadorUtil.exibirSucessoAlerta(
                     "Sucesso",
-                    "Intervenção salva com sucesso!"
+                    "Intervenção salva com sucesso!",
+                    menuController.getStage()
             );
             onClickLimpar(null);
 

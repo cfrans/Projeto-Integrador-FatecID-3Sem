@@ -278,7 +278,8 @@ public class RendimentoController extends BaseController implements Initializabl
             // Sucesso
             NavegadorUtil.exibirSucessoAlerta(
                     "Sucesso",
-                    "Rendimento salvo com sucesso!!"
+                    "Rendimento salvo com sucesso!!",
+                    menuController.getStage()
             );
             onClickLimpar(null);
 

@@ -119,7 +119,7 @@ public abstract class BaseController implements ControladorNavegavel {
                     }
                 }
 
-                // Aplica o estilo se necessário
+                // Aplica o estilo
                 if (deveBloquear) {
                     setDisable(true);
                     setStyle("-fx-background-color: #ffc0cb;"); // Vermelho claro

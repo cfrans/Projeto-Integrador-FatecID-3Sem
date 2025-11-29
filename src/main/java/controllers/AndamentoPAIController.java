@@ -19,6 +19,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import database.ConexaoDB;
+import controllers.NavegadorUtil;
 import util.SessaoUsuario;
 
 public class AndamentoPAIController extends BaseController implements Initializable {
@@ -61,8 +62,7 @@ public class AndamentoPAIController extends BaseController implements Initializa
         colRevisao.setCellFactory(column -> new TableCell<AndamentoPAIController.PAIAndamento, LocalDate>() {
             @Override
             protected void updateItem(LocalDate item, boolean empty) {
-                super.updateItem(item, empty); // Mantém funcionamento padrão
-
+                super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null);
                 } else {
@@ -195,6 +195,12 @@ public class AndamentoPAIController extends BaseController implements Initializa
             alertPermissao.setTitle("Acesso Negado");
             alertPermissao.setHeaderText("Você não tem permissão para esta ação.");
             alertPermissao.setContentText("Apenas T.I., Professores e Profissionais Especializados podem finalizar um PAI.");
+
+            // --- CENTRALIZAÇÃO MANUAL ---
+            if (menuController != null && menuController.getStage() != null) {
+                alertPermissao.initOwner(menuController.getStage());
+            }
+
             alertPermissao.showAndWait();
             return;
         }
@@ -205,7 +211,11 @@ public class AndamentoPAIController extends BaseController implements Initializa
         alertConfirmacao.setHeaderText("Finalizar PAI");
         alertConfirmacao.setContentText("Tem certeza que deseja finalizar o PAI de título '" + paiSelecionado.getTitulo() + "'?");
 
-        // 2. Mostrar o alerta e esperar a resposta
+        // --- CENTRALIZAÇÃO MANUAL ---
+        if (menuController != null && menuController.getStage() != null) {
+            alertConfirmacao.initOwner(menuController.getStage());
+        }
+
         Optional<ButtonType> resultado = alertConfirmacao.showAndWait();
 
         // 3. Verificar se o usuário clicou em "OK"
@@ -214,14 +224,16 @@ public class AndamentoPAIController extends BaseController implements Initializa
             boolean sucesso = finalizarPAINoBanco(paiSelecionado.getIdPai());
 
             if (sucesso) {
-                // 5. Mostrar alerta de sucesso
-                NavegadorUtil.exibirSucessoAlerta("PAI Finalizado", "O PAI foi alterado para 'Finalizado' com sucesso.");
+                NavegadorUtil.exibirSucessoAlerta(
+                        "PAI Finalizado",
+                        "O PAI foi alterado para 'Finalizado' com sucesso.",
+                        menuController.getStage()
+                );
 
                 // 6. Recarregar a tabela (o item finalizado desaparecerá)
                 carregarPAIs();
             }
         }
-        // Se o usuário clicar em "Cancelar", nada acontece.
     }
 
     /**
@@ -245,6 +257,12 @@ public class AndamentoPAIController extends BaseController implements Initializa
             alertErro.setTitle("Erro de Banco de Dados");
             alertErro.setHeaderText("Não foi possível finalizar o PAI.");
             alertErro.setContentText("Ocorreu um erro ao tentar atualizar o banco de dados: " + e.getMessage());
+
+            // --- CENTRALIZAÇÃO MANUAL ---
+            if (menuController != null && menuController.getStage() != null) {
+                alertErro.initOwner(menuController.getStage());
+            }
+
             alertErro.showAndWait();
             return false;
         }

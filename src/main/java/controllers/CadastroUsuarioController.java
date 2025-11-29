@@ -160,7 +160,8 @@ public class CadastroUsuarioController extends BaseController implements Initial
 
             NavegadorUtil.exibirSucessoAlerta(
                     "Sucesso",
-                    "Usuário '" + nome + "' cadastrado com sucesso!"
+                    "Usuário '" + nome + "' cadastrado com sucesso!",
+                    menuController.getStage()
             );
             navegarParaHome();
 
