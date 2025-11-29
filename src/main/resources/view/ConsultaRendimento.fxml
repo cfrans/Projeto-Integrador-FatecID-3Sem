@@ -29,36 +29,36 @@
         <Pane layoutX="62.0" layoutY="208.0" prefHeight="304.0" prefWidth="263.0" style="-fx-background-color: #E8E8E8;">
             <children>
                 <TextField fx:id="tfMateria1" editable="false" layoutX="18.0" layoutY="18.0" prefHeight="25.0" prefWidth="150.0" text="Português" />
-                <TextField fx:id="tfNota1" layoutX="179.0" layoutY="18.0" prefHeight="25.0" prefWidth="65.0" />
+                <TextField fx:id="tfNota1" layoutX="179.0" layoutY="18.0" prefHeight="25.0" prefWidth="65.0" editable="false"/>
                 <TextField fx:id="tfMateria2" editable="false" layoutX="18.0" layoutY="51.0" prefHeight="25.0" prefWidth="150.0" text="Redação" />
-                <TextField fx:id="tfNota2" layoutX="179.0" layoutY="51.0" prefHeight="25.0" prefWidth="65.0" />
+                <TextField fx:id="tfNota2" layoutX="179.0" layoutY="51.0" prefHeight="25.0" prefWidth="65.0" editable="false"/>
                 <TextField fx:id="tfMateria3" editable="false" layoutX="18.0" layoutY="85.0" prefHeight="25.0" prefWidth="150.0" text="Matemática" />
-                <TextField fx:id="tfNota3" layoutX="179.0" layoutY="86.0" prefHeight="25.0" prefWidth="65.0" />
+                <TextField fx:id="tfNota3" layoutX="179.0" layoutY="86.0" prefHeight="25.0" prefWidth="65.0" editable="false" />
                 <TextField fx:id="tfMateria4" editable="false" layoutX="19.0" layoutY="120.0" prefHeight="25.0" prefWidth="150.0" text="Ciências" />
-                <TextField fx:id="tfNota4" layoutX="179.0" layoutY="120.0" prefHeight="25.0" prefWidth="65.0" />
+                <TextField fx:id="tfNota4" layoutX="179.0" layoutY="120.0" prefHeight="25.0" prefWidth="65.0" editable="false"/>
                 <TextField fx:id="tfMateria5" editable="false" layoutX="18.0" layoutY="154.0" prefHeight="25.0" prefWidth="150.0" text="História" />
-                <TextField fx:id="tfNota5" layoutX="179.0" layoutY="154.0" prefHeight="25.0" prefWidth="65.0" />
+                <TextField fx:id="tfNota5" layoutX="179.0" layoutY="154.0" prefHeight="25.0" prefWidth="65.0" editable="false"/>
                 <TextField fx:id="tfMateria6" editable="false" layoutX="18.0" layoutY="187.0" prefHeight="25.0" prefWidth="150.0" text="Geografia" />
-                <TextField fx:id="tfNota6" layoutX="179.0" layoutY="187.0" prefHeight="25.0" prefWidth="65.0" />
+                <TextField fx:id="tfNota6" layoutX="179.0" layoutY="187.0" prefHeight="25.0" prefWidth="65.0" editable="false"/>
                 <TextField fx:id="tfMateria7" editable="false" layoutX="18.0" layoutY="221.0" prefHeight="25.0" prefWidth="150.0" text="Educação Física" />
-                <TextField fx:id="tfNota7" layoutX="179.0" layoutY="222.0" prefHeight="25.0" prefWidth="65.0" />
+                <TextField fx:id="tfNota7" layoutX="179.0" layoutY="222.0" prefHeight="25.0" prefWidth="65.0" editable="false"/>
                 <TextField fx:id="tfMateria8" editable="false" layoutX="19.0" layoutY="256.0" prefHeight="25.0" prefWidth="150.0" text="Inglês" />
-                <TextField fx:id="tfNota8" layoutX="179.0" layoutY="256.0" prefHeight="25.0" prefWidth="65.0" />
+                <TextField fx:id="tfNota8" layoutX="179.0" layoutY="256.0" prefHeight="25.0" prefWidth="65.0" editable="false"/>
             </children>
         </Pane>
         <Label layoutX="62.0" layoutY="190.0" text="Notas por Disciplina" />
         <Pane layoutX="342.0" layoutY="208.0" prefHeight="60.0" prefWidth="494.0" style="-fx-background-color: #E8E8E8;">
             <children>
-                <TextField fx:id="tfEntregaTrabalho" layoutX="16.0" layoutY="23.0" prefHeight="25.0" prefWidth="226.0" />
-                <TextField fx:id="tfParticipacao" layoutX="253.0" layoutY="23.0" prefHeight="25.0" prefWidth="226.0" />
+                <TextField fx:id="tfEntregaTrabalho" layoutX="16.0" layoutY="23.0" prefHeight="25.0" prefWidth="226.0" editable="false"/>
+                <TextField fx:id="tfParticipacao" layoutX="253.0" layoutY="23.0" prefHeight="25.0" prefWidth="226.0" editable="false"/>
                 <Label layoutX="17.0" layoutY="7.0" text="Entrega de Trabalhos" />
                 <Label layoutX="253.0" layoutY="7.0" text="Participação" />
             </children>
         </Pane>
         <Pane layoutX="342.0" layoutY="293.0" prefHeight="60.0" prefWidth="494.0" style="-fx-background-color: #E8E8E8;">
             <children>
-                <TextField fx:id="tfQuantidadeIntervencoes" layoutX="14.0" layoutY="23.0" prefHeight="25.0" prefWidth="107.0" />
-                <TextField fx:id="tfResponsavelFrequente" layoutX="135.0" layoutY="23.0" prefHeight="25.0" prefWidth="346.0" />
+                <TextField fx:id="tfQuantidadeIntervencoes" layoutX="14.0" layoutY="23.0" prefHeight="25.0" prefWidth="107.0" editable="false"/>
+                <TextField fx:id="tfResponsavelFrequente" layoutX="135.0" layoutY="23.0" prefHeight="25.0" prefWidth="346.0" editable="false"/>
                 <Label layoutX="15.0" layoutY="7.0" text="Qnt Total" />
                 <Label layoutX="135.0" layoutY="8.0" text="Responsavel Mais Frequente pelas Intervenções" />
             </children>
@@ -66,8 +66,8 @@
         <Label layoutX="342.0" layoutY="276.0" text="Interveções" />
         <Pane layoutX="342.0" layoutY="373.0" prefHeight="60.0" prefWidth="494.0" style="-fx-background-color: #E8E8E8;">
             <children>
-                <TextField fx:id="tfQunatidadePlanos" layoutX="14.0" layoutY="22.0" prefHeight="25.0" prefWidth="226.0" />
-                <TextField fx:id="tfQuantidadePlanosFinalizados" layoutX="254.0" layoutY="22.0" prefHeight="25.0" prefWidth="226.0" />
+                <TextField fx:id="tfQunatidadePlanos" layoutX="14.0" layoutY="22.0" prefHeight="25.0" prefWidth="226.0" editable="false"/>
+                <TextField fx:id="tfQuantidadePlanosFinalizados" layoutX="254.0" layoutY="22.0" prefHeight="25.0" prefWidth="226.0" editable="false"/>
                 <Label layoutX="16.0" layoutY="7.0" text="Qnt Total" />
                 <Label layoutX="254.0" layoutY="7.0" text="Qnt de Finalizados" />
             </children>
