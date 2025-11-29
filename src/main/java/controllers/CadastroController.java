@@ -331,7 +331,8 @@ public class CadastroController extends BaseController implements Initializable 
 
                 NavegadorUtil.exibirSucessoAlerta(
                         "Cadastro",
-                        "Aluno, Responsável e Laudo salvos com sucesso!"
+                        "Aluno, Responsável e Laudo salvos com sucesso!",
+                        menuController.getStage()
                 );
                 onClickLimpar(null);
 

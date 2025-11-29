@@ -12,7 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import util.SessaoUsuario;
-
+import controllers.NavegadorUtil;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,7 +44,7 @@ public class DetalhesPAIController extends BaseController implements Initializab
 
     // ID do PAI que está sendo visualizado
     private int idPaiAtual;
-    private String tituloPaiAtual; // Para usar na confirmação
+    private String tituloPaiAtual;
 
     /**
      * Inicializa o controller. Pega o ID do PAI da sessão e
@@ -58,12 +58,11 @@ public class DetalhesPAIController extends BaseController implements Initializab
         if (idPaiAtual > 0) {
             carregarDadosPAI(idPaiAtual);
         } else {
-            // Tratar erro - PAI não encontrado
-            Alert alertErro = new Alert(Alert.AlertType.ERROR);
-            alertErro.setTitle("Erro");
-            alertErro.setHeaderText("ID do PAI não encontrado.");
-            alertErro.setContentText("Não foi possível carregar os detalhes do PAI. Tente voltar e selecionar novamente.");
-            alertErro.showAndWait();
+            exibirAlertaErro(
+                    "Erro",
+                    "ID do PAI não encontrado.",
+                    "Não foi possível carregar os detalhes do PAI. Tente voltar e selecionar novamente."
+            );
         }
     }
 
@@ -115,21 +114,20 @@ public class DetalhesPAIController extends BaseController implements Initializab
                 }
 
             } else {
-                // PAI não encontrado no banco
-                Alert alertErro = new Alert(Alert.AlertType.ERROR);
-                alertErro.setTitle("Erro de Banco de Dados");
-                alertErro.setHeaderText("PAI não encontrado.");
-                alertErro.setContentText("O PAI com ID " + idPai + " não foi localizado no banco de dados.");
-                alertErro.showAndWait();
+                exibirAlertaErro(
+                        "Erro de Banco de Dados",
+                        "PAI não encontrado.",
+                        "O PAI com ID " + idPai + " não foi localizado no banco de dados."
+                );
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            Alert alertErro = new Alert(Alert.AlertType.ERROR);
-            alertErro.setTitle("Erro de Banco de Dados");
-            alertErro.setHeaderText("Falha ao carregar PAI.");
-            alertErro.setContentText("Ocorreu um erro ao consultar o banco de dados: " + e.getMessage());
-            alertErro.showAndWait();
+            exibirAlertaErro(
+                    "Erro de Banco de Dados",
+                    "Falha ao carregar PAI.",
+                    "Ocorreu um erro ao consultar o banco de dados: " + e.getMessage()
+            );
         }
     }
 
@@ -147,23 +145,29 @@ public class DetalhesPAIController extends BaseController implements Initializab
         alertConfirmacao.setHeaderText("Finalizar PAI");
         alertConfirmacao.setContentText("Tem certeza que deseja finalizar o PAI de título '" + tituloPaiAtual + "'?");
 
-        // 2. Mostrar o alerta e esperar a resposta
+        // Definindo o Owner para centralizar pop-ups
+        if (menuController != null && menuController.getStage() != null) {
+            alertConfirmacao.initOwner(menuController.getStage());
+        }
+
         Optional<ButtonType> resultado = alertConfirmacao.showAndWait();
 
-        // 3. Verificar se o usuário clicou em "OK"
+        // Verificar se o usuário clicou em "OK"
         if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
-            // 4. Chamar o método para atualizar o banco
+            // Chamar o método para atualizar o banco
             boolean sucesso = finalizarPAINoBanco(idPaiAtual);
 
             if (sucesso) {
-                // 5. Mostrar alerta de sucesso
-                NavegadorUtil.exibirSucessoAlerta("PAI Finalizado", "O PAI foi alterado para 'Finalizado' com sucesso.");
+                // Mostrar alerta de sucesso
+                NavegadorUtil.exibirSucessoAlerta("PAI Finalizado",
+                        "O PAI foi alterado para 'Finalizado' com sucesso.",
+                        menuController.getStage()
+                );
 
-                // 6. VOLTAR para a tela de Andamento
+                // VOLTAR para a tela de Andamento
                 navegarPara("/view/AndamentoPAI.fxml");
             }
         }
-        // Se o usuário clicar em "Cancelar", nada acontece.
     }
 
     /**
@@ -182,11 +186,11 @@ public class DetalhesPAIController extends BaseController implements Initializab
 
         } catch (SQLException e) {
             e.printStackTrace();
-            Alert alertErro = new Alert(Alert.AlertType.ERROR);
-            alertErro.setTitle("Erro de Banco de Dados");
-            alertErro.setHeaderText("Não foi possível finalizar o PAI.");
-            alertErro.setContentText("Ocorreu um erro ao tentar atualizar o banco de dados: " + e.getMessage());
-            alertErro.showAndWait();
+            exibirAlertaErro(
+                    "Erro de Banco de Dados",
+                    "Não foi possível finalizar o PAI.",
+                    "Ocorreu um erro ao tentar atualizar o banco de dados: " + e.getMessage()
+            );
             return false;
         }
     }
@@ -208,7 +212,6 @@ public class DetalhesPAIController extends BaseController implements Initializab
             btImprimir.setVisible(true);
             btFinalizar.setVisible(true);
             btVoltar.setVisible(true);
-            // menuBar.setVisible(true);
 
 
             PrinterJob job = PrinterJob.createPrinterJob();
@@ -216,7 +219,6 @@ public class DetalhesPAIController extends BaseController implements Initializab
 
                 ImageView imageView = new ImageView(snapshot);
                 imageView.setPreserveRatio(true);
-
 
                 double pageWidth = job.getJobSettings().getPageLayout().getPrintableWidth();
                 double pageHeight = job.getJobSettings().getPageLayout().getPrintableHeight();
@@ -240,18 +242,25 @@ public class DetalhesPAIController extends BaseController implements Initializab
         }
     }
 
-
     private void restaurarBotoes() {
         btImprimir.setVisible(true);
         btFinalizar.setVisible(true);
         btVoltar.setVisible(true);
     }
 
+    // Método helper local para avisos (Warnings)
     private void showAlert(String msg) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Aviso");
         alert.setHeaderText(null);
         alert.setContentText(msg);
+
+        // Centralizando o Aviso
+        if (menuController != null && menuController.getStage() != null) {
+            alert.initOwner(menuController.getStage());
+        }
+        // ---------------------------------------------
+
         alert.showAndWait();
     }
 

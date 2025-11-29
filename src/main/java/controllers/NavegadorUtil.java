@@ -111,11 +111,13 @@ public class NavegadorUtil {
 
     /**
      * Exibe um alerta de sucesso com título, mensagem e ícone personalizado.
+     * Centraliza o alerta na janela informada (stageDono).
      *
-     * @param titulo    o título da janela do alerta.
-     * @param mensagem  o texto principal exibido dentro do alerta.
+     * @param titulo     o título da janela do alerta.
+     * @param mensagem   o texto principal exibido dentro do alerta.
+     * @param stageDono  a janela pai (Stage) para centralizar o alerta (pode ser null).
      */
-    public static void exibirSucessoAlerta(String titulo, String mensagem) {
+    public static void exibirSucessoAlerta(String titulo, String mensagem, Stage stageDono) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
@@ -123,6 +125,7 @@ public class NavegadorUtil {
 
         // Tenta carregar a imagem de sucesso do ícone
         try {
+            // Verifica se o caminho da imagem está correto no seu projeto
             Image checkIcon = new Image(Objects.requireNonNull(NavegadorUtil.class.getResourceAsStream("/images/success.png")));
             if (checkIcon.isError()) {
                 System.err.println("Imagem do ícone carregada, mas contém erro.");
@@ -134,6 +137,11 @@ public class NavegadorUtil {
             }
         } catch (Exception e) {
             System.err.println("Erro ao carregar ícone de sucesso: " + e.getMessage());
+        }
+
+        // CENTRALIZAÇÃO
+        if (stageDono != null) {
+            alert.initOwner(stageDono);
         }
 
         alert.showAndWait();

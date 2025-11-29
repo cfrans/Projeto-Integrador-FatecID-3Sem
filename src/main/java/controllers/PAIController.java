@@ -217,7 +217,8 @@ public class PAIController extends BaseController implements Initializable {
 
             NavegadorUtil.exibirSucessoAlerta(
                     "Sucesso",
-                    "PAI salvo e associado ao aluno com sucesso!"
+                    "PAI salvo e associado ao aluno com sucesso!",
+                    menuController.getStage()
             );
             onClickLimpar(null);
 
