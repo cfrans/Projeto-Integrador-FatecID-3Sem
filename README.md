@@ -8,7 +8,7 @@
   <br>
 
   ![Status](https://img.shields.io/badge/Status-Manutenção_Ativa-yellow?logo=rocket&logoColor=white)
-  ![Versão](https://img.shields.io/badge/Versão-v1.0.1-blue?logo=git&logoColor=white)
+  ![Versão](https://img.shields.io/badge/Versão-v1.0.2-blue?logo=git&logoColor=white)
   ![Licença](https://img.shields.io/badge/Licença-CC%20BY--NC--ND%204.0-blue?logo=creativecommons&logoColor=white)
   ![Java](https://img.shields.io/badge/Java-24-orange?logo=openjdk&logoColor=white)
 

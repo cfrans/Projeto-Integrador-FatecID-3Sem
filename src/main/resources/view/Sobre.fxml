@@ -45,7 +45,7 @@
 
                 <HBox alignment="CENTER" spacing="10.0">
                     <children>
-                        <Label style="-fx-background-color: #007ec6; -fx-text-fill: white; -fx-background-radius: 4; -fx-padding: 3 8; -fx-font-family: 'Selawk'; -fx-font-weight: bold; -fx-font-size: 12px;" text="Versão v1.0.1" />
+                        <Label style="-fx-background-color: #007ec6; -fx-text-fill: white; -fx-background-radius: 4; -fx-padding: 3 8; -fx-font-family: 'Selawk'; -fx-font-weight: bold; -fx-font-size: 12px;" text="Versão v1.0.2" />
                         <Label style="-fx-background-color: #e76f00; -fx-text-fill: white; -fx-background-radius: 4; -fx-padding: 3 8; -fx-font-family: 'Selawk'; -fx-font-weight: bold; -fx-font-size: 12px;" text="Java 24" />
                         <Label style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 4; -fx-padding: 3 8; -fx-font-family: 'Selawk'; -fx-font-weight: bold; -fx-font-size: 12px;" text="Licença CC BY-NC-ND 4.0" />
                     </children>
