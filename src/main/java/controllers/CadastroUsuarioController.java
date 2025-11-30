@@ -140,7 +140,7 @@ public class CadastroUsuarioController extends BaseController implements Initial
                 alert.setTitle("Configuração Concluída");
                 alert.setHeaderText("Novo administrador configurado com sucesso!");
                 alert.setContentText("O usuário padrão 'admin' foi removido por segurança.\n" +
-                        "O sistema será encerrado agora. Por favor, faça login com seu NOVO usuário.");
+                        "Por favor, faça login com seu NOVO usuário.");
                 alert.showAndWait(); // Espera o usuário dar OK
 
                 // 3. Força o Logoff (Volta para Login)
